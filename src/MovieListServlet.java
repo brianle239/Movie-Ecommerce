@@ -46,19 +46,24 @@ public class MovieListServlet extends HttpServlet {
             // Get a connection from dataSource
 
             // Construct a query with parameter represented by "?"
-            String query =" SELECT " +
-           " m.title as title," + " m.year as year," + " m.director," + "m.id," +
-           " GROUP_CONCAT(DISTINCT g.name ORDER BY gm.genreid ASC SEPARATOR ', ') AS genres, " +
-            "GROUP_CONCAT(DISTINCT s.name ORDER BY sm.starid ASC SEPARATOR ', ') AS stars," + "r.rating " +
-           " FROM movies m " +
-            "JOIN genres_in_movies gm ON m.id = gm.movieid " +
-           " JOIN genres g ON gm.genreid = g.id " +
-          "  JOIN stars_in_movies sm ON m.id = sm.movieid " +
-           " JOIN stars s ON sm.starid = s.id " +
-           " LEFT JOIN ratings r ON m.id = r.movieId " +
-            "GROUP BY m.id, m.title, m.year, m.director " +
-           " ORDER BY r.rating DESC " +
-           " LIMIT 20";
+            String query ="SELECT\n" +
+            "\tm.id as id,\n" +
+                    "    m.title as title,\n" +
+                    "    m.year as year,\n" +
+                    "    m.director as director,\n" +
+                    "    GROUP_CONCAT(DISTINCT g.name SEPARATOR ', ') as genres,\n" +
+                    "    GROUP_CONCAT(DISTINCT s.name ORDER BY sm.starid ASC SEPARATOR ',') AS stars,\n" +
+                    "    mr.Movie_Rating as rating\n" +
+                    "FROM (\n" +
+                    "\tSELECT m.id as id, r.rating as Movie_Rating\n" +
+                    "\tFROM movies m, ratings r\n" +
+                    "\tWHERE m.id = r.movieId\n" +
+                    "\tORDER BY Movie_Rating DESC\n" +
+                    "\tLIMIT 0, 20) mr, \n" +
+                    "    movies m, genres_in_movies gm, genres g, stars_in_movies sm, stars s\n" +
+                    "WHERE mr.id = m.id and mr.id = gm.movieId and gm.genreId = g.id and mr.id = sm.movieId and sm.starId = s.id\n" +
+                    "GROUP BY m.id\n" +
+                    "ORDER BY Movie_Rating DESC";
 
 
 
