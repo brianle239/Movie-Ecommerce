@@ -17,9 +17,14 @@ function getParameterByName(target) {
 function handleResult(resultData) {
 
     console.log("handleResult: populating star info from resultData");
+    let starElement = jQuery("#stars-link");
 
-        let movieTableBodyElement = jQuery("#movie_table_body");
-        console.log(resultData);
+    starElement.append('<a href=' + '"stars.html">'
+        + "Stars list"+     // display star_name for the link text
+        '</a>');
+
+    let movieTableBodyElement = jQuery("#movie_table_body");
+    console.log(resultData);
     // Concatenate the html tags with resultData jsonObject to create table rows
     for (let i = 0; i < Math.min(20, resultData.length); i++) {
         let rowHTML = "";

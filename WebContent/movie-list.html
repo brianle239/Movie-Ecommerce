@@ -1,32 +1,34 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-  <title>Movie list</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Fabflix</title>
 </head>
 <body>
-<!-- H3 body is left empty here, will be populated with the data retrieved with single-star.js -->
-<!-- single-star.js will find this html element by it's id "star_info" -->
+
+<h2 id="stars-link"></h2>
 <h3 id="movie_info"></h3>
 <table id=movie_table class="table table-striped">
-  <thead>
-  <tr>
-    <th>Movie Title</th>
-    <th>Release Year</th>
-    <th>Director</th>
-    <th>Genres</th>
-    <th>Stars</th>
-    <th>Rating</th>
-    <th>
-  </tr>
-  </thead>
-
-  <!-- Table body is left empty here, will be populated with the data retrieved with single-star.js -->
-  <!-- single-star.js will find this html element by it's id "movie_table_body" -->
-  <tbody id=movie_table_body></tbody>
+    <thead>
+    <tr>
+        <th>Movie Title</th>
+        <th>Release Year</th>
+        <th>Director</th>
+        <th>Genres</th>
+        <th>Stars</th>
+        <th>Rating</th>
+        <th>
+    </tr>
+    </thead>
+    <tbody id=movie_table_body></tbody>
 </table>
 
 <!-- Load jQuery and Bootstrap JS -->
