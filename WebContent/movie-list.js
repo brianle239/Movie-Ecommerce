@@ -36,8 +36,42 @@ function handleResult(resultData) {
             "</th>";
         rowHTML += "<th>" + resultData[i]["movie_year"] + "</th>";
         rowHTML += "<th>" + resultData[i]["movie_director"] + "</th>";
-        rowHTML += "<th>" + resultData[i]["movie_genres"] + "</th>";
-        rowHTML += "<th>" + resultData[i]["movie_stars"] + "</th>";
+        // rowHTML += "<th>" + resultData[i]["movie_genres"] + "</th>";
+        rowHTML += "<th>";
+        const genres_array = resultData[i]["movie_genres"].split(",");
+        const genres_id_array = resultData[i]["movie_genres_id"].split(",");
+        for (let i = 0; i < Math.min(3, genres_array.length); i++) {
+            if (i == Math.min(3, genres_array.length) - 1) {
+                rowHTML +=
+                    '<p>' + genres_array[i] + '</p>';  // display star_name for the link text
+                    // + '</a>';
+            }
+            else {
+                rowHTML +=
+                    '<p>' + genres_array[i] + ", " + '</p>';   // display star_name for the link text
+                    // + '</a>';
+            }
+        }
+        rowHTML += "</th>";
+        const stars_array = resultData[i]["movie_stars"].split(",");
+        const stars_id_array = resultData[i]["movie_stars_id"].split(",");
+        rowHTML += "<th>";
+        for (let i = 0; i < Math.min(3, stars_array.length); i++) {
+            if (i == Math.min(3, stars_array.length) - 1) {
+                rowHTML +=
+                    '<a href="single-star.html?id=' + stars_id_array[i] + '">'
+                    + stars_array[i] +   // display star_name for the link text
+                    '</a>';
+            }
+            else {
+                rowHTML +=
+                    '<a href="single-star.html?id=' + stars_id_array[i] + '">'
+                    + stars_array[i] + ", " +   // display star_name for the link text
+                    '</a>';
+            }
+        }
+        rowHTML += "</th>";
+
         rowHTML += "<th>" + resultData[i]["movie_rating"] + "</th>";
         rowHTML += "</tr>";
 

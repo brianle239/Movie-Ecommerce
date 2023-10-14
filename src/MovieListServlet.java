@@ -51,8 +51,10 @@ public class MovieListServlet extends HttpServlet {
                     "    m.title as title,\n" +
                     "    m.year as year,\n" +
                     "    m.director as director,\n" +
-                    "    GROUP_CONCAT(DISTINCT g.name SEPARATOR ', ') as genres,\n" +
-                    "    GROUP_CONCAT(DISTINCT s.name ORDER BY sm.starid ASC SEPARATOR ',') AS stars,\n" +
+                    "    GROUP_CONCAT(DISTINCT g.name ORDER BY g.id SEPARATOR ', ') as genres,\n" +
+                    "    GROUP_CONCAT(DISTINCT g.id ORDER BY g.id SEPARATOR ',') AS genres_id,\n" +
+                    "    GROUP_CONCAT(DISTINCT s.name ORDER BY s.id ASC SEPARATOR ',') AS stars,\n" +
+                    "    GROUP_CONCAT(DISTINCT s.id ORDER BY s.id SEPARATOR ',') AS stars_id,\n" +
                     "    mr.Movie_Rating as rating\n" +
                     "FROM (\n" +
                     "\tSELECT m.id as id, r.rating as Movie_Rating\n" +
@@ -81,13 +83,16 @@ public class MovieListServlet extends HttpServlet {
 
             // Iterate through each row of rs
             while (rs.next()) {
+                // Will need genre Id later on so might as well store the ID
 
                 String movieId = rs.getString("id");
                 String title = rs.getString("title");
                 String year = rs.getString("year");
                 String director = rs.getString("director");
                 String genres = rs.getString("genres");
+                String genres_id = rs.getString("genres_id");
                 String stars = rs.getString("stars");
+                String stars_id = rs.getString("stars_id");
                 String rating = rs.getString("rating");
 
                 // Create a JsonObject based on the data we retrieve from rs
@@ -98,7 +103,9 @@ public class MovieListServlet extends HttpServlet {
                 jsonObject.addProperty("movie_year", year);
                 jsonObject.addProperty("movie_director", director);
                 jsonObject.addProperty("movie_genres", genres);
+                jsonObject.addProperty("movie_genres_id", genres_id);
                 jsonObject.addProperty("movie_stars", stars);
+                jsonObject.addProperty("movie_stars_id", stars_id);
                 jsonObject.addProperty("movie_rating", rating);
 
 
