@@ -17,11 +17,11 @@ function getParameterByName(target) {
 function handleResult(resultData) {
 
     console.log("handleResult: populating star info from resultData");
-    let starElement = jQuery("#stars-link");
-
-    starElement.append('<a href=' + '"stars.html">'
-        + "Stars list"+     // display star_name for the link text
-        '</a>');
+    // let starElement = jQuery("#stars-link");
+    //
+    // starElement.append('<a href=' + '"stars.html">'
+    //     + "Stars list"+     // display star_name for the link text
+    //     '</a>');
 
     let movieTableBodyElement = jQuery("#movie_table_body");
     console.log(resultData);

@@ -17,10 +17,10 @@
 
 function handleStarResult(resultData) {
     console.log("handleStarResult: populating star table from resultData");
-    let movieElement = jQuery("#movie-link");
-
-    movieElement.append('<a href=' + '"movie-list.html">'
-        + "Click for top 20 movies"+ '</a>');
+    // let movieElement = jQuery("#movie-link");
+    //
+    // movieElement.append('<a href=' + '"movie-list.html">'
+    //     + "Click for top 20 movies"+ '</a>');
 
 
     // Populate the star table
