@@ -1,5 +1,6 @@
 .idea
 .out
+.DS_Store
 # Default ignored files
 /shelf/
 /workspace.xml
