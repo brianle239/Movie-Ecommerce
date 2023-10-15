@@ -5,6 +5,8 @@ Project 1 Demo Video URL:
 
 Brian Le (bale4): Wrote MySQL table schema, Created Single Movie List page and Home Page, Styling tables, and Deployed on AWS
 
+Henry Reyes (henreyes): Wrote MySQL queries for Movie list and Single Movie, java servlets, and javascript 
+
 Special Instructions: 
 
 
