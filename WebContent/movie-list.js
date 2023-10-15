@@ -43,12 +43,12 @@ function handleResult(resultData) {
         for (let i = 0; i < Math.min(3, genres_array.length); i++) {
             if (i == Math.min(3, genres_array.length) - 1) {
                 rowHTML +=
-                    '<p>' + genres_array[i] + '</p>';  // display star_name for the link text
+                    genres_array[i];  // display star_name for the link text
                     // + '</a>';
             }
             else {
                 rowHTML +=
-                    '<p>' + genres_array[i] + ", " + '</p>';   // display star_name for the link text
+                    genres_array[i] + ", ";   // display star_name for the link text
                     // + '</a>';
             }
         }

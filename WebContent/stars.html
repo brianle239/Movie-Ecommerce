@@ -16,7 +16,8 @@
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
               integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    
+        <link rel="stylesheet" href="table_style.css">
+
         <title>Star List</title>
     </head>
     <body>
@@ -38,6 +39,7 @@
 <!--    <h2 id="movie-link"></h2>-->
     
     <!-- Id "star_table" is useful for jQuery to find the html element with id, class here is mapping to Bootstrap defined class CSS -->
+    <div class = "p-4 rounded">
     <table id=star_table class="table table-striped">
         <!-- Create a table header -->
         <thead>
@@ -51,6 +53,7 @@
         <!-- Again, id "star_table_body" is useful for jQuery to find this html element -->
         <tbody id=star_table_body></tbody>
     </table>
+    </div>
     
     <!-- Load jQuery and Bootstrap JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
