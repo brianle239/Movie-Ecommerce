@@ -39,34 +39,53 @@ function getParameterByName(target) {
 function handleResult(resultData) {
 
     console.log("handleResult: populating star info from resultData");
+    console.log(resultData);
 
-    // populate the star info h3
-    // find the empty h3 body by id "star_info"
-    let starInfoElement = jQuery("#star_info");
+
+    let starInfoElement = jQuery("#movie-title");
 
     // append two html <p> created to the h3 body, which will refresh the page
-    starInfoElement.append("<p>Star Name: " + resultData[0]["star_name"] + "</p>" +
-        "<p>Date Of Birth: " + resultData[0]["star_dob"] + "</p>");
+    starInfoElement.append("<p>Star Name: " + resultData[0]["movie_title"] + "</p>");
 
     console.log("handleResult: populating movie table from resultData");
+    console.log(resultData);
 
-    // Populate the star table
+    // Populate the movie table
     // Find the empty table body by id "movie_table_body"
     let movieTableBodyElement = jQuery("#movie_table_body");
 
     // Concatenate the html tags with resultData jsonObject to create table rows
-    for (let i = 0; i < Math.min(10, resultData.length); i++) {
-        let rowHTML = "";
-        rowHTML += "<tr>";
-        rowHTML += "<th>" + '<a href=' + resultData[i]['movie_id'] + '"../single-movie/single-movie.html?id=">'
-            + resultData[i]["movie_title"] + '</a>' + "</th>";
-        rowHTML += "<th>" + resultData[i]["movie_year"] + "</th>";
-        rowHTML += "<th>" + resultData[i]["movie_director"] + "</th>";
-        rowHTML += "</tr>";
-
-        // Append the row created to the table body, which will refresh the page
-        movieTableBodyElement.append(rowHTML);
+    let rowHTML = "";
+    rowHTML += "<tr>";
+    rowHTML += "<th>" + resultData[0]["movie_title"] + "</th>";
+    rowHTML += "<th>" + resultData[0]["movie_year"] + "</th>";
+    rowHTML += "<th>" + resultData[0]["movie_director"] + "</th>";
+    rowHTML += "<th>" + resultData[0]["movie_genres"] + "</th>";
+    const stars_array = resultData[0]["movie_stars"].split(",");
+    const stars_id_array = resultData[0]["movie_stars_id"].split(",");
+    rowHTML += "<th>";
+    for (let i = 0; i < stars_array.length; i++) {
+        if (i == stars_array.length - 1) {
+            rowHTML +=
+                '<a href="single-star.html?id=' + stars_id_array[i] + '">'
+                + stars_array[i] +   // display star_name for the link text
+                '</a>';
+        }
+        else {
+            rowHTML +=
+                '<a href="single-star.html?id=' + stars_id_array[i] + '">'
+                + stars_array[i] + ", " +   // display star_name for the link text
+                '</a>';
+        }
     }
+    rowHTML += "</th>";
+
+    rowHTML += "<th>" + resultData[0]["movie_rating"] + "</th>";
+    rowHTML += "</tr>";
+
+    // Append the row created to the table body, which will refresh the page
+    movieTableBodyElement.append(rowHTML);
+
 }
 
 /**
@@ -74,12 +93,12 @@ function handleResult(resultData) {
  */
 
 // Get id from URL
-let starId = getParameterByName('id');
+let movieId = getParameterByName('id');
 
 // Makes the HTTP GET request and registers on success callback function handleResult
 jQuery.ajax({
     dataType: "json",  // Setting return data type
     method: "GET",// Setting request method
-    url: "../api/single-star?id=" + starId, // Setting request url, which is mapped by StarsServlet in Stars.java
-    success: (resultData) => handleResult(resultData) // Setting callback function to handle data returned successfully by the SingleStarServlet
+    url: "api/single-movie?id=" + movieId, // Setting request url, which is mapped by StarsServlet in Movie.java
+    success: (resultData) => handleResult(resultData) // Setting callback function to handle data returned successfully by the SingleMovieServlet
 });
