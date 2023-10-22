@@ -89,3 +89,7 @@ jQuery.ajax({
     url: "api/movielist", // Setting request url, which is mapped by StarsServlet in Stars.java
     success: (resultData) => handleResult(resultData) // Setting callback function to handle data returned successfully by the SingleStarServlet
 });
+
+
+
+;

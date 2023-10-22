@@ -14,6 +14,7 @@ function submitLoginForm(formSubmitEvent) {
     );
 }
 
+
 function handleLoginResult(resultDataString) {
     console.log(resultDataString)
     let resultDataJson = resultDataString;
@@ -33,5 +34,7 @@ function handleLoginResult(resultDataString) {
         $("#login_error_message").text(resultDataJson["message"]);
     }
 }
+
+
 
 login_form.submit(submitLoginForm);

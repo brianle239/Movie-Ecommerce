@@ -1,4 +1,4 @@
-import com.google.gson.JsonArray;
+
 import com.google.gson.JsonObject;
 
 import javax.naming.InitialContext;
@@ -10,7 +10,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -50,18 +49,23 @@ public class LoginServlet extends HttpServlet {
                 jsonObject.addProperty("status", "success");
                 jsonObject.addProperty("message", "Logged in successfully!");
                 request.getSession().setAttribute("user", new User(username));
+                request.getSession().setAttribute("user", username);
+                request.getSession().setMaxInactiveInterval(1800); // 30 minutes
                 response.setStatus(200);
             } else {
                 // User not found
                 jsonObject.addProperty("status", "fail");
                 jsonObject.addProperty("message", "Invalid email or password!");
                 jsonObject.addProperty("input", username + " " + password);
+
                 response.setStatus(401);  // Unauthorized
             }
 
             rs.close();
             statement.close();
 
+            jsonObject.addProperty("user", (new User(username)).toString());
+            jsonObject.addProperty("sessionId" , request.getSession().getId());
             response.getWriter().write(jsonObject.toString());
 
         } catch (Exception e) {
