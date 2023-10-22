@@ -16,28 +16,30 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="table_style.css">
-
+    <link rel="stylesheet" href="../table_style.css">
     <title>Single Star</title>
 </head>
 <body>
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <img src="images/popcorn_logo.png" width="30" height="25" alt="🍿" style="transform: translate(0px, -2px);">
+
+    <img src="../images/popcorn_logo.png" width="30" height="25" alt="🍿" style="transform: translate(0px, -2px);">
     <h2>Fabflix</h2>
 
     <div class="ml-2" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-            <a class="nav-item nav-link" href="index.html">Home</a>
-            <a class="nav-item nav-link" href="movies.html">Movies</a>
-            <a class="nav-item nav-link" href="movie-list.html">Top 20</a>
-            <a class="nav-item nav-link" href="stars.html">Stars</a>
+            <a class="nav-item nav-link" href="../index.html">Home</a>
+            <a class="nav-item nav-link" href="../movies/movies.html">Movies</a>
+            <a class="nav-item nav-link" href="../movie-list/movie-list.html">Top 20</a>
+            <a class="nav-item nav-link" href="../stars/stars.html">Stars</a>
         </div>
     </div>
 </nav>
 
+
 <!-- H3 body is left empty here, will be populated with the data retrieved with single-star.js -->
 <!-- single-star.js will find this html element by it's id "star_info" -->
-<h3 id="star_info"></h3>
+<h3 id="movie_info"></h3>
 <div class = "p-4 rounded">
 <table id=movie_table class="table table-striped">
     <thead>
@@ -45,6 +47,9 @@
         <th>Movie Title</th>
         <th>Release Year</th>
         <th>Director</th>
+        <th>Genres</th>
+        <th>Stars</th>
+        <th>Rating</th>
 
     </tr>
     </thead>
@@ -54,6 +59,23 @@
     <tbody id=movie_table_body></tbody>
 </table>
 </div>
+<!--Movie page styling feature-->
+<!--<h2 id="movie-title"></h2>-->
+<!--<div class="container-fluid">-->
+
+<!--    <div class="row">-->
+<!--        <div class="col-lg-4 bg-success">-->
+<!--            <img class="rounded" src="images/Default_Movie_Img.png" width="300" height="400" alt="No Image Available">-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <div class="row">-->
+<!--        <div class="col-lg-6 bg-warning">-->
+<!--            Container Right-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--</div>-->
 <!-- Load jQuery and Bootstrap JS -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
@@ -63,7 +85,7 @@
 <!-- The path is relative to single-star.html, since these two files are in the same directory -->
 <!-- Note the url does not contain a "/" in the beginning, which means the url is relative to current path
      otherwise the url is relative to the root path-->
-<script src="single-star.js"></script>
+<script src="single-movie.js"></script>
 </body>
 
 

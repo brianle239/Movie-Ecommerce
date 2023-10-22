@@ -30,7 +30,7 @@ function handleResult(resultData) {
         let rowHTML = "";
         rowHTML += "<tr>";
         rowHTML += "<th>" +
-            '<a href="single-movie.html?id=' + resultData[i]["movie_id"] + '">'
+            '<a href=' + resultData[i]["movie_id"] + '"../single-movie/single-movie.html?id=">'
             + resultData[i]["movie_title"] +     // display star_name for the link text
             '</a>' +
             "</th>";
@@ -44,12 +44,12 @@ function handleResult(resultData) {
             if (i == Math.min(3, genres_array.length) - 1) {
                 rowHTML +=
                     genres_array[i];  // display star_name for the link text
-                // + '</a>';
+                    // + '</a>';
             }
             else {
                 rowHTML +=
                     genres_array[i] + ", ";   // display star_name for the link text
-                // + '</a>';
+                    // + '</a>';
             }
         }
         rowHTML += "</th>";
@@ -59,13 +59,13 @@ function handleResult(resultData) {
         for (let i = 0; i < Math.min(3, stars_array.length); i++) {
             if (i == Math.min(3, stars_array.length) - 1) {
                 rowHTML +=
-                    '<a href="single-star.html?id=' + stars_id_array[i] + '">'
+                    '<a href=' + stars_id_array[i] + '"../single-star/single-star.html?id=">'
                     + stars_array[i] +   // display star_name for the link text
                     '</a>';
             }
             else {
                 rowHTML +=
-                    '<a href="single-star.html?id=' + stars_id_array[i] + '">'
+                    '<a href=' + stars_id_array[i] + '"../single-star/single-star.html?id=">'
                     + stars_array[i] + ", " +   // display star_name for the link text
                     '</a>';
             }
@@ -86,6 +86,6 @@ let moveId = getParameterByName('id');
 jQuery.ajax({
     dataType: "json",  // Setting return data type
     method: "GET",// Setting request method
-    url: "api/movies", // Setting request url, which is mapped by StarsServlet in Stars.java
+    url: "api/movielist", // Setting request url, which is mapped by StarsServlet in Stars.java
     success: (resultData) => handleResult(resultData) // Setting callback function to handle data returned successfully by the SingleStarServlet
 });
