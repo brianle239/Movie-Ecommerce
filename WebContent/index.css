@@ -7,19 +7,19 @@
 }
 
 .search-input {
-    width: 300px; /* Specify the width of your search bar */
-    padding: 10px 20px; /* Padding for the input field */
-    border: 2px solid #ccc; /* Border color */
-    border-radius: 30px; /* Rounded border edges */
-    font-size: 16px; /* Font size for the input */
-    outline: none; /* Remove the default outline */
+    width: 300px;
+    padding: 10px 20px;
+    border: 2px solid #ccc;
+    border-radius: 30px;
+    font-size: 16px;
+    outline: none;
 }
 
 .search-button {
     padding: 10px;
-    margin-left: -40px; /* Overlap the search button over the search input to maintain the rounded appearance */
+    margin-left: -40px;
     border: 2px solid #ccc;
-    border-radius: 30px; /* Increased to create more rounded edges */
+    border-radius: 30px;
     background-color: #5F9EA0;
     cursor: pointer;
     outline: none;
@@ -32,5 +32,5 @@
 }
 .search-button:hover,
 .search-button:focus {
-    background-color: #4e8d8e; /* Darker cadet blue on hover/focus */
+    background-color: #4e8d8e;
 }

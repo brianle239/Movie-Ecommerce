@@ -50,6 +50,10 @@ body {
 
 }
 
+.title-and-rating a:hover{
+    color: #4E8D90;
+}
+
 .movie-title {
     margin: 0;
     font-size: 1.3em;
@@ -58,10 +62,10 @@ body {
 
 .rating {
     background-color: #eee; /* Light grey background for the rating */
-    border-radius: 25%; /* Rounded corners for the rating */
-    padding: 5px 10px; /* Spacing around the rating */
-    color: #333; /* Rating text color */
-    margin: 0; /* Remove default margin */
+    border-radius: 25%;
+    padding: 5px 10px;
+    color: #333;
+    margin: 0;
     font-size: 0.8em;
 }
 
@@ -73,6 +77,14 @@ body {
     margin: 5px 0;
 }
 
+.movie-content a {
+    text-decoration: none;
+}
+
+.movie-content a:hover {
+    color: #4E8D90;
+}
+
 .cart-btn {
     background-color: #4E8D90;
     color: white;
@@ -81,8 +93,8 @@ body {
     padding: 10px 20px;
     cursor: pointer;
     text-transform: uppercase;
-    letter-spacing: 1px; /
-    transition: background-color 0.3s ease-in-out; /* Color transition on hover */
+    letter-spacing: 1px;
+    transition: background-color 0.3s ease-in-out;
 }
 
 .cart-btn:hover {
@@ -90,7 +102,7 @@ body {
 }
 @media (min-width: 1200px) {
     .card {
-        min-width: calc(25% - 20px); /* minus gap */
+        min-width: calc(25% - 20px);
     }
 }
 
