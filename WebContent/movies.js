@@ -28,7 +28,7 @@ function handleResult(resultData) {
         let rowHTML = "";
         rowHTML += "<tr>";
         rowHTML += "<th>" +
-            '<a href="single-movie.html?id=' + resultData[i]["movie_id"] + '">'
+            '<a href=' + resultData[i]["movie_id"] + '"single-movie.html?id=">'
             + resultData[i]["movie_title"] +     // display star_name for the link text
             '</a>' +
             "</th>";
@@ -50,6 +50,7 @@ function handleResult(resultData) {
                 // + '</a>';
             }
         }
+
         rowHTML += "</th>";
         const stars_array = resultData[i]["movie_stars"].split(",");
         const stars_id_array = resultData[i]["movie_stars_id"].split(",");
@@ -70,11 +71,14 @@ function handleResult(resultData) {
         }
         rowHTML += "</th>";
 
-        rowHTML += "<th>" + resultData[i]["movie_rating"] + "</th>";
+        rowHTML += "<td>" + resultData[i]["movie_rating"] + "</td>";
+
+        //rowHTML += "<th><button type='button' class='btn btn-primary add-to-cart'>Add to Cart</button></th>";
         rowHTML += "</tr>";
 
         // Append the row created to the table body, which will refresh the page
         movieTableBodyElement.append(rowHTML);
+
     }
 }
 

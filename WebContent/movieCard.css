@@ -1,0 +1,113 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px; /* Adjust gap to your preference */
+    align-items: stretch;
+    max-width: 1200px; /* Adjust to the maximum width you prefer for the container */
+    width: 100%;
+    padding: 20px; /* Adjust padding based on your preference */
+}
+
+.movie-card {
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out;
+    /* You can set a max-width here if you want to control the maximum size of the card */
+    max-width: 400px; /* This sets the maximum width of the card. Adjust as necessary. */
+}
+
+.movie-card:hover {
+    transform: scale(1.05);
+}
+.movie-header,
+.movie-content,
+.movie-footer {
+    padding: 20px;
+}
+
+.title-and-rating {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+}
+.title-and-rating a {
+    text-decoration: none;
+    font-size: .43em;
+    color: #333;
+
+}
+
+.title-and-rating a:hover{
+    color: #4E8D90;
+}
+
+.movie-title {
+    margin: 0;
+    font-size: 1.3em;
+    color: #333;
+}
+
+.rating {
+    background-color: #eee; /* Light grey background for the rating */
+    border-radius: 25%;
+    padding: 5px 10px;
+    color: #333;
+    margin: 0;
+    font-size: 0.8em;
+}
+
+
+
+.release-date,
+.movie-content p {
+    color: #777;
+    margin: 5px 0;
+}
+
+.movie-content a {
+    text-decoration: none;
+}
+
+.movie-content a:hover {
+    color: #4E8D90;
+}
+
+.cart-btn {
+    background-color: #4E8D90;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.cart-btn:hover {
+    background-color: #4cae4c;
+}
+@media (min-width: 1200px) {
+    .card {
+        min-width: calc(25% - 20px);
+    }
+}
+
+@media (max-width: 768px) { /* Adjust breakpoint as needed */
+    .cards-container {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); /* Adjust for smaller card size on mobile devices */
+    }
+}

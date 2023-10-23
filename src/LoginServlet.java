@@ -1,4 +1,4 @@
-import com.google.gson.JsonArray;
+
 import com.google.gson.JsonObject;
 
 import javax.naming.InitialContext;
@@ -10,7 +10,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -36,11 +35,7 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        PrintWriter out = response.getWriter();
-
         try (Connection conn = dataSource.getConnection()) {
-
-
             String query = "SELECT email, password FROM customers WHERE email = ? AND password = ?";
 
             PreparedStatement statement = conn.prepareStatement(query);
@@ -48,40 +43,42 @@ public class LoginServlet extends HttpServlet {
             statement.setString(2, password);
 
             ResultSet rs = statement.executeQuery();
-            System.out.print(rs.toString());
-
-
             JsonObject jsonObject = new JsonObject();
 
             if (rs.next()) {
                 jsonObject.addProperty("status", "success");
                 jsonObject.addProperty("message", "Logged in successfully!");
-                response.sendRedirect("http://localhost:8080/fabflix_war/index.html");
+                request.getSession().setAttribute("user", new User(username));
+                request.getSession().setAttribute("user", username);
+                request.getSession().setMaxInactiveInterval(1800); // 30 minutes
                 response.setStatus(200);
             } else {
                 // User not found
                 jsonObject.addProperty("status", "fail");
                 jsonObject.addProperty("message", "Invalid email or password!");
                 jsonObject.addProperty("input", username + " " + password);
+
                 response.setStatus(401);  // Unauthorized
             }
 
             rs.close();
             statement.close();
 
-            out.write(jsonObject.toString());
+            jsonObject.addProperty("user", (new User(username)).toString());
+            jsonObject.addProperty("sessionId" , request.getSession().getId());
+            response.getWriter().write(jsonObject.toString());
 
         } catch (Exception e) {
 
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("errorMessage", e.getMessage());
-            out.write(jsonObject.toString());
+            response.getWriter().write(jsonObject.toString());;
 
             request.getServletContext().log("Error:", e);
             response.setStatus(500);
 
         } finally {
-            out.close();
+            response.getWriter();
         }
     }
 }

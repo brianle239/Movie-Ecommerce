@@ -39,6 +39,7 @@ function getParameterByName(target) {
 function handleResult(resultData) {
 
     console.log("handleResult: populating star info from resultData");
+    console.log(resultData);
 
 
     let starInfoElement = jQuery("#movie-title");
@@ -68,13 +69,13 @@ function handleResult(resultData) {
             rowHTML +=
                 '<a href="single-star.html?id=' + stars_id_array[i] + '">'
                 + stars_array[i] +   // display star_name for the link text
-            '</a>';
+                '</a>';
         }
         else {
             rowHTML +=
                 '<a href="single-star.html?id=' + stars_id_array[i] + '">'
                 + stars_array[i] + ", " +   // display star_name for the link text
-            '</a>';
+                '</a>';
         }
     }
     rowHTML += "</th>";

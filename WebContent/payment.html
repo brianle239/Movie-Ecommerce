@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Page</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* Custom styles */
+    body {
+      background-color: #f4f4f4;
+    }
+    .card {
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .btn-cobalt {
+      background-color: #4E8D90;
+      color: #ffffff;
+      border-radius: 25px;
+      padding: 10px 25px;
+    }
+    .btn-cobalt:hover {
+      background-color: #4E8D90;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header text-center bg-white">
+          <h4>Payment</h4>
+        </div>
+        <div class="card-body">
+          <p class="text-center font-weight-bold">Total: $<span id="totalPrice"></span></p>
+
+          <form>
+            <div class="form-group">
+              <label for="firstName">First Name</label>
+              <input type="text" class="form-control" id="firstName" placeholder="peter">
+            </div>
+            <div class="form-group">
+              <label for="lastName">Last Name</label>
+              <input type="text" class="form-control" id="lastName" placeholder="anteater">
+            </div>
+            <div class="form-group">
+              <label for="cardNumber">Credit Card Number</label>
+              <input type="text" class="form-control" id="cardNumber" placeholder="1234 5678 9101 1121">
+            </div>
+            <div class="form-group">
+              <label for="expiry">Expiry Date</label>
+              <input type="text" class="form-control" id="expiry" placeholder="MM/YY">
+            </div>
+            <button type="submit" class="btn btn-cobalt btn-block">Place Order</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
