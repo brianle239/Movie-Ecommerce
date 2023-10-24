@@ -50,7 +50,6 @@ public class LoginServlet extends HttpServlet {
                 jsonObject.addProperty("message", "Logged in successfully!");
                 request.getSession().setAttribute("user", new User(username));
                 request.getSession().setAttribute("user", username);
-                request.getSession().setMaxInactiveInterval(1800); // 30 minutes
                 response.setStatus(200);
             } else {
                 // User not found
