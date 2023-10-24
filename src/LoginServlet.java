@@ -57,7 +57,7 @@ public class LoginServlet extends HttpServlet {
                 jsonObject.addProperty("message", "Invalid email or password!");
                 jsonObject.addProperty("input", username + " " + password);
 
-                response.setStatus(401);  // Unauthorized
+                //response.setStatus(401);  // Unauthorized
             }
 
             rs.close();
