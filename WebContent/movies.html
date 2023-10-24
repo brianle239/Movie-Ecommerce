@@ -27,31 +27,36 @@
         </div>
     </div>
 </nav>
-
-<div class="form-inline">
+<form id="page_form"  action="#">
+<div class="form-inline ml-5">
         <div class="form-group">
             <label class="" for="formPgAmt">Amount</label>
             <select class="form-control col-sm-6 ml-1" id="formPgAmt">
-                <option>10</option>
-                <option>25</option>
-                <option>50</option>
-                <option>100</option>
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
             </select>
         </div>
         <div class="form-group">
             <label class="ml-2" for="formSort">Sorting</label>
-            <select class="form-control ml-1" id="formSort" style="width:8em;">
-                <option>Title↑ Rating↑</option>
-                <option>Title↑ Rating↓</option>
-                <option>Title↓ Rating↑</option>
-                <option>Title↓ Rating↓</option>
-                <option>Rating↑ Title↑</option>
-                <option>Rating↑ Title↓</option>
-                <option>Rating↓ Title↑</option>
-                <option>Rating↓ Title↓</option>
+            <select class="form-control ml-1" id="formSort" style="width:9em;">
+                <option value="r Desc Desc">Rating↓ Title↓</option>
+                <option value="r Desc Asc">Rating↓ Title↑</option>
+                <option value="r Asc Desc">Rating↑ Title↓</option>
+                <option value="r Asc Asc">Rating↑ Title↑</option>
+                <option value="t Desc Asc">Title↓ Rating↓</option>
+                <option value="t Desc Asc">Title↓ Rating↑</option>
+                <option value="t Asc Desc">Title↑ Rating↓</option>
+                <option value="t Asc Asc">Title↑ Rating↑</option>
+
+
             </select>
         </div>
+        <button type="submit" class="btn btn-default ml-2">Update</button>
 </div>
+
+</form>
 
 <!--<h2 id="stars-link"></h2>-->
 <h3 id="movie_info"></h3>
@@ -65,13 +70,25 @@
             <th>Genres</th>
             <th>Stars</th>
             <th>Rating</th>
-
-
         </tr>
         </thead>
         <tbody id=movie_table_body></tbody>
     </table>
 </div>
+<nav aria-label="..." class="d-flex">
+    <ul class="pagination mx-auto" id="pageBar">
+        <li class="page-item">
+            <a class="page-link" onclick="prevPage()" tabindex="-1">Previous</a>
+        </li>
+        <li class="page-item"><a class="page-link">1</a></li>
+        <li class="page-item"><a class="page-link">2</a></li>
+        <li class="page-item"><a class="page-link" href="">3</a>
+        <li class="page-item"><a class="page-link" href="">4</a></li>
+        <li class="page-item" >
+            <a class="page-link" id="next" onclick="nextPage()">Next</a>
+        </li>
+    </ul>
+</nav>
 
 <!-- Load jQuery and Bootstrap JS -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -82,6 +99,6 @@
 <!-- The path is relative to single-star.html, since these two files are in the same directory -->
 <!-- Note the url does not contain a "/" in the beginning, which means the url is relative to current path
      otherwise the url is relative to the root path-->
-<script src="movie-list.js"></script>
+<script src="movies.js"></script>
 </body>
 </html>

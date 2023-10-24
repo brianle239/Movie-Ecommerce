@@ -1,3 +1,53 @@
+
+let pageAmt = getParameterByName('amt');
+let sort = getParameterByName('sort');
+let offset = getParameterByName('offset');
+var pages = [];
+$('#pageBar li').each(function(){
+    pages.push($(this));
+});
+if (pageAmt != null) {
+    $("#formPgAmt").val(pageAmt).change();
+}
+else {
+    pageAmt = "10";
+}
+if (sort != null) {
+    $("#formSort").val(sort).change();
+}
+else {
+    sort = "r Desc Desc";
+}
+if (offset != null) {
+
+    let page = parseInt(offset) / pageAmt;
+    if (page === 0) {
+        pages[0].addClass("disabled");
+        pages[1].addClass("active");
+        $(pages[2]).find("a").attr('href', 'movies.html?amt=' + pageAmt + "&sort=" + sort + "&offset=" + pageAmt);
+        $(pages[3]).find("a").attr('href', 'movies.html?amt=' + pageAmt + "&sort=" + sort + "&offset=" + 2*parseInt(pageAmt));
+    }
+    else {
+        $(pages[1]).find("a").text(page);
+        $(pages[2]).find("a").text(page+1);
+        pages[2].addClass("active");
+        $(pages[3]).find("a").text(page+2);
+
+        $(pages[1]).find("a").attr('href', 'movies.html?amt=' + pageAmt + "&sort=" + sort + "&offset=" + (parseInt(offset) - parseInt(pageAmt)));
+        $(pages[3]).find("a").attr('href', 'movies.html?amt=' + pageAmt + "&sort=" + sort + "&offset=" + (parseInt(offset) + parseInt(pageAmt)));
+    }
+
+
+    console.log("yes offset");
+}
+else {
+    pages[0].addClass("disabled");
+    pages[1].addClass("active");
+    $(pages[2]).find("a").attr('href', 'movies.html?amt=' + pageAmt + "&sort=" + sort + "&offset=" + pageAmt);
+    $(pages[3]).find("a").attr('href', 'movies.html?amt=' + pageAmt + "&sort=" + sort + "&offset=" + 2*parseInt(pageAmt));
+    offset = "0";
+
+}
 function getParameterByName(target) {
     // Get request URL
     let url = window.location.href;
@@ -24,12 +74,13 @@ function handleResult(resultData) {
     //     '</a>');
     let movieTableBodyElement = jQuery("#movie_table_body");
     // Concatenate the html tags with resultData jsonObject to create table rows
-    for (let i = 0; i < Math.min(20, resultData.length); i++) {
+    for (let i = 0; i < Math.min(resultData.length); i++) {
         let rowHTML = "";
         rowHTML += "<tr>";
+
         rowHTML += "<th>" +
-            '<a href=' + resultData[i]["movie_id"] + '"single-movie.html?id=">'
-            + resultData[i]["movie_title"] +     // display star_name for the link text
+            '<a href="single-movie.html?id=' + resultData[i]["movie_id"] + '">'
+            + resultData[i]["movie_title"] +
             '</a>' +
             "</th>";
         rowHTML += "<th>" + resultData[i]["movie_year"] + "</th>";
@@ -79,15 +130,51 @@ function handleResult(resultData) {
         // Append the row created to the table body, which will refresh the page
         movieTableBodyElement.append(rowHTML);
 
+        // Set highest page
+        let highestPage = Math.ceil(parseInt(resultData[0]["total_rows"])/parseInt(pageAmt));
+        let lastOffset = (highestPage * (parseInt(pageAmt))-parseInt(pageAmt));
+        $(pages[4]).find("a").text(highestPage);
+
+        $(pages[4]).find("a").attr('href', 'movies.html?amt=' + pageAmt + "&sort=" + sort + "&offset=" + lastOffset);
+        if (parseInt(offset) === lastOffset) {
+            pages[3].addClass("disabled");
+            pages[5].addClass("disabled");
+            $(pages[3]).find("a").text("...");
+        }
+
     }
 }
 
-let moveId = getParameterByName('id');
 
-// Makes the HTTP GET request and registers on success callback function handleResult
+
+// // Makes the HTTP GET request and registers on success callback function handleResult
 jQuery.ajax({
     dataType: "json",  // Setting return data type
     method: "GET",// Setting request method
-    url: "api/movies", // Setting request url, which is mapped by StarsServlet in Stars.java
+    url: "api/movies?amt=" + pageAmt + "&sort=" + sort + "&offset=" + offset, // Setting request url, which is mapped by StarsServlet in Stars.java
     success: (resultData) => handleResult(resultData) // Setting callback function to handle data returned successfully by the SingleStarServlet
 });
+
+let page_form = $("#page_form");
+function submitPageForm(formSubmitEvent) {
+    console.log("submit page form");
+    let pageAmt = $( "select#formPgAmt option:checked" ).val();
+    console.log(pageAmt)
+    let sort = $( "select#formSort option:checked" ).val();
+    formSubmitEvent.preventDefault();
+    window.location.href = 'movies.html?amt=' + pageAmt + "&sort=" + sort;
+
+}
+page_form.submit(submitPageForm);
+
+function nextPage() {
+    offset = parseInt(offset) + parseInt(pageAmt);
+    window.location.href = 'movies.html?amt=' + pageAmt + "&sort=" + sort + "&offset=" + offset;
+
+}
+
+function prevPage() {
+    offset = parseInt(offset) - parseInt(pageAmt);
+    window.location.href = 'movies.html?amt=' + pageAmt + "&sort=" + sort + "&offset=" + offset;
+
+}

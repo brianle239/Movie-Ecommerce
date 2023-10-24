@@ -33,7 +33,32 @@ public class MoviesServlet extends HttpServlet {
         response.setContentType("application/json"); // Response mime type
 
         // Retrieve parameter id from url request.
-        //String id = request.getParameter("id");
+        int amt = 10;
+        int offset = 0;
+//        boolean order = true; // True when rating is first, False when title is first
+        String[] arr;
+        String firstOrder = "rating Desc";
+        String entireOrder = "rating Desc, title Desc";
+        if (!request.getParameter("amt").equals("null")) {
+            amt = Integer.parseInt(request.getParameter("amt"));
+        }
+        if (!request.getParameter("sort").equals("null")) {
+            arr = request.getParameter("sort").split(" ");
+            if (arr[0].equals("t")) {
+                firstOrder = "title " + arr[1];
+                entireOrder = "title " + arr[1] + ", rating " + arr[2];
+            }
+            else {
+                firstOrder = "rating " + arr[1];
+                entireOrder = "rating " + arr[1] + ", title " + arr[2];
+            }
+        }
+        if (!request.getParameter("offset").equals("null")) {
+            offset = Integer.parseInt(request.getParameter("offset"));
+        }
+
+
+
 
         // The log message can be found in localhost log
         //request.getServletContext().log("getting id: " + id);
@@ -44,28 +69,29 @@ public class MoviesServlet extends HttpServlet {
         // Get a connection from dataSource and let resource manager close the connection after usage.
         try (Connection conn = dataSource.getConnection()) {
             // Get a connection from dataSource
-
             // Construct a query with parameter represented by "?"
+            // count(*) OVER() AS full_count
             String query ="SELECT\n" +
-                    "\tm.id as id,\n" +
+                    "    m.id as id,\n" +
                     "    m.title as title,\n" +
                     "    m.year as year,\n" +
                     "    m.director as director,\n" +
-                    "    GROUP_CONCAT(DISTINCT g.name ORDER BY g.id SEPARATOR ', ') as genres,\n" +
-                    "    GROUP_CONCAT(DISTINCT g.id ORDER BY g.id SEPARATOR ',') AS genres_id,\n" +
-                    "    GROUP_CONCAT(DISTINCT s.name ORDER BY s.id ASC SEPARATOR ',') AS stars,\n" +
-                    "    GROUP_CONCAT(DISTINCT s.id ORDER BY s.id SEPARATOR ',') AS stars_id,\n" +
-                    "    mr.Movie_Rating as rating\n" +
+                    "    GROUP_CONCAT(DISTINCT g.name ORDER BY g.name ASC SEPARATOR ', ') as genres,\n" +
+                    "    GROUP_CONCAT(DISTINCT g.id ORDER BY g.name ASC SEPARATOR ',') AS genres_id,\n" +
+                    "    GROUP_CONCAT(DISTINCT s.name ORDER BY (select count(sm.movieId) from stars_in_movies sm where sm.starId = s.id) Desc, s.name Asc SEPARATOR ',') AS stars,\n" +
+                    "    GROUP_CONCAT(DISTINCT s.id ORDER BY (select count(sm.movieId) from stars_in_movies sm where sm.starId = s.id) Desc, s.name Asc SEPARATOR ',') AS stars_id,\n" +
+                    "    mr.rating as rating,\n" +
+                    "    mr.total_rows\n" +
                     "FROM (\n" +
-                    "\tSELECT m.id as id, r.rating as Movie_Rating\n" +
+                    "\tSELECT m.id as id, r.rating as rating, count(*) OVER() AS total_rows\n" +
                     "\tFROM movies m, ratings r\n" +
                     "\tWHERE m.id = r.movieId\n" +
-                    "\tORDER BY Movie_Rating DESC\n" +
-                    "\tLIMIT 0, 20) mr, \n" +
-                    "    movies m, genres_in_movies gm, genres g, stars_in_movies sm, stars s\n" +
-                    "WHERE mr.id = m.id and mr.id = gm.movieId and gm.genreId = g.id and mr.id = sm.movieId and sm.starId = s.id\n" +
+                    "\tORDER BY " + firstOrder + "\n" +
+                    "\tLIMIT ? OFFSET ?) mr, \n" +
+                    "movies m, genres_in_movies gm, genres g, stars_in_movies sm, stars s\n" +
+                    "WHERE mr.id = m.id and mr.id = gm.movieId and gm.genreId = g.id and mr.id = sm.movieId and s.id = sm.starId\n" +
                     "GROUP BY m.id\n" +
-                    "ORDER BY Movie_Rating DESC";
+                    "ORDER BY " + entireOrder + ";";
 
 
 
@@ -74,7 +100,17 @@ public class MoviesServlet extends HttpServlet {
 
             // Set the parameter represented by "?" in the query to the id we get from url,
             // num 1 indicates the first "?" in the query
-            //statement.setString(1, id);
+            statement.setInt(1, amt);
+            statement.setInt(2, offset);
+
+//            if (amt == null) {
+//                statement.setString(1, "10");
+//            }
+//            else {
+//                statement.setString(1, amt);
+//
+//
+//            }
 
             // Perform the query
             ResultSet rs = statement.executeQuery();
@@ -94,6 +130,7 @@ public class MoviesServlet extends HttpServlet {
                 String stars = rs.getString("stars");
                 String stars_id = rs.getString("stars_id");
                 String rating = rs.getString("rating");
+                String total_rows = rs.getString("total_rows");
 
                 // Create a JsonObject based on the data we retrieve from rs
 
@@ -107,6 +144,7 @@ public class MoviesServlet extends HttpServlet {
                 jsonObject.addProperty("movie_stars", stars);
                 jsonObject.addProperty("movie_stars_id", stars_id);
                 jsonObject.addProperty("movie_rating", rating);
+                jsonObject.addProperty("total_rows", total_rows);
 
 
 
