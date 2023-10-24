@@ -20,7 +20,7 @@
       <a class="nav-item nav-link" href="movieCard.html">Movies</a>
       <a class="nav-item nav-link" href="movie-list.html">Top 20</a>
       <a class="nav-item nav-link" href="stars.html">Stars</a>
-      <a class="nav-item nav-link active" href="../shoppingCart/cart.html">View Cart</a>
+      <a class="nav-item nav-link active" href="cart.html">View Cart</a>
 
     </div>
   </div>
@@ -36,28 +36,17 @@
       <th>Total</th>
     </tr>
     </thead>
-    <tbody>
-    <tr>
-      <td>Product 1</td>
-      <td>
-        <button class="qty-decrease">-</button>
-        <input type="number" class="product-qty" value="1" min="1">
-        <button class="qty-increase">+</button>
-      </td>
-      <td>$10</td>
-      <td>2</td>
-      <td>$20</td>
-    </tr>
-
+    <tbody id="cartItems">
     </tbody>
   </table>
   <a href="payment.html" class="btn btn-accent" role="button">proceed to payment</a>
+</div>
 
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
-<script src="movieCard.js"></script>
+<script src="cart.js"></script>
 </body>
 </html>
