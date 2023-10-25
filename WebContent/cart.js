@@ -101,11 +101,6 @@ function updateTotalForProduct(row) {
 
 }
 
-$("#cartItems").on("click", ".remove-product", function() {
-
-
-});
-
 $(document).ready(function() {
     $(document).on('click', '.remove-product', function(event) {
         var data = { item: this.id, increase: "false", remove: "true" }
