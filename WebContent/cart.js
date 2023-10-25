@@ -20,7 +20,7 @@ jQuery.ajax({
                             <button id="${idDict[title]}" class="increase-quantity">+</button>
                         </td>
                         <td class="product-total">$${total}</td>
-                        <td><button class="remove-product">Remove</button></td>
+                        <td><button id="${idDict[title]}" class="remove-product">Remove</button></td>
                     </tr>
                 `;
 
@@ -48,7 +48,7 @@ $("#cartItems").on("click", ".decrease-quantity", function() {
 
 $(document).ready(function() {
     $(document).on('click', '.increase-quantity', function(event) {
-        var data = { item: this.id, increase: "true" }
+        var data = { item: this.id, increase: "true", remove: "false"}
         let quantityInput = $(this).siblings('.product-quantity');
         let currentValue = parseInt(quantityInput.val(), 10); // Convert to integer
         quantityInput.val(currentValue);
@@ -70,7 +70,7 @@ $(document).ready(function() {
 
 $(document).ready(function() {
     $(document).on('click', '.decrease-quantity', function(event) {
-        var data = { item: this.id, increase: "false" }
+        var data = { item: this.id, increase: "false", remove: "false"}
         let quantityInput = $(this).siblings('.product-quantity');
 
         let currentValue = parseInt(quantityInput.val(), 10);
@@ -102,10 +102,30 @@ function updateTotalForProduct(row) {
 }
 
 $("#cartItems").on("click", ".remove-product", function() {
-    $(this).closest("tr").remove();
+
 
 });
 
+$(document).ready(function() {
+    $(document).on('click', '.remove-product', function(event) {
+        var data = { item: this.id, increase: "false", remove: "true" }
+        $(this).closest("tr").remove();
+
+        console.log(data)
+        jQuery.ajax({
+            method: "POST",
+            data: data,
+            url: "api/cart",
+            success: (resultData) => {
+                console.log(resultData);
+            },
+            error: (jqXHR, textStatus, errorThrown) => {
+                console.error("AJAX error:", textStatus, errorThrown);
+                alert("Error occurred: " + textStatus);
+            },
+        });
+    });
+});
 $(document).ready(function() {
     $(".btn-accent").click(function(event) {
         event.preventDefault();

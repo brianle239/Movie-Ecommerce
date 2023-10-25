@@ -74,6 +74,9 @@ public class CartItemServlet extends HttpServlet {
                     String movieTitle = rs.getString("title");
                     HashMap<String, String> idCart = ((HashMap<String, String> ) session.getAttribute("idCart"));
                     HashMap<String, Integer> cart = ((HashMap<String, Integer> ) session.getAttribute("cartItems"));
+
+                    String remove = request.getParameter("remove");
+
                     if (cart == null) {
                         cart = new HashMap<String, Integer>();
                         cart.put(movieTitle, 1);;
@@ -87,17 +90,25 @@ public class CartItemServlet extends HttpServlet {
                         // prevent corrupted states through sharing under multi-threads
                         // will only be executed by one thread at a time
                         synchronized (cart) {
-                            if(modify.equalsIgnoreCase("true")){
-                                cart.put(movieTitle, cart.getOrDefault(movieTitle, 0) + 1);
+                            if (remove.equalsIgnoreCase("true")){
+                                cart.remove(movieTitle);
+                                idCart.remove(movieTitle);
                             }
-                            else {
-                                if(cart.get(movieTitle) == 0){
-                                    cart.put(movieTitle, 0);
-                                } else{
-                                    cart.put(movieTitle, cart.getOrDefault(movieTitle, 1) - 1);
+                            else{
+                                if(modify.equalsIgnoreCase("true")){
+                                    cart.put(movieTitle, cart.getOrDefault(movieTitle, 0) + 1);
+                                }
+                                else {
+                                    if(cart.get(movieTitle) == 0){
+                                        cart.put(movieTitle, 0);
+                                    } else{
+                                        cart.put(movieTitle, cart.getOrDefault(movieTitle, 1) - 1);
+                                    }
+
+
                                 }
 
-                            }
+                        }
 
                             idCart.put(movieTitle, movieId);
                         }
