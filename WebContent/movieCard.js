@@ -73,7 +73,7 @@ function populateMovieCard(resultData) {
 
 $(document).ready(function() {
     $(document).on('click', '.cart-btn', function(event) {
-        var data = { item: this.id }
+        var data = { item: this.id, increase: true }
         jQuery.ajax({
             method: "POST",
             data: data,

@@ -23,12 +23,10 @@ function handleLoginResult(resultDataString) {
     console.log(resultDataJson);
     console.log(resultDataJson["status"]);
 
-    // If login succeeds, it will redirect the user to index.html
     if (resultDataJson["status"] === "success") {
         window.location.replace("http://localhost:8080/fabflix_war/index.html");
     } else {
-        // If login fails, the web page will display
-        // error messages on <div> with id "login_error_message"
+
         console.log("show error message");
         console.log(resultDataJson["message"]);
         const errorMessageDiv = jQuery("#login_error_message");
