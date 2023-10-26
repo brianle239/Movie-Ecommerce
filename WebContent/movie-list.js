@@ -81,7 +81,7 @@ function handleResult(resultData) {
     }
 }
 
-let moveId = getParameterByName('id');
+
 
 // Makes the HTTP GET request and registers on success callback function handleResult
 jQuery.ajax({

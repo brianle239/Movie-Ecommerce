@@ -1,4 +1,67 @@
 
+let pageAmt = getParameterByName('amt');
+let sort = getParameterByName('sort');
+let offset = getParameterByName('offset');
+var pages = [];
+$('#pageBar li').each(function(){
+    pages.push($(this));
+});
+if (pageAmt != null) {
+    $("#formPgAmt").val(pageAmt).change();
+}
+else {
+    pageAmt = "10";
+}
+if (sort != null) {
+    $("#formSort").val(sort).change();
+}
+else {
+    sort = "r Desc Desc";
+}
+if (offset != null) {
+
+    let page = parseInt(offset) / pageAmt;
+    if (page === 0) {
+        pages[0].addClass("disabled");
+        pages[1].addClass("active");
+        $(pages[2]).find("a").attr('href', 'movieCard.html?amt=' + pageAmt + "&sort=" + sort + "&offset=" + pageAmt);
+        $(pages[3]).find("a").attr('href', 'movieCard.html?amt=' + pageAmt + "&sort=" + sort + "&offset=" + 2*parseInt(pageAmt));
+    }
+    else {
+        $(pages[1]).find("a").text(page);
+        $(pages[2]).find("a").text(page+1);
+        pages[2].addClass("active");
+        $(pages[3]).find("a").text(page+2);
+
+        $(pages[1]).find("a").attr('href', 'movieCard.html?amt=' + pageAmt + "&sort=" + sort + "&offset=" + (parseInt(offset) - parseInt(pageAmt)));
+        $(pages[3]).find("a").attr('href', 'movieCard.html?amt=' + pageAmt + "&sort=" + sort + "&offset=" + (parseInt(offset) + parseInt(pageAmt)));
+    }
+
+
+}
+else {
+    pages[0].addClass("disabled");
+    pages[1].addClass("active");
+    $(pages[2]).find("a").attr('href', 'movieCard.html?amt=' + pageAmt + "&sort=" + sort + "&offset=" + pageAmt);
+    $(pages[3]).find("a").attr('href', 'movieCard.html?amt=' + pageAmt + "&sort=" + sort + "&offset=" + 2 * parseInt(pageAmt));
+    offset = "0";
+}
+
+function getParameterByName(target) {
+    // Get request URL
+    let url = window.location.href;
+    // Encode target parameter name to url encoding
+    target = target.replace(/[\[\]]/g, "\\$&");
+
+    // Ues regular expression to find matched parameter value
+    let regex = new RegExp("[?&]" + target + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+
+    // Return the decoded parameter value
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
 
 function populateMovieCard(resultData) {
     console.log("handleResult: populating movie info from resultData");
@@ -21,7 +84,7 @@ function populateMovieCard(resultData) {
                 <div class="movie-header">
                     <div class="title-and-rating">`;
 
-        movieCardHtml+=m`<h1><span>`;
+        movieCardHtml+=`<h1><span>`;
         movieCardHtml+= '<a href="single-movie.html?id=' + movie_id[0] + '">' + movie_title[0] + '</a>';
         movieCardHtml+= `</span></h1>`;
 
@@ -53,6 +116,18 @@ function populateMovieCard(resultData) {
 
         // Append the card to the container
         moviesContainer.append(movieCardHtml);
+        // Set highest page
+        let highestPage = Math.ceil(parseInt(resultData[0]["total_rows"])/parseInt(pageAmt));
+        let lastOffset = (highestPage * (parseInt(pageAmt))-parseInt(pageAmt));
+        $(pages[4]).find("a").text(highestPage);
+
+        $(pages[4]).find("a").attr('href', 'movieCard.html?amt=' + pageAmt + "&sort=" + sort + "&offset=" + lastOffset);
+        if (parseInt(offset) === lastOffset) {
+            pages[3].addClass("disabled");
+            pages[5].addClass("disabled");
+            $(pages[3]).find("a").text("...");
+        }
+
     }
 }
 
@@ -83,7 +158,30 @@ $(document).ready(function() {
 jQuery.ajax({
     dataType: "json",  // Setting return data type
     method: "GET",// Setting request method
-    url: "api/movies", // Setting request url, which is mapped by StarsServlet in Stars.java
+    url: "api/movies?amt=" + pageAmt + "&sort=" + sort + "&offset=" + offset, // Setting request url, which is mapped by StarsServlet in Stars.java
     success: (resultData) => populateMovieCard(resultData) // Setting callback function to handle data returned successfully by the SingleStarServlet
 });
 
+let page_form = $("#page_form");
+function submitPageForm(formSubmitEvent) {
+    console.log("submit page form");
+    let pageAmt = $( "select#formPgAmt option:checked" ).val();
+    console.log(pageAmt)
+    let sort = $( "select#formSort option:checked" ).val();
+    formSubmitEvent.preventDefault();
+    window.location.href = 'movieCard.html?amt=' + pageAmt + "&sort=" + sort;
+
+}
+page_form.submit(submitPageForm);
+
+function nextPage() {
+    offset = parseInt(offset) + parseInt(pageAmt);
+    window.location.href = 'movieCard.html?amt=' + pageAmt + "&sort=" + sort + "&offset=" + offset;
+
+}
+
+function prevPage() {
+    offset = parseInt(offset) - parseInt(pageAmt);
+    window.location.href = 'movieCard.html?amt=' + pageAmt + "&sort=" + sort + "&offset=" + offset;
+
+}
