@@ -1,4 +1,3 @@
-
 public class User {
 
     private final String username;
@@ -10,12 +9,6 @@ public class User {
     }
 
     String getUsername() { return this.username; }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "username='" + username + '\'' +
-                '}';
-    }
+    String getId() { return this.id; }
 
 }

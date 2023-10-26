@@ -46,13 +46,18 @@ public class CartItemServlet extends HttpServlet {
             idCart = new HashMap<String,String>();
         }
 
+
         Gson cartGson = new Gson();
         JsonObject cartJson = cartGson.toJsonTree(cart).getAsJsonObject();
         Gson idGson = new Gson();
         JsonObject idJson = idGson.toJsonTree(idCart).getAsJsonObject();
+        String user = (String) session.getAttribute("user");
 
         responseJsonObject.add("cart", cartJson);
         responseJsonObject.add("idCart", idJson);
+        responseJsonObject.addProperty("user", user);
+        responseJsonObject.addProperty("customerId", session.getAttribute("customerId").toString());
+
 
         response.getWriter().write(responseJsonObject.toString());
     }
