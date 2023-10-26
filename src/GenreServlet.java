@@ -16,8 +16,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 // Declaring a WebServlet called SingleStarServlet, which maps to url "/api/single-star"
-@WebServlet(name = "SingleMovieServlet", urlPatterns = "/api/single-movie")
-public class SingleMovieServlet extends HttpServlet {
+@WebServlet(name = "GenreServlet", urlPatterns = "/api/genre")
+public class GenreServlet extends HttpServlet {
     private static final long serialVersionUID = 2L;
 
     // Create a dataSource which registered in web.xml
@@ -39,12 +39,6 @@ public class SingleMovieServlet extends HttpServlet {
 
         response.setContentType("application/json"); // Response mime type
 
-        // Retrieve parameter id from url request.
-        String id = request.getParameter("id");
-
-        // The log message can be found in localhost log
-        request.getServletContext().log("getting id: " + id);
-
         // Output stream to STDOUT
         PrintWriter out = response.getWriter();
 
@@ -53,22 +47,11 @@ public class SingleMovieServlet extends HttpServlet {
             // Get a connection from dataSource
 
             // Construct a query with parameter represented by "?"
-            String query = "SELECT m.id, m.title, m.year, m.director, r.rating, " +
-                    "GROUP_CONCAT(DISTINCT g.name ORDER BY g.name ASC SEPARATOR ', ') as genres, " +
-                    "GROUP_CONCAT(s.name ORDER BY (select count(sm.movieId) from stars_in_movies sm where sm.starId = s.id) Desc, s.name Asc SEPARATOR ',') AS stars," +
-                    "GROUP_CONCAT(s.id ORDER BY (select count(sm.movieId) from stars_in_movies sm where sm.starId = s.id) Desc, s.name Asc SEPARATOR ',') AS stars_id\n" +
-                    "FROM movies as m, ratings as r, genres g, genres_in_movies gim, stars_in_movies sm, stars s\n" +
-                    "WHERE m.id = ? and m.id = r.movieId and m.id = gim.movieId and gim.genreId = g.id and m.id = sm.movieId and s.id = sm.starId\n" +
-                    "GROUP BY m.id";
-
-
+            String query = "SELECT g.name, g.id from genres as g " +
+                    "ORDER BY g.name ASC;";
 
             // Declare our statement
             PreparedStatement statement = conn.prepareStatement(query);
-
-            // Set the parameter represented by "?" in the query to the id we get from url,
-            // num 1 indicates the first "?" in the query
-            statement.setString(1, id);
 
             // Perform the query
             ResultSet rs = statement.executeQuery();
@@ -78,27 +61,14 @@ public class SingleMovieServlet extends HttpServlet {
             // Iterate through each row of rs
             while (rs.next()) {
 
-                String movieId = rs.getString("id");
-                String title = rs.getString("title");
-                String year = rs.getString("year");
-                String director = rs.getString("director");
-                String genres = rs.getString("genres");
-                String stars = rs.getString("stars");
-                String stars_id = rs.getString("stars_id");
-                String rating = rs.getString("rating");
+                String name = rs.getString("name");
+                String id = rs.getString("id");
 
                 // Create a JsonObject based on the data we retrieve from rs
-                System.out.println(stars);
-                JsonObject jsonObject = new JsonObject();
-                jsonObject.addProperty("movie_id", movieId);
-                jsonObject.addProperty("movie_title", title);
-                jsonObject.addProperty("movie_year", year);
-                jsonObject.addProperty("movie_director", director);
-                jsonObject.addProperty("movie_genres", genres);
-                jsonObject.addProperty("movie_stars", stars);
-                jsonObject.addProperty("movie_stars_id", stars_id);
-                jsonObject.addProperty("movie_rating", rating);
 
+                JsonObject jsonObject = new JsonObject();
+                jsonObject.addProperty("name", name);
+                jsonObject.addProperty("id", id);
 
                 jsonArray.add(jsonObject);
             }

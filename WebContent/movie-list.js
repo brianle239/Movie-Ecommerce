@@ -44,12 +44,12 @@ function handleResult(resultData) {
             if (i == Math.min(3, genres_array.length) - 1) {
                 rowHTML +=
                     genres_array[i];  // display star_name for the link text
-                    // + '</a>';
+                // + '</a>';
             }
             else {
                 rowHTML +=
                     genres_array[i] + ", ";   // display star_name for the link text
-                    // + '</a>';
+                // + '</a>';
             }
         }
         rowHTML += "</th>";
@@ -81,7 +81,7 @@ function handleResult(resultData) {
     }
 }
 
-
+// let moveId = getParameterByName('id');
 
 // Makes the HTTP GET request and registers on success callback function handleResult
 jQuery.ajax({
@@ -90,5 +90,4 @@ jQuery.ajax({
     url: "api/movielist", // Setting request url, which is mapped by StarsServlet in Stars.java
     success: (resultData) => handleResult(resultData) // Setting callback function to handle data returned successfully by the SingleStarServlet
 });
-
 
