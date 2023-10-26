@@ -1,20 +1,6 @@
-function getParameterByName(target) {
-    // Get request URL
-    let url = window.location.href;
-    // Encode target parameter name to url encoding
-    target = target.replace(/[\[\]]/g, "\\$&");
 
-    // Ues regular expression to find matched parameter value
-    let regex = new RegExp("[?&]" + target + "(=([^&#]*)|&|#|$)"),
-        results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return '';
 
-    // Return the decoded parameter value
-    return decodeURIComponent(results[2].replace(/\+/g, " "));
-}
-
-function handleResult(resultData) {
+function populateMovieCard(resultData) {
     console.log("handleResult: populating movie info from resultData");
     console.log(resultData)
 
@@ -74,7 +60,7 @@ function handleResult(resultData) {
                     <p>Genre: <span>${resultData[i]["movie_genres"]}</span></p>
                 </div> `;
             movieCardHtml += `  <div class="movie-footer">
-                    <button class="cart-btn" ">Add to Cart</button>
+                    <button class="cart-btn" id="${movie_id[0]}">Add to Cart</button>
                 </div>
             </div>`;
 
@@ -84,10 +70,33 @@ function handleResult(resultData) {
 }
 
 
-// Makes the HTTP GET request and registers on success callback function handleResult
+
+$(document).ready(function() {
+    $(document).on('click', '.cart-btn', function(event) {
+        var data = { item: this.id, increase: true, remove: "false" }
+        jQuery.ajax({
+            method: "POST",
+            data: data,
+            url: "api/cart", // Setting request url, which is mapped by StarsServlet in Stars.java
+            success: (resultData) => {
+                console.log(resultData);
+                alert("Added to cart!");
+
+            },
+            error: (jqXHR, textStatus, errorThrown) => {
+                console.error("AJAX error:", textStatus, errorThrown);
+                alert("Error occurred: " + textStatus);
+            },
+        });
+    });
+});
+
+
+
 jQuery.ajax({
     dataType: "json",  // Setting return data type
     method: "GET",// Setting request method
     url: "api/movies", // Setting request url, which is mapped by StarsServlet in Stars.java
-    success: (resultData) => handleResult(resultData) // Setting callback function to handle data returned successfully by the SingleStarServlet
+    success: (resultData) => populateMovieCard(resultData) // Setting callback function to handle data returned successfully by the SingleStarServlet
 });
+

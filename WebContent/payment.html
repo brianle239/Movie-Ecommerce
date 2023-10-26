@@ -5,25 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Payment Page</title>
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    /* Custom styles */
-    body {
-      background-color: #f4f4f4;
-    }
-    .card {
-      border-radius: 15px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-    .btn-cobalt {
-      background-color: #4E8D90;
-      color: #ffffff;
-      border-radius: 25px;
-      padding: 10px 25px;
-    }
-    .btn-cobalt:hover {
-      background-color: #4E8D90;
-    }
-  </style>
+  <link rel="stylesheet" href="payment.css">
 </head>
 <body>
 
@@ -37,7 +19,7 @@
         <div class="card-body">
           <p class="text-center font-weight-bold">Total: $<span id="totalPrice"></span></p>
 
-          <form>
+          <form  id="paymentForm">
             <div class="form-group">
               <label for="firstName">First Name</label>
               <input type="text" class="form-control" id="firstName" placeholder="peter">
@@ -52,17 +34,21 @@
             </div>
             <div class="form-group">
               <label for="expiry">Expiry Date</label>
-              <input type="text" class="form-control" id="expiry" placeholder="MM/YY">
+              <input type="text" class="form-control" id="expiry" placeholder="YY/MM/D">
             </div>
-            <button type="submit" class="btn btn-cobalt btn-block">Place Order</button>
+            <button type="submit"  class="payment btn-cobalt">Place Order</button>
           </form>
+          <div id="login_error_message" class="text-danger mb-2 " style="display: none;"></div>
         </div>
+
       </div>
     </div>
   </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="payment.js"></script>
 </body>
 </html>

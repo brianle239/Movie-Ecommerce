@@ -1,0 +1,16 @@
+body {
+    background-color: #f4f4f4;
+}
+.card {
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.btn-cobalt {
+    background-color: #4E8D90;
+    color: #ffffff;
+    border-radius: 25px;
+    padding: 10px 25px;
+}
+.btn-cobalt:hover {
+    background-color: #4E8D90;
+}

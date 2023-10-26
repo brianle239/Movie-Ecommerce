@@ -1,21 +1,23 @@
-
 import com.google.gson.JsonObject;
-
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.HashMap;
 
-@WebServlet(name = "LoginServlet", urlPatterns = "/api/login")
-public class LoginServlet extends HttpServlet {
+
+@WebServlet(name = "PaymentServlet", urlPatterns = "/api/payment")
+public class PaymentServlet  extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     private DataSource dataSource;
@@ -31,44 +33,53 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         response.setContentType("application/json");
+        // get payment information
+        String fName = request.getParameter("firstName");
+        String lName = request.getParameter("lastName");
+        String cc = request.getParameter("cardNumber");
+        String exp = request.getParameter("expiry");
 
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+        HttpSession session = request.getSession();
 
         try (Connection conn = dataSource.getConnection()) {
-            String query = "SELECT email, id, password FROM customers WHERE email = ? AND password = ?";
+            String query = "SELECT * from creditcards WHERE id= ? AND firstName= ? AND lastName= ? AND expiration= ?";
 
             PreparedStatement statement = conn.prepareStatement(query);
-            statement.setString(1, username);
-            statement.setString(2, password);
+            statement.setString(1, cc);
+            statement.setString(2, fName);
+            statement.setString(3, lName);
+            statement.setString(4, exp);
 
             ResultSet rs = statement.executeQuery();
+
             JsonObject jsonObject = new JsonObject();
 
             if (rs.next()) {
-                jsonObject.addProperty("status", "success");
-                jsonObject.addProperty("message", "Logged in successfully!");
-                String customerId = rs.getString("id");
-                //request.getSession().setAttribute("user", new User(username, customerId));
-                request.getSession().setAttribute("user", username);
-                request.getSession().setAttribute("customerId", customerId);
+                HashMap<String, Integer> cart = ((HashMap<String, Integer> ) session.getAttribute("cartItems"));
+                if(cart == null || cart.toString().equals("{}")) {
+                    // cart is empty
+                    jsonObject.addProperty("status", "fail");
+                    jsonObject.addProperty("message", "Your cart is empty!");
+                }
+                else {
+                    // payment is successful
+                    jsonObject.addProperty("status", "success");
+                    jsonObject.addProperty("message", "successful payment!");
 
-                jsonObject.addProperty("user", (new User(username,customerId )).toString());
-                response.setStatus(200);
+                    jsonObject.addProperty("customerId", session.getAttribute("customerId").toString());
+                }
+
             } else {
-                // User not found
+                // card information not found
                 jsonObject.addProperty("status", "fail");
-                jsonObject.addProperty("message", "Invalid email or password!");
-                jsonObject.addProperty("input", username + " " + password);
+                jsonObject.addProperty("message", "Invalid payment information!");
 
-                //response.setStatus(401);  // Unauthorized
             }
 
             rs.close();
             statement.close();
 
 
-            jsonObject.addProperty("sessionId" , request.getSession().getId());
             response.getWriter().write(jsonObject.toString());
 
         } catch (Exception e) {

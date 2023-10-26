@@ -17,25 +17,15 @@ public class SessionServlet extends HttpServlet {
         // Get a instance of current session on the request
         HttpSession session = request.getSession();
         String sessionId = session.getId();
-        //User user = (User) session.getAttribute("user");
-        //String username;
-        //if (user != null) {
-            // "user" attribute found, you can work with it
-         //    username = user.getUsername();
-            // Rest of your code
-        //} else {
-     //        username = "testing else";
-       // }
+
         long lastAccessTime = session.getLastAccessedTime();
 
         JsonObject responseJsonObject = new JsonObject();
         responseJsonObject.addProperty("sessionID", sessionId);
         responseJsonObject.addProperty("lastAccessTime", new Date(lastAccessTime).toString());
-        //responseJsonObject.addProperty("user", user.toString());
-        // Retrieve data named "accessCount" from session, which count how many times the user requested before
+
         Integer accessCount = (Integer) session.getAttribute("accessCount");
-        //responseJsonObject.addProperty("user", session.getAttribute("user").toString());
-        //responseJsonObject.addProperty("user", username );
+
 
         if (accessCount == null) {
             accessCount = 0;
@@ -43,7 +33,7 @@ public class SessionServlet extends HttpServlet {
             accessCount++;
         }
 
-        // Update the new accessCount to session, replacing the old value if existed
+
         session.setAttribute("accessCount", accessCount);
         responseJsonObject.addProperty("accessCount", accessCount);
         responseJsonObject.addProperty("session", session.toString());
@@ -51,6 +41,11 @@ public class SessionServlet extends HttpServlet {
 
         // write all the data into the jsonObject
         response.getWriter().write(responseJsonObject.toString());
+
+    }
+
+    // add attributes to session
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
     }
 }
