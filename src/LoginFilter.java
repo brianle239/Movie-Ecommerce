@@ -38,11 +38,6 @@ public class LoginFilter implements Filter {
     }
 
     private boolean isUrlAllowedWithoutLogin(String requestURI) {
-        /*
-         Setup your own rules here to allow accessing some resources without logging in
-         Always allow your own login related requests(html, js, servlet, etc..)
-         You might also want to allow some CSS files, etc..
-         */
         return allowedURIs.stream().anyMatch(requestURI.toLowerCase()::endsWith);
     }
 

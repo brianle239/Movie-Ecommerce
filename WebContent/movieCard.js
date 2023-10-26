@@ -21,44 +21,31 @@ function populateMovieCard(resultData) {
                 <div class="movie-header">
                     <div class="title-and-rating">`;
 
-        movieCardHtml+=
-            `<h1><span>`;
-        movieCardHtml+=
-        '<a href="single-movie.html?id=' + movie_id[0] + '">'
-        + movie_title[0] +   // display star_name for the link text
-        '</a>';
-
+        movieCardHtml+=m`<h1><span>`;
+        movieCardHtml+= '<a href="single-movie.html?id=' + movie_id[0] + '">' + movie_title[0] + '</a>';
         movieCardHtml+= `</span></h1>`;
 
-        movieCardHtml +=` <h2 class="rating">Rating: <span>${resultData[i]["movie_rating"]}</span></h2>
-                    </div>
-                    <p class="release-date">Release Date: <span>${resultData[i]["movie_year"]}</span></p>
-                </div> `;
-            // limit genre and stars
-
-
-        movieCardHtml += `<div class="movie-content">
+        movieCardHtml +=` <h2 class="rating">Rating: <span>${resultData[i]["movie_rating"]}</span></h2></div>
+                    <p class="release-date">Release Date: <span>${resultData[i]["movie_year"]}</span></p></div> `;
+        movieCardHtml +=
+                    `<div class="movie-content">
                     <p>Stars: <span>`;
-
-
-
-        for (let i = 0; i < Math.min(3, stars_array.length); i++) {
-            if (i == Math.min(3, stars_array.length) - 1) {
-                 movieCardHtml+=
-                     '<a href="single-star.html?id=' + stars_id_array[i] + '">'
-                    + stars_array[i] +   // display star_name for the link text
-                    '</a>';
-            }
-            else {
-                 movieCardHtml+=
-                     '<a href="single-star.html?id=' + stars_id_array[i] + '">'
-                    + stars_array[i] + ", " +   // display star_name for the link text
-                    '</a>';
-            }
-        }
-            movieCardHtml += `</span></p>
-                    <p>Genre: <span>${resultData[i]["movie_genres"]}</span></p>
-                </div> `;
+                        for (let i = 0; i < Math.min(3, stars_array.length); i++) {
+                            if (i == Math.min(3, stars_array.length) - 1) {
+                                 movieCardHtml+=
+                                     '<a href="single-star.html?id=' + stars_id_array[i] + '">'
+                                    + stars_array[i] +   // display star_name for the link text
+                                    '</a>';
+                            }
+                            else {
+                                 movieCardHtml+=
+                                     '<a href="single-star.html?id=' + stars_id_array[i] + '">'
+                                    + stars_array[i] + ", " +   // display star_name for the link text
+                                    '</a>';
+                            }
+                        }
+        movieCardHtml += `</span></p>
+                           <p>Genre: <span>${resultData[i]["movie_genres"]}</span></p> </div> `;
             movieCardHtml += `  <div class="movie-footer">
                     <button class="cart-btn" id="${movie_id[0]}">Add to Cart</button>
                 </div>
