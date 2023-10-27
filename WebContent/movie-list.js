@@ -30,8 +30,8 @@ function handleResult(resultData) {
         let rowHTML = "";
         rowHTML += "<tr>";
         rowHTML += "<th>" +
-            '<a href=' + resultData[i]["movie_id"] + '"single-movie.html?id=">'
-            + resultData[i]["movie_title"] +     // display star_name for the link text
+            '<a href="single-movie.html?id=' + resultData[i]["movie_id"] + '">'
+            + resultData[i]["movie_title"] +    
             '</a>' +
             "</th>";
         rowHTML += "<th>" + resultData[i]["movie_year"] + "</th>";
