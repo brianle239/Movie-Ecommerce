@@ -74,7 +74,7 @@ $(document).ready(function() {
         let quantityInput = $(this).siblings('.product-quantity');
 
         let currentValue = parseInt(quantityInput.val(), 10);
-        // Check if current value is greater than 1 before decrementing
+
         if (currentValue > 1) {
             quantityInput.val(currentValue - 1);
         }
@@ -124,9 +124,27 @@ $(document).ready(function() {
 $(document).ready(function() {
     $(".btn-accent").click(function(event) {
         event.preventDefault();
-        console.log("in here");
+        jQuery.ajax({
+            method: "GET",
+            url: "api/cart",
+            success: function(resultData) {
+                console.log(resultData)
+                const errorMessageDiv = jQuery("#login_error_message");
+                if(JSON.stringify(resultData["cart"]) === '{}') {
+                    errorMessageDiv.text("Your cart is empty!");
+                    errorMessageDiv.show();
+                }
+                else {
+                    window.location.href = "payment.html";
 
-        // Redirect to the desired page
-        window.location.href = $(this).attr('href');
+                }
+            },
+            error: (jqXHR, textStatus, errorThrown) => {
+                console.error("AJAX error:", textStatus, errorThrown);
+                console.log("Raw response:", jqXHR.responseText);
+                alert("Error occurred: " + textStatus);
+            },
+        });
+
     });
 });
