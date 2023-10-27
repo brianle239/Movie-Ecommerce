@@ -73,6 +73,8 @@ function handleResult(resultData) {
         rowHTML += "</th>";
 
         rowHTML += "<td>" + resultData[i]["movie_rating"] + "</td>";
+        rowHTML += "<th><button class='cart-btn btn' id='" + resultData[i]["movie_id"] + "'>Add to Cart</button></th>";
+
 
         rowHTML += "</tr>";
 
@@ -81,9 +83,27 @@ function handleResult(resultData) {
     }
 }
 
-// let moveId = getParameterByName('id');
+$(document).ready(function() {
+    $(document).on('click', '.cart-btn', function(event) {
+        event.preventDefault();
+        var data = { item: this.id, increase: true, remove: "false" }
+        jQuery.ajax({
+            method: "POST",
+            data: data,
+            url: "api/cart",
+            success: (resultData) => {
+                console.log(resultData);
+                alert("Added to cart!");
 
-// Makes the HTTP GET request and registers on success callback function handleResult
+            },
+            error: (jqXHR, textStatus, errorThrown) => {
+                console.error("AJAX error:", textStatus, errorThrown);
+                alert("Error occurred: " + textStatus);
+            },
+        });
+    });
+});
+
 jQuery.ajax({
     dataType: "json",  // Setting return data type
     method: "GET",// Setting request method

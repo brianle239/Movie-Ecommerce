@@ -61,7 +61,7 @@ function handleResult(resultData) {
     rowHTML += "</th>";
 
     rowHTML += "<th>" + resultData[0]["movie_rating"] + "</th>";
-    rowHTML += "<th><button class='cart-btn' id='" + resultData[0]["movie_id"] + "'>Add to Cart</button></th>";
+    rowHTML += "<th><button class='cart-btn btn' id='" + resultData[0]["movie_id"] + "'>Add to Cart</button></th>";
     rowHTML += "</tr>";
 
     movieTableBodyElement.append(rowHTML);
