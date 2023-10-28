@@ -35,10 +35,17 @@ public class MoviesServlet extends HttpServlet {
         // Retrieve parameter id from url request.
         int amt = 10;
         int offset = 0;
-//        boolean order = true; // True when rating is first, False when title is first
+
+        String genreCondition = "";
+        String titleCondition = "";
         String[] arr;
         String firstOrder = "rating Desc";
         String entireOrder = "rating Desc, title Desc";
+        String movie_name_cond = "";
+        String year_cond = "";
+        String director_cond = "";
+        String star_name_cond = "";
+
         if (!request.getParameter("amt").equals("null")) {
             amt = Integer.parseInt(request.getParameter("amt"));
         }
@@ -56,13 +63,39 @@ public class MoviesServlet extends HttpServlet {
         if (!request.getParameter("offset").equals("null")) {
             offset = Integer.parseInt(request.getParameter("offset"));
         }
+        if (!request.getParameter("genreId").equals("null")) {
+            genreCondition = "and gm.genreId =" + request.getParameter("genreId");
+        }
+        if (!request.getParameter("titleChar").equals("null")) {
+            String c = request.getParameter("titleChar");
+            if (!c.equals("*")) {
+                titleCondition = " and m.title LIKE '" + c + "%'";
+            }
+            else {
+                titleCondition = " and m.title RLIKE '^[^a-zA-Z0-9]'";
+            }
+        }
+        if (!request.getParameter("movie_name").equals("null")) {
+            movie_name_cond = " and m.title LIKE '%" + request.getParameter("movie_name") + "%'";
+        }
+        if (!request.getParameter("year").isEmpty() && !request.getParameter("year").equals("null")) {
+            year_cond = " and m.year =" + request.getParameter("year");
+        }
+        if (!request.getParameter("director").equals("null")) {
+            director_cond = " and m.director LIKE '%" + request.getParameter("director") + "%'";
+        }
+        if (!request.getParameter("star_name").equals("null")) {
+            star_name_cond = " and s.name LIKE '%" + request.getParameter("star_name") + "%'";
+        }
+
+
+
 
 
 
 
         // The log message can be found in localhost log
         //request.getServletContext().log("getting id: " + id);
-
         // Output stream to STDOUT
         PrintWriter out = response.getWriter();
 
@@ -71,52 +104,78 @@ public class MoviesServlet extends HttpServlet {
             // Get a connection from dataSource
             // Construct a query with parameter represented by "?"
             // count(*) OVER() AS full_count
-            String query ="SELECT\n" +
-                    "    m.id as id,\n" +
-                    "    m.title as title,\n" +
-                    "    m.year as year,\n" +
-                    "    m.director as director,\n" +
-                    "    GROUP_CONCAT(DISTINCT g.name ORDER BY g.name ASC SEPARATOR ', ') as genres,\n" +
-                    "    GROUP_CONCAT(DISTINCT g.id ORDER BY g.name ASC SEPARATOR ',') AS genres_id,\n" +
-                    "    GROUP_CONCAT(DISTINCT s.name ORDER BY (select count(sm.movieId) from stars_in_movies sm where sm.starId = s.id) Desc, s.name Asc SEPARATOR ',') AS stars,\n" +
-                    "    GROUP_CONCAT(DISTINCT s.id ORDER BY (select count(sm.movieId) from stars_in_movies sm where sm.starId = s.id) Desc, s.name Asc SEPARATOR ',') AS stars_id,\n" +
-                    "    mr.rating as rating,\n" +
-                    "    mr.total_rows\n" +
-                    "FROM (\n" +
-                    "\tSELECT m.id as id, r.rating as rating, count(*) OVER() AS total_rows\n" +
-                    "\tFROM movies m, ratings r\n" +
-                    "\tWHERE m.id = r.movieId\n" +
-                    "\tORDER BY " + firstOrder + "\n" +
-                    "\tLIMIT ? OFFSET ?) mr, \n" +
-                    "movies m, genres_in_movies gm, genres g, stars_in_movies sm, stars s\n" +
-                    "WHERE mr.id = m.id and mr.id = gm.movieId and gm.genreId = g.id and mr.id = sm.movieId and s.id = sm.starId\n" +
-                    "GROUP BY m.id\n" +
-                    "ORDER BY " + entireOrder + ";";
+            String query = "";
+            PreparedStatement statement;
+            if (!genreCondition.isEmpty() || !titleCondition.isEmpty()) {
+                // This is browsing query
+
+                query = "SELECT\n" +
+                        "    m.id as id,\n" +
+                        "    m.title as title,\n" +
+                        "    m.year as year,\n" +
+                        "    m.director as director,\n" +
+                        "    GROUP_CONCAT(DISTINCT g.name ORDER BY g.name ASC SEPARATOR ', ') as genres,\n" +
+                        "    GROUP_CONCAT(DISTINCT g.id ORDER BY g.name ASC SEPARATOR ',') AS genres_id,\n" +
+                        "    GROUP_CONCAT(DISTINCT s.name ORDER BY (select count(sm.movieId) from stars_in_movies sm where sm.starId = s.id) Desc, s.name Asc SEPARATOR ',') AS stars,\n" +
+                        "    GROUP_CONCAT(DISTINCT s.id ORDER BY (select count(sm.movieId) from stars_in_movies sm where sm.starId = s.id) Desc, s.name Asc SEPARATOR ',') AS stars_id,\n" +
+                        "    mr.rating as rating,\n" +
+                        "    mr.total_rows\n" +
+                        "FROM (\n" +
+                        "\tSELECT DISTINCT m.id as id, r.rating as rating, count(*) OVER() AS total_rows\n" +
+                        "\tFROM movies m, ratings r, genres_in_movies gm\n" +
+                        "\tWHERE m.id = r.movieId and m.id = gm.movieId " + genreCondition + titleCondition + "\n" +
+                        "\tORDER BY " + firstOrder + "\n" +
+                        "\tLIMIT ? OFFSET ?) mr, \n" +
+                        "movies m, genres_in_movies gm, genres g, stars_in_movies sm, stars s\n" +
+                        "WHERE mr.id = m.id and mr.id = gm.movieId and gm.genreId = g.id and mr.id = sm.movieId and s.id = sm.starId\n" +
+                        "GROUP BY m.id\n" +
+                        "ORDER BY " + entireOrder + ";";
+
+                // Declare our statement
+                statement = conn.prepareStatement(query);
+
+                statement.setInt(1, amt);
+                statement.setInt(2, offset);
+            }
+            else {
+                query = "SELECT\n" +
+                        "    m.id as id,\n" +
+                        "    m.title as title,\n" +
+                        "    m.year as year,\n" +
+                        "    m.director as director,\n" +
+                        "    GROUP_CONCAT(DISTINCT g.name ORDER BY g.name ASC SEPARATOR ', ') as genres,\n" +
+                        "    GROUP_CONCAT(DISTINCT g.id ORDER BY g.name ASC SEPARATOR ',') AS genres_id,\n" +
+                        "    GROUP_CONCAT(DISTINCT s.name ORDER BY (select count(sm.movieId) from stars_in_movies sm where sm.starId = s.id) Desc, s.name Asc SEPARATOR ',') AS stars,\n" +
+                        "    GROUP_CONCAT(DISTINCT s.id ORDER BY (select count(sm.movieId) from stars_in_movies sm where sm.starId = s.id) Desc, s.name Asc SEPARATOR ',') AS stars_id,\n" +
+                        "    mr.rating as rating,\n" +
+                        "    mr.total_rows\n" +
+                        "FROM (\n" +
+                        "\tSELECT DISTINCT m.id as id, r.rating as rating, count(*) OVER() AS total_rows\n" +
+                        "\tFROM movies m, ratings r, stars_in_movies sm, stars s\n" +
+                        "\tWHERE m.id = r.movieId and m.id = sm.movieId and sm.starId = s.id" + movie_name_cond + director_cond + year_cond + star_name_cond+ "\n" +
+                        "\tORDER BY " + firstOrder + "\n" +
+                        "\tLIMIT ? OFFSET ?) mr, \n" +
+                        "movies m, genres_in_movies gm, genres g, stars_in_movies sm, stars s\n" +
+                        "WHERE mr.id = m.id and mr.id = gm.movieId and gm.genreId = g.id and mr.id = sm.movieId and s.id = sm.starId\n" +
+                        "GROUP BY m.id\n" +
+                        "ORDER BY " + entireOrder + ";";
 
 
+                statement = conn.prepareStatement(query);
+                statement.setInt(1, amt);
+                statement.setInt(2, offset);
+//                statement.setString(1, "L");
+//                statement.setString(2, "");
+//                statement.setString(3, "");
 
-            // Declare our statement
-            PreparedStatement statement = conn.prepareStatement(query);
+            }
 
-            // Set the parameter represented by "?" in the query to the id we get from url,
-            // num 1 indicates the first "?" in the query
-            statement.setInt(1, amt);
-            statement.setInt(2, offset);
 
-//            if (amt == null) {
-//                statement.setString(1, "10");
-//            }
-//            else {
-//                statement.setString(1, amt);
-//
-//
-//            }
 
             // Perform the query
             ResultSet rs = statement.executeQuery();
 
             JsonArray jsonArray = new JsonArray();
-
             // Iterate through each row of rs
             while (rs.next()) {
                 // Will need genre Id later on so might as well store the ID

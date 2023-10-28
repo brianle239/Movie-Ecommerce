@@ -23,14 +23,37 @@ height: 100vh;">
         <h2>Fabflix</h2>
 
         <div class="ml-2" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
+            <div class="navbar-nav mr-auto ml-auto">
                 <a class="nav-item nav-link active" href="index.html">Home</a>
-                <a class="nav-item nav-link" href="movies.html">Movies</a>
+                <a class="nav-item nav-link" href="movieCard.html">Movies</a>
                 <a class="nav-item nav-link" href="movieCard.html">Top 20</a>
                 <a class="nav-item nav-link" href="stars.html">Stars</a>
                 <a class="nav-item nav-link " href="cart.html">View cart</a>
 
             </div>
+
+        </div>
+        <div class="navbar-collapse collapse dual-collapse2">
+            <ul class="navbar-nav ml-auto">
+
+                <li class="ml-3">
+                    <input type="text" class="form-control input-sm" id="titleSearch" placeholder="Title">
+                </li>
+                <li class="ml-3">
+                    <input type="text" class="form-control input-sm" id="yearSearch" placeholder="Year" style="width:5em;">
+                </li>
+                <li class="ml-3">
+                    <input type="text" class="form-control input-sm" id="directorSearch" placeholder="Director" style="width:8em;">
+                </li>
+                <li class="ml-3">
+                    <input type="text" class="form-control input-sm" id="starSearch" placeholder="Star Name" style="width:8em;">
+                </li>
+                <li class="ml-3">
+                    <img src="images/search_logo.png" width="42" height="42" alt="🔍" onclick="search()" style="transform: translate(0px, -2px);">
+                </li>
+
+            </ul>
+
         </div>
     </nav>
 
@@ -56,6 +79,8 @@ height: 100vh;">
 
             </select>
         </div>
+        <button type="submit" class="btn btn-default ml-2">Go</button>
+
     </div>
 </form>
 
@@ -65,34 +90,9 @@ height: 100vh;">
             <label class="" for="titleForm">Title</label>
             <select class="form-control ml-1" id="titleForm" style="width: 4em">
                 <option value="*" selected>*</option>
-                <option value="A">A</option>
-                <option value="B">B</option>
-                <option value="C">C</option>
-                <option value="D">D</option>
-                <option value="E">E</option>
-                <option value="F">F</option>
-                <option value="G">G</option>
-                <option value="H">H</option>
-                <option value="I">I</option>
-                <option value="J">J</option>
-                <option value="L">L</option>
-                <option value="M">M</option>
-                <option value="N">N</option>
-                <option value="O">O</option>
-                <option value="P">P</option>
-                <option value="Q">Q</option>
-                <option value="R">R</option>
-                <option value="S">S</option>
-                <option value="T">T</option>
-                <option value="U">U</option>
-                <option value="V">V</option>
-                <option value="W">W</option>
-                <option value="X">X</option>
-                <option value="Y">Y</option>
-                <option value="Z">Z</option>
-
             </select>
         </div>
+        <button type="submit" class="btn btn-default ml-2">Go</button>
     </div>
 </form>
 

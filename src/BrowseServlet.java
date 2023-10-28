@@ -17,7 +17,7 @@ import java.sql.ResultSet;
 
 // Declaring a WebServlet called SingleStarServlet, which maps to url "/api/single-star"
 @WebServlet(name = "GenreServlet", urlPatterns = "/api/genre")
-public class GenreServlet extends HttpServlet {
+public class BrowseServlet extends HttpServlet {
     private static final long serialVersionUID = 2L;
 
     // Create a dataSource which registered in web.xml
@@ -50,6 +50,7 @@ public class GenreServlet extends HttpServlet {
             String query = "SELECT g.name, g.id from genres as g " +
                     "ORDER BY g.name ASC;";
 
+
             // Declare our statement
             PreparedStatement statement = conn.prepareStatement(query);
 
@@ -57,7 +58,6 @@ public class GenreServlet extends HttpServlet {
             ResultSet rs = statement.executeQuery();
 
             JsonArray jsonArray = new JsonArray();
-
             // Iterate through each row of rs
             while (rs.next()) {
 
@@ -69,6 +69,27 @@ public class GenreServlet extends HttpServlet {
                 JsonObject jsonObject = new JsonObject();
                 jsonObject.addProperty("name", name);
                 jsonObject.addProperty("id", id);
+
+                jsonArray.add(jsonObject);
+            }
+            System.out.print("yes");
+
+            query = "SELECT DISTINCT SUBSTRING(m.title, 1, 1) AS t\n" +
+                    "FROM movies m\n" +
+                    "ORDER BY t Asc;";
+            statement = conn.prepareStatement(query);
+            rs = statement.executeQuery();
+
+            JsonArray jsonArrayTitle = new JsonArray();
+            while (rs.next()) {
+
+                String titleChar = rs.getString("t");
+                if (!Character.isLetterOrDigit(titleChar.charAt(0))) {
+                    continue;
+                }
+
+                JsonObject jsonObject = new JsonObject();
+                jsonObject.addProperty("titleChar", titleChar);
 
                 jsonArray.add(jsonObject);
             }

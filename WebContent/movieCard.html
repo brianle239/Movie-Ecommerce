@@ -29,6 +29,36 @@
         </div>
     </div>
 </nav>
+<form id="page_form"  action="#">
+    <div class="form-inline ml-5">
+        <div class="form-group">
+            <label class="" for="formPgAmt">Amount</label>
+            <select class="form-control col-sm-6 ml-1" id="formPgAmt">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="ml-2" for="formSort">Sorting</label>
+            <select class="form-control ml-1" id="formSort" style="width:9em;">
+                <option value="r Desc Desc">Rating↓ Title↓</option>
+                <option value="r Desc Asc">Rating↓ Title↑</option>
+                <option value="r Asc Desc">Rating↑ Title↓</option>
+                <option value="r Asc Asc">Rating↑ Title↑</option>
+                <option value="t Desc Asc">Title↓ Rating↓</option>
+                <option value="t Desc Asc">Title↓ Rating↑</option>
+                <option value="t Asc Desc">Title↑ Rating↓</option>
+                <option value="t Asc Asc">Title↑ Rating↑</option>
+
+
+            </select>
+        </div>
+        <button type="submit" class="btn btn-default ml-2">Update</button>
+    </div>
+
+</form>
 <div class="cards-container">
     <!-- Card 1 -->
     <div class="movie-card">
@@ -38,6 +68,7 @@
                 <h2 class="rating">Rating: <span id="movie-rating">8.2</span></h2>
             </div>
             <p class="release-date">Release Date: <span id="release-date">2023</span></p>
+            <p class="director">Director: <span id="director"></span></p>
         </div>
         <div class="movie-content">
             <p>Stars: <span id="star-names"></span></p>
@@ -48,8 +79,21 @@
         </div>
     </div>
 
-
 </div>
+<nav aria-label="..." class="d-flex">
+    <ul class="pagination mx-auto" id="pageBar">
+        <li class="page-item">
+            <a class="page-link" onclick="prevPage()" tabindex="-1">Previous</a>
+        </li>
+        <li class="page-item"><a class="page-link">1</a></li>
+        <li class="page-item"><a class="page-link">_</a></li>
+        <li class="page-item"><a class="page-link" href="">_</a>
+        <li class="page-item"><a class="page-link" href="">1</a></li>
+        <li class="page-item" >
+            <a class="page-link" id="next" onclick="nextPage()">Next</a>
+        </li>
+    </ul>
+</nav>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
