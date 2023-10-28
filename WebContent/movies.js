@@ -165,6 +165,8 @@ function submitPageForm(formSubmitEvent) {
     window.location.href = 'movies.html?amt=' + pageAmt + "&sort=" + sort;
 
 }
+
+
 page_form.submit(submitPageForm);
 
 function nextPage() {

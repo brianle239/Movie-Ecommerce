@@ -17,11 +17,6 @@ function getParameterByName(target) {
 function handleResult(resultData) {
 
     console.log("handleResult: populating star info from resultData");
-    // let starElement = jQuery("#stars-link");
-    //
-    // starElement.append('<a href=' + '"stars.html">'
-    //     + "Stars list"+     // display star_name for the link text
-    //     '</a>');
 
     let movieTableBodyElement = jQuery("#movie_table_body");
     console.log(resultData);
@@ -30,8 +25,8 @@ function handleResult(resultData) {
         let rowHTML = "";
         rowHTML += "<tr>";
         rowHTML += "<th>" +
-            '<a href=' + resultData[i]["movie_id"] + '"single-movie.html?id=">'
-            + resultData[i]["movie_title"] +     // display star_name for the link text
+            '<a href="single-movie.html?id=' + resultData[i]["movie_id"] + '">'
+            + resultData[i]["movie_title"] +
             '</a>' +
             "</th>";
         rowHTML += "<th>" + resultData[i]["movie_year"] + "</th>";
@@ -44,12 +39,12 @@ function handleResult(resultData) {
             if (i == Math.min(3, genres_array.length) - 1) {
                 rowHTML +=
                     genres_array[i];  // display star_name for the link text
-                    // + '</a>';
+                // + '</a>';
             }
             else {
                 rowHTML +=
                     genres_array[i] + ", ";   // display star_name for the link text
-                    // + '</a>';
+                // + '</a>';
             }
         }
         rowHTML += "</th>";
@@ -73,6 +68,8 @@ function handleResult(resultData) {
         rowHTML += "</th>";
 
         rowHTML += "<td>" + resultData[i]["movie_rating"] + "</td>";
+        rowHTML += "<th><button class='cart-btn btn' id='" + resultData[i]["movie_id"] + "'>Add to Cart</button></th>";
+
 
         rowHTML += "</tr>";
 
@@ -81,14 +78,31 @@ function handleResult(resultData) {
     }
 }
 
-// let moveId = getParameterByName('id');
+$(document).ready(function() {
+    $(document).on('click', '.cart-btn', function(event) {
+        event.preventDefault();
+        var data = { item: this.id, increase: true, remove: "false" }
+        jQuery.ajax({
+            method: "POST",
+            data: data,
+            url: "api/cart",
+            success: (resultData) => {
+                console.log(resultData);
+                alert("Added to cart!");
 
-// Makes the HTTP GET request and registers on success callback function handleResult
+            },
+            error: (jqXHR, textStatus, errorThrown) => {
+                console.error("AJAX error:", textStatus, errorThrown);
+                alert("Error occurred: " + textStatus);
+            },
+        });
+    });
+});
+
 jQuery.ajax({
     dataType: "json",  // Setting return data type
     method: "GET",// Setting request method
     url: "api/movielist", // Setting request url, which is mapped by StarsServlet in Stars.java
     success: (resultData) => handleResult(resultData) // Setting callback function to handle data returned successfully by the SingleStarServlet
 });
-
 

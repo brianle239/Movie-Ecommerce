@@ -1,20 +1,4 @@
-/**
- * This example is following frontend and backend separation.
- *
- * Before this .js is loaded, the html skeleton is created.
- *
- * This .js performs three steps:
- *      1. Get parameter from request URL so it know which id to look for
- *      2. Use jQuery to talk to backend API to get the json data.
- *      3. Populate the data to correct html elements.
- */
 
-
-/**
- * Retrieve parameter from request URL, matching by parameter name
- * @param target String
- * @returns {*}
- */
 function getParameterByName(target) {
     // Get request URL
     let url = window.location.href;
@@ -44,17 +28,13 @@ function handleResult(resultData) {
 
     let starInfoElement = jQuery("#movie-title");
 
-    // append two html <p> created to the h3 body, which will refresh the page
     starInfoElement.append("<p>Star Name: " + resultData[0]["movie_title"] + "</p>");
 
     console.log("handleResult: populating movie table from resultData");
     console.log(resultData);
 
-    // Populate the movie table
-    // Find the empty table body by id "movie_table_body"
     let movieTableBodyElement = jQuery("#movie_table_body");
 
-    // Concatenate the html tags with resultData jsonObject to create table rows
     let rowHTML = "";
     rowHTML += "<tr>";
     rowHTML += "<th>" + resultData[0]["movie_title"] + "</th>";
@@ -68,29 +48,47 @@ function handleResult(resultData) {
         if (i == stars_array.length - 1) {
             rowHTML +=
                 '<a href="single-star.html?id=' + stars_id_array[i] + '">'
-                + stars_array[i] +   // display star_name for the link text
+                + stars_array[i] +
                 '</a>';
         }
         else {
             rowHTML +=
                 '<a href="single-star.html?id=' + stars_id_array[i] + '">'
-                + stars_array[i] + ", " +   // display star_name for the link text
+                + stars_array[i] + ", " +
                 '</a>';
         }
     }
     rowHTML += "</th>";
 
     rowHTML += "<th>" + resultData[0]["movie_rating"] + "</th>";
+    rowHTML += "<th><button class='cart-btn btn' id='" + resultData[0]["movie_id"] + "'>Add to Cart</button></th>";
     rowHTML += "</tr>";
 
-    // Append the row created to the table body, which will refresh the page
     movieTableBodyElement.append(rowHTML);
 
-}
 
-/**
- * Once this .js is loaded, following scripts will be executed by the browser\
- */
+}
+$(document).ready(function() {
+    $(document).on('click', '.cart-btn', function(event) {
+        event.preventDefault();
+        var data = { item: this.id, increase: true, remove: "false" }
+        jQuery.ajax({
+            method: "POST",
+            data: data,
+            url: "api/cart",
+            success: (resultData) => {
+                console.log(resultData);
+                alert("Added to cart!");
+
+            },
+            error: (jqXHR, textStatus, errorThrown) => {
+                console.error("AJAX error:", textStatus, errorThrown);
+                alert("Error occurred: " + textStatus);
+            },
+        });
+    });
+});
+
 
 // Get id from URL
 let movieId = getParameterByName('id');

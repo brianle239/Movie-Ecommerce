@@ -87,8 +87,7 @@ function getParameterByName(target) {
 }
 
 function populateMovieCard(resultData) {
-    console.log("Populate movieCard");
-    console.log(genreId);
+    console.log("handleResult: populating movie info from resultData");
     console.log(resultData)
 
 
@@ -180,7 +179,7 @@ $(document).ready(function() {
 });
 
 
-console.log("Year:" + year+":");
+
 jQuery.ajax({
     dataType: "json",  // Setting return data type
     method: "GET",// Setting request method
