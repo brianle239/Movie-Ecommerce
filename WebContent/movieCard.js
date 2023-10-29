@@ -61,7 +61,7 @@ function addUrlParemeter() {
         res += "&year=" + year;
     }
     if (director != null) {
-        res += "&director=" + year;
+        res += "&director=" + director;
     }
     if (star_name != null) {
         res += "&star_name=" + star_name;
@@ -111,7 +111,12 @@ function populateMovieCard(resultData) {
         movieCardHtml+= '<a href="single-movie.html?id=' + movie_id[0] + '">' + movie_title[0] + '</a>';
         movieCardHtml+= `</span></h1>`;
 
-        movieCardHtml +=` <h2 class="rating">Rating: <span>${resultData[i]["movie_rating"]}</span></h2></div>
+        let r = resultData[i]["movie_rating"]
+        console.log(r);
+        if (r == null) {
+            r = "N/A";
+        }
+        movieCardHtml +=` <h2 class="rating">Rating: <span>${r}</span></h2></div>
                     <p class="release-date">Release Date: <span>${resultData[i]["movie_year"]}</span></p>
                     <p class="director">Director: <span>${resultData[i]["movie_director"]}</span></p>
                     </div>`;
@@ -146,12 +151,24 @@ function populateMovieCard(resultData) {
         let lastOffset = (highestPage * (parseInt(pageAmt))-parseInt(pageAmt));
         $(pages[4]).find("a").text(highestPage);
 
+        console.log(highestPage, resultData[0]["total_rows"]);
+        if (highestPage <= 2) {
+            console.log("Lower page");
+            pages[3].addClass("disabled");
+            $(pages[3]).find("a").text("-");
+            if (highestPage <= 1) {
+                pages[2].addClass("disabled");
+                $(pages[2]).find("a").text("-");
+            }
+
+        }
         $(pages[4]).find("a").attr('href', 'movieCard.html?amt=' + pageAmt + "&sort=" + sort + "&offset=" + lastOffset + addUrlParemeter());
         if (parseInt(offset) === lastOffset) {
             pages[3].addClass("disabled");
             pages[5].addClass("disabled");
-            $(pages[3]).find("a").text("...");
+            $(pages[3]).find("a").text("-");
         }
+
 
     }
 }
