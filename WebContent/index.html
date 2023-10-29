@@ -51,22 +51,22 @@ height: 100vh;">
         </div>
     </nav>
 
-<h1 class="h-30 display-2 d-flex align-items-center justify-content-center" style="font-weight: 650; letter-spacing: .3rem;">Fabflix</h1>
+<h1 class="h-30 display-2 d-flex align-items-center justify-content-center mt-5 mb-4" style="font-weight: 650; letter-spacing: .3rem;">Fabflix</h1>
 
-    <div class="search-bar">
-        <form action="/search" method="GET"> <!-- Replace '/search' with your search endpoint -->
-            <input type="text" name="query" class="search-input" placeholder="Search for movies...">
-            <button type="submit" class="search-button">
-                ->
-            </button>
-        </form>
-    </div>
+<!--<div class="search-bar">-->
+<!--    <form action="/search" method="GET"> &lt;!&ndash; Replace '/search' with your search endpoint &ndash;&gt;-->
+<!--        <input type="text" name="query" class="search-input" placeholder="Search for movies...">-->
+<!--        <button type="submit" class="search-button">-->
+<!--            ->-->
+<!--        </button>-->
+<!--    </form>-->
+<!--</div>-->
 
 <form id="genre_form"  action="#">
-    <div class="form-inline ml-5">
+    <div class="form-inline">
         <div class="form-group" >
             <label class="" for="genreForm">Genre</label>
-            <select class="form-control ml-1" id="genreForm" style="width: 8em">
+            <select class="form-control ml-2" id="genreForm" style="width: 8em">
 
             </select>
         </div>
@@ -76,10 +76,10 @@ height: 100vh;">
 </form>
 
 <form id="title_form"  action="#">
-    <div class="form-inline ml-5">
+    <div class="form-inline">
         <div class="form-group" >
             <label class="" for="titleForm">Title</label>
-            <select class="form-control ml-1" id="titleForm" style="width: 4em">
+            <select class="form-control ml-2" id="titleForm" style="width: 4em">
                 <option value="*" selected>*</option>
             </select>
         </div>
