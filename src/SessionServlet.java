@@ -25,19 +25,28 @@ public class SessionServlet extends HttpServlet {
         responseJsonObject.addProperty("lastAccessTime", new Date(lastAccessTime).toString());
 
         Integer accessCount = (Integer) session.getAttribute("accessCount");
-
-
+        String history = (String) session.getAttribute("history");
+        String single = (String) session.getAttribute("single");
+        System.out.println("YES GET: " + history + ":");
         if (accessCount == null) {
             accessCount = 0;
         } else {
             accessCount++;
         }
+        if (history == null || history.equals("null")) {
+            history = "";
+        }
+        if (single == null || single.equals("null")) {
+            single = "false";
+        }
 
 
         session.setAttribute("accessCount", accessCount);
         responseJsonObject.addProperty("accessCount", accessCount);
-        responseJsonObject.addProperty("session", session.toString());
+        responseJsonObject.addProperty("history", history);
 
+        responseJsonObject.addProperty("single", single);
+        responseJsonObject.addProperty("session", session.toString());
 
         // write all the data into the jsonObject
         response.getWriter().write(responseJsonObject.toString());
@@ -46,6 +55,29 @@ public class SessionServlet extends HttpServlet {
 
     // add attributes to session
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        HttpSession session = request.getSession();
+        String h = (String) request.getParameter("history");
+        try {
+            if (h == null || h.equals("null") ) {
+                String history = request.getParameter("history");
+            }
+            else {
+                session.setAttribute("history", h);
+            }
+        }
+        catch (Exception e) {
+            System.out.println("No History");
+        }
+        try {
+            if (!request.getParameter("single").equals("null")) {
+                String single = request.getParameter("single");
+                session.setAttribute("single", single);
+            }
+        }
+        catch (Exception e) {
+            System.out.println("No Single");
+        }
 
     }
 }

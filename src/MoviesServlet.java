@@ -15,7 +15,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-
 @WebServlet(name = "MoviesServlet", urlPatterns = "/api/movies")
 public class MoviesServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -64,7 +63,7 @@ public class MoviesServlet extends HttpServlet {
             offset = Integer.parseInt(request.getParameter("offset"));
         }
         if (!request.getParameter("genreId").equals("null")) {
-            genreCondition = "and gm.genreId =" + request.getParameter("genreId");
+            genreCondition = " and gm.genreId =" + request.getParameter("genreId");
         }
         if (!request.getParameter("titleChar").equals("null")) {
             String c = request.getParameter("titleChar");
@@ -87,12 +86,7 @@ public class MoviesServlet extends HttpServlet {
         if (!request.getParameter("star_name").equals("null")) {
             star_name_cond = " and s.name LIKE '%" + request.getParameter("star_name") + "%'";
         }
-
-
-
-
-
-
+        System.out.println(genreCondition);
 
         // The log message can be found in localhost log
         //request.getServletContext().log("getting id: " + id);
@@ -122,15 +116,17 @@ public class MoviesServlet extends HttpServlet {
                         "    mr.total_rows\n" +
                         "FROM (\n" +
                         "\tSELECT DISTINCT m.id as id, r.rating as rating, count(*) OVER() AS total_rows\n" +
-                        "\tFROM movies m, ratings r, genres_in_movies gm\n" +
-                        "\tWHERE m.id = r.movieId and m.id = gm.movieId " + genreCondition + titleCondition + "\n" +
+                        "\tFROM movies m\n" +
+                        "\tLEFT JOIN ratings r ON r.movieId = m.id\n" +
+                        "\tLEFT JOIN genres_in_movies gm ON gm.movieId = m.id\n" +
+                        "\tWHERE m.id is not null" + genreCondition + titleCondition + "\n" +
+                        "\tGROUP BY m.id\n" +
                         "\tORDER BY " + firstOrder + "\n" +
                         "\tLIMIT ? OFFSET ?) mr, \n" +
                         "movies m, genres_in_movies gm, genres g, stars_in_movies sm, stars s\n" +
                         "WHERE mr.id = m.id and mr.id = gm.movieId and gm.genreId = g.id and mr.id = sm.movieId and s.id = sm.starId\n" +
                         "GROUP BY m.id\n" +
                         "ORDER BY " + entireOrder + ";";
-
                 // Declare our statement
                 statement = conn.prepareStatement(query);
 
@@ -151,8 +147,12 @@ public class MoviesServlet extends HttpServlet {
                         "    mr.total_rows\n" +
                         "FROM (\n" +
                         "\tSELECT DISTINCT m.id as id, r.rating as rating, count(*) OVER() AS total_rows\n" +
-                        "\tFROM movies m, ratings r, stars_in_movies sm, stars s\n" +
-                        "\tWHERE m.id = r.movieId and m.id = sm.movieId and sm.starId = s.id" + movie_name_cond + director_cond + year_cond + star_name_cond+ "\n" +
+                        "\tFROM movies m\n" +
+                        "\tLEFT JOIN ratings r ON r.movieId = m.id\n" +
+                        "\tLEFT JOIN stars_in_movies sm ON sm.movieId = m.id\n" +
+                        "\tLEFT JOIN stars s ON sm.starId = s.id\n" +
+                        "\tWHERE m.id is not null" + movie_name_cond + director_cond + year_cond + star_name_cond+ "\n" +
+                        "\tGROUP BY m.id\n" +
                         "\tORDER BY " + firstOrder + "\n" +
                         "\tLIMIT ? OFFSET ?) mr, \n" +
                         "movies m, genres_in_movies gm, genres g, stars_in_movies sm, stars s\n" +
@@ -164,13 +164,7 @@ public class MoviesServlet extends HttpServlet {
                 statement = conn.prepareStatement(query);
                 statement.setInt(1, amt);
                 statement.setInt(2, offset);
-//                statement.setString(1, "L");
-//                statement.setString(2, "");
-//                statement.setString(3, "");
-
             }
-
-
 
             // Perform the query
             ResultSet rs = statement.executeQuery();
@@ -178,8 +172,6 @@ public class MoviesServlet extends HttpServlet {
             JsonArray jsonArray = new JsonArray();
             // Iterate through each row of rs
             while (rs.next()) {
-                // Will need genre Id later on so might as well store the ID
-
                 String movieId = rs.getString("id");
                 String title = rs.getString("title");
                 String year = rs.getString("year");
@@ -205,8 +197,6 @@ public class MoviesServlet extends HttpServlet {
                 jsonObject.addProperty("movie_rating", rating);
                 jsonObject.addProperty("total_rows", total_rows);
 
-
-
                 jsonArray.add(jsonObject);
             }
             rs.close();
@@ -230,8 +220,6 @@ public class MoviesServlet extends HttpServlet {
         } finally {
             out.close();
         }
-
         // Always remember to close db connection after usage. Here it's done by try-with-resources
-
     }
 }

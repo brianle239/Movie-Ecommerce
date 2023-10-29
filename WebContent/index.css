@@ -5,7 +5,14 @@
     align-items: center;
     padding: 20px;
 }
-
+form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    font-size: 2em;
+}
 .search-input {
     width: 300px;
     padding: 10px 20px;

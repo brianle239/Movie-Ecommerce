@@ -1,50 +1,97 @@
-let pageAmt = getParameterByName('amt');
-let sort = getParameterByName('sort');
-let offset = getParameterByName('offset');
-let genreId = getParameterByName('genreId');
-let titleChar = getParameterByName('titleChar');
-let movie_name = getParameterByName('movie_name');
-let year = getParameterByName('year');
-let director = getParameterByName('director');
-let star_name = getParameterByName('star_name');
 
+let movie_url = "";
+let pageAmt
+let sort;
+let offset;
+let genreId;
+let titleChar;
+let movie_name;
+let year;
+let director;
+let star_name;
 var pages = [];
-$('#pageBar li').each(function(){
-    pages.push($(this));
+function setUrl(resultData) {
+    console.log(resultData);
+    if (resultData["single"] === "false") {
+        movie_url = window.location.href;
+    }
+    else {
+        movie_url = resultData["history"];
+    }
+
+    pageAmt = getParameterByName('amt');
+    sort = getParameterByName('sort');
+    offset = getParameterByName('offset');
+    genreId = getParameterByName('genreId');
+    titleChar = getParameterByName('titleChar');
+    movie_name = getParameterByName('movie_name');
+    year = getParameterByName('year');
+    director = getParameterByName('director');
+    star_name = getParameterByName('star_name');
+
+    console.log("Movie URL to be set" + movie_url);
+    jQuery.ajax({
+        dataType: "json",  // Setting return data type
+        method: "POST",// Setting request method
+        url: "api/session",
+        // Do not change the url
+        data: {"history": movie_url, "single": "false"},
+        success: (resultData) => setUrl(resultData) // Setting callback function to handle data returned successfully by the SingleStarServlet
+    });
+
+    jQuery.ajax({
+        dataType: "json",  // Setting return data type
+        method: "GET",// Setting request method
+        // Do not change the url
+        url: "api/movies?amt=" + pageAmt + "&sort=" + sort + "&offset=" + offset + "&genreId=" + genreId + "&titleChar=" + titleChar + "&movie_name=" + movie_name + "&year=" + year + "&director=" + director + "&star_name=" + star_name, // Do not change url
+        success: (resultData) => populateMovieCard(resultData) // Setting callback function to handle data returned successfully by the SingleStarServlet
+    });
+    $('#pageBar li').each(function(){
+        pages.push($(this));
+    });
+    if (pageAmt != null) {
+        $("#formPgAmt").val(pageAmt).change();
+    }
+    else {
+        pageAmt = "10";
+    }
+    if (sort != null) {
+        $("#formSort").val(sort).change();
+    }
+    else {
+        sort = "r Desc Desc";
+    }
+    if (offset != null && offset !== "0") {
+        console.log(offset);
+        let page = parseInt(offset) / pageAmt;
+        $(pages[1]).find("a").text(page);
+        $(pages[2]).find("a").text(page+1);
+        pages[2].addClass("active");
+        $(pages[3]).find("a").text(page+2);
+
+        $(pages[1]).find("a").attr('href', 'movieCard.html?amt=' + pageAmt + "&sort=" + sort + "&offset=" + (parseInt(offset) - parseInt(pageAmt)) + addUrlParemeter());
+        $(pages[3]).find("a").attr('href', 'movieCard.html?amt=' + pageAmt + "&sort=" + sort + "&offset=" + (parseInt(offset) + parseInt(pageAmt))+ "&genreId=" + genreId + "&titleChar=" + titleChar);
+
+    }
+    else {
+        pages[0].addClass("disabled");
+        pages[1].addClass("active");
+        $(pages[2]).find("a").text(2);
+        $(pages[3]).find("a").text(3);
+        $(pages[2]).find("a").attr('href', 'movieCard.html?amt=' + pageAmt + "&sort=" + sort + "&offset=" + pageAmt + addUrlParemeter());
+        $(pages[3]).find("a").attr('href', 'movieCard.html?amt=' + pageAmt + "&sort=" + sort + "&offset=" + 2 * parseInt(pageAmt) + addUrlParemeter());
+        offset = "0";
+    }
+
+}
+jQuery.ajax({
+    dataType: "json",  // Setting return data type
+    method: "GET",// Setting request method
+    // Do not change the url
+    url: "api/session",
+    success: (resultData) => setUrl(resultData) // Setting callback function to handle data returned successfully by the SingleStarServlet
 });
-if (pageAmt != null) {
-    $("#formPgAmt").val(pageAmt).change();
-}
-else {
-    pageAmt = "10";
-}
-if (sort != null) {
-    $("#formSort").val(sort).change();
-}
-else {
-    sort = "r Desc Desc";
-}
-if (offset != null && offset !== "0") {
-    console.log(offset);
-    let page = parseInt(offset) / pageAmt;
-    $(pages[1]).find("a").text(page);
-    $(pages[2]).find("a").text(page+1);
-    pages[2].addClass("active");
-    $(pages[3]).find("a").text(page+2);
 
-    $(pages[1]).find("a").attr('href', 'movieCard.html?amt=' + pageAmt + "&sort=" + sort + "&offset=" + (parseInt(offset) - parseInt(pageAmt)) + addUrlParemeter());
-    $(pages[3]).find("a").attr('href', 'movieCard.html?amt=' + pageAmt + "&sort=" + sort + "&offset=" + (parseInt(offset) + parseInt(pageAmt))+ "&genreId=" + genreId + "&titleChar=" + titleChar);
-
-}
-else {
-    pages[0].addClass("disabled");
-    pages[1].addClass("active");
-    $(pages[2]).find("a").text(2);
-    $(pages[3]).find("a").text(3);
-    $(pages[2]).find("a").attr('href', 'movieCard.html?amt=' + pageAmt + "&sort=" + sort + "&offset=" + pageAmt + addUrlParemeter());
-    $(pages[3]).find("a").attr('href', 'movieCard.html?amt=' + pageAmt + "&sort=" + sort + "&offset=" + 2 * parseInt(pageAmt) + addUrlParemeter());
-    offset = "0";
-}
 
 function addUrlParemeter() {
     let res = "";
@@ -61,24 +108,25 @@ function addUrlParemeter() {
         res += "&year=" + year;
     }
     if (director != null) {
-        res += "&director=" + year;
+        res += "&director=" + director;
     }
     if (star_name != null) {
         res += "&star_name=" + star_name;
     }
-
     return res;
-
 }
+
 function getParameterByName(target) {
     // Get request URL
-    let url = window.location.href;
-    // Encode target parameter name to url encoding
-    target = target.replace(/[\[\]]/g, "\\$&");
 
+    // let url = window.location.href;
+    // Encode target parameter name to url encoding
+
+    target = target.replace(/[\[\]]/g, "\\$&");
+    console.log("Found: " + movie_url);
     // Ues regular expression to find matched parameter value
     let regex = new RegExp("[?&]" + target + "(=([^&#]*)|&|#|$)"),
-        results = regex.exec(url);
+        results = regex.exec(movie_url);
     if (!results) return null;
     if (!results[2]) return '';
 
@@ -88,8 +136,7 @@ function getParameterByName(target) {
 
 function populateMovieCard(resultData) {
     console.log("handleResult: populating movie info from resultData");
-    console.log(resultData)
-
+    // console.log(resultData)
 
     // Get the movie container
     let moviesContainer = $(".cards-container")
@@ -111,7 +158,11 @@ function populateMovieCard(resultData) {
         movieCardHtml+= '<a href="single-movie.html?id=' + movie_id[0] + '">' + movie_title[0] + '</a>';
         movieCardHtml+= `</span></h1>`;
 
-        movieCardHtml +=` <h2 class="rating">Rating: <span>${resultData[i]["movie_rating"]}</span></h2></div>
+        let r = resultData[i]["movie_rating"]
+        if (r == null) {
+            r = "N/A";
+        }
+        movieCardHtml +=` <h2 class="rating">Rating: <span>${r}</span></h2></div>
                     <p class="release-date">Release Date: <span>${resultData[i]["movie_year"]}</span></p>
                     <p class="director">Director: <span>${resultData[i]["movie_director"]}</span></p>
                     </div>`;
@@ -146,17 +197,24 @@ function populateMovieCard(resultData) {
         let lastOffset = (highestPage * (parseInt(pageAmt))-parseInt(pageAmt));
         $(pages[4]).find("a").text(highestPage);
 
+        console.log(highestPage, resultData[0]["total_rows"]);
+        if (highestPage <= 2) {
+            console.log("Lower page");
+            pages[3].addClass("disabled");
+            $(pages[3]).find("a").text("-");
+            if (highestPage <= 1) {
+                pages[2].addClass("disabled");
+                $(pages[2]).find("a").text("-");
+            }
+        }
         $(pages[4]).find("a").attr('href', 'movieCard.html?amt=' + pageAmt + "&sort=" + sort + "&offset=" + lastOffset + addUrlParemeter());
         if (parseInt(offset) === lastOffset) {
             pages[3].addClass("disabled");
             pages[5].addClass("disabled");
-            $(pages[3]).find("a").text("...");
+            $(pages[3]).find("a").text("-");
         }
-
     }
 }
-
-
 
 $(document).ready(function() {
     $(document).on('click', '.cart-btn', function(event) {
@@ -179,15 +237,6 @@ $(document).ready(function() {
 });
 
 
-
-jQuery.ajax({
-    dataType: "json",  // Setting return data type
-    method: "GET",// Setting request method
-    // Do not change the url
-    url: "api/movies?amt=" + pageAmt + "&sort=" + sort + "&offset=" + offset + "&genreId=" + genreId + "&titleChar=" + titleChar + "&movie_name=" + movie_name + "&year=" + year + "&director=" + director + "&star_name=" + star_name, // Do not change url
-    success: (resultData) => populateMovieCard(resultData) // Setting callback function to handle data returned successfully by the SingleStarServlet
-});
-
 let page_form = $("#page_form");
 function submitPageForm(formSubmitEvent) {
     console.log("submit page form");
@@ -199,11 +248,9 @@ function submitPageForm(formSubmitEvent) {
 
 }
 page_form.submit(submitPageForm);
-
 function nextPage() {
     offset = parseInt(offset) + parseInt(pageAmt);
     window.location.href = 'movieCard.html?amt=' + pageAmt + "&sort=" + sort + "&offset=" + offset + addUrlParemeter();
-
 }
 
 function prevPage() {

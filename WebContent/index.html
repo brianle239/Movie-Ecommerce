@@ -21,21 +21,17 @@ height: 100vh;">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <img src="images/popcorn_logo.png" width="30" height="25" alt="🍿" style="transform: translate(0px, -2px);">
         <h2>Fabflix</h2>
-
         <div class="ml-2" id="navbarNavAltMarkup">
             <div class="navbar-nav mr-auto ml-auto">
                 <a class="nav-item nav-link active" href="index.html">Home</a>
                 <a class="nav-item nav-link" href="movieCard.html">Movies</a>
                 <a class="nav-item nav-link" href="movie-list.html">Top 20</a>
-                <a class="nav-item nav-link" href="stars.html">Stars</a>
+<!--                <a class="nav-item nav-link" href="stars.html">Stars</a>-->
                 <a class="nav-item nav-link " href="cart.html">View cart</a>
-
             </div>
-
         </div>
         <div class="navbar-collapse collapse dual-collapse2">
             <ul class="navbar-nav ml-auto">
-
                 <li class="ml-3">
                     <input type="text" class="form-control input-sm" id="titleSearch" placeholder="Title">
                 </li>
@@ -51,31 +47,26 @@ height: 100vh;">
                 <li class="ml-3">
                     <img src="images/search_logo.png" width="42" height="42" alt="🔍" onclick="search()" style="transform: translate(0px, -2px);">
                 </li>
-
             </ul>
-
         </div>
     </nav>
 
+<h1 class="h-30 display-2 d-flex align-items-center justify-content-center mt-5 mb-4" style="font-weight: 650; letter-spacing: .3rem;">Fabflix</h1>
 
-<h1 class="h-30 display-2 d-flex align-items-center justify-content-center" style="font-weight: 650; letter-spacing: .3rem;">Fabflix</h1>
-
-
-
-    <div class="search-bar">
-        <form action="/search" method="GET"> <!-- Replace '/search' with your search endpoint -->
-            <input type="text" name="query" class="search-input" placeholder="Search for movies...">
-            <button type="submit" class="search-button">
-                ->
-            </button>
-        </form>
-    </div>
+<!--<div class="search-bar">-->
+<!--    <form action="/search" method="GET"> &lt;!&ndash; Replace '/search' with your search endpoint &ndash;&gt;-->
+<!--        <input type="text" name="query" class="search-input" placeholder="Search for movies...">-->
+<!--        <button type="submit" class="search-button">-->
+<!--            ->-->
+<!--        </button>-->
+<!--    </form>-->
+<!--</div>-->
 
 <form id="genre_form"  action="#">
-    <div class="form-inline ml-5">
+    <div class="form-inline">
         <div class="form-group" >
             <label class="" for="genreForm">Genre</label>
-            <select class="form-control ml-1" id="genreForm" style="width: 8em">
+            <select class="form-control ml-2" id="genreForm" style="width: 8em">
 
             </select>
         </div>
@@ -85,10 +76,10 @@ height: 100vh;">
 </form>
 
 <form id="title_form"  action="#">
-    <div class="form-inline ml-5">
+    <div class="form-inline">
         <div class="form-group" >
             <label class="" for="titleForm">Title</label>
-            <select class="form-control ml-1" id="titleForm" style="width: 4em">
+            <select class="form-control ml-2" id="titleForm" style="width: 4em">
                 <option value="*" selected>*</option>
             </select>
         </div>
