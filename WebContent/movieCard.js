@@ -12,7 +12,6 @@ let star_name;
 var pages = [];
 function setUrl(resultData) {
     console.log(resultData);
-
     if (resultData["single"] === "false") {
         movie_url = window.location.href;
     }
@@ -114,9 +113,7 @@ function addUrlParemeter() {
     if (star_name != null) {
         res += "&star_name=" + star_name;
     }
-
     return res;
-
 }
 
 function getParameterByName(target) {
@@ -209,7 +206,6 @@ function populateMovieCard(resultData) {
                 pages[2].addClass("disabled");
                 $(pages[2]).find("a").text("-");
             }
-
         }
         $(pages[4]).find("a").attr('href', 'movieCard.html?amt=' + pageAmt + "&sort=" + sort + "&offset=" + lastOffset + addUrlParemeter());
         if (parseInt(offset) === lastOffset) {
@@ -217,12 +213,8 @@ function populateMovieCard(resultData) {
             pages[5].addClass("disabled");
             $(pages[3]).find("a").text("-");
         }
-
-
     }
 }
-
-
 
 $(document).ready(function() {
     $(document).on('click', '.cart-btn', function(event) {
@@ -256,11 +248,9 @@ function submitPageForm(formSubmitEvent) {
 
 }
 page_form.submit(submitPageForm);
-
 function nextPage() {
     offset = parseInt(offset) + parseInt(pageAmt);
     window.location.href = 'movieCard.html?amt=' + pageAmt + "&sort=" + sort + "&offset=" + offset + addUrlParemeter();
-
 }
 
 function prevPage() {

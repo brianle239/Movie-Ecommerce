@@ -15,7 +15,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-
 @WebServlet(name = "MoviesServlet", urlPatterns = "/api/movies")
 public class MoviesServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -88,12 +87,6 @@ public class MoviesServlet extends HttpServlet {
             star_name_cond = " and s.name LIKE '%" + request.getParameter("star_name") + "%'";
         }
         System.out.println(genreCondition);
-
-
-
-
-
-
 
         // The log message can be found in localhost log
         //request.getServletContext().log("getting id: " + id);
@@ -171,13 +164,7 @@ public class MoviesServlet extends HttpServlet {
                 statement = conn.prepareStatement(query);
                 statement.setInt(1, amt);
                 statement.setInt(2, offset);
-//                statement.setString(1, "L");
-//                statement.setString(2, "");
-//                statement.setString(3, "");
-
             }
-
-
 
             // Perform the query
             ResultSet rs = statement.executeQuery();
@@ -185,8 +172,6 @@ public class MoviesServlet extends HttpServlet {
             JsonArray jsonArray = new JsonArray();
             // Iterate through each row of rs
             while (rs.next()) {
-                // Will need genre Id later on so might as well store the ID
-
                 String movieId = rs.getString("id");
                 String title = rs.getString("title");
                 String year = rs.getString("year");
@@ -212,8 +197,6 @@ public class MoviesServlet extends HttpServlet {
                 jsonObject.addProperty("movie_rating", rating);
                 jsonObject.addProperty("total_rows", total_rows);
 
-
-
                 jsonArray.add(jsonObject);
             }
             rs.close();
@@ -237,8 +220,6 @@ public class MoviesServlet extends HttpServlet {
         } finally {
             out.close();
         }
-
         // Always remember to close db connection after usage. Here it's done by try-with-resources
-
     }
 }
