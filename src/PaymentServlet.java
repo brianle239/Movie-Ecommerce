@@ -56,6 +56,8 @@ public class PaymentServlet  extends HttpServlet {
 
             if (rs.next()) {
                 HashMap<String, Integer> cart = ((HashMap<String, Integer> ) session.getAttribute("cartItems"));
+                HashMap<String, String> idCart = ((HashMap<String, String> ) session.getAttribute("idCart"));
+
                 if(cart == null || cart.toString().equals("{}")) {
                     // cart is empty
                     jsonObject.addProperty("status", "fail");
@@ -63,9 +65,23 @@ public class PaymentServlet  extends HttpServlet {
                 }
                 else {
                     // payment is successful
+
+                    query = "INSERT INTO sales(customerId, movieId, saleDate) VALUES (?, ?, CURDATE())";
+                    PreparedStatement statement2 = conn.prepareStatement(query);
+                    String customerId = session.getAttribute("customerId").toString();
+                    for (String key : cart.keySet()) {
+                        String movieId = idCart.get(key);
+
+                        statement2.setString(1, customerId);
+                        statement2.setString(2, movieId);
+
+                        statement2.executeUpdate();  // Insert for each movie in the cart
+                    }
+
+                    statement2.close();
+
                     jsonObject.addProperty("status", "success");
                     jsonObject.addProperty("message", "successful payment!");
-
                     jsonObject.addProperty("customerId", session.getAttribute("customerId").toString());
                 }
 

@@ -24,6 +24,7 @@ $(document).ready(function() {
 
                 if (resultDataJson["status"] === "success") {
                     console.log(resultDataJson)
+                    window.location.href = "confirmation.html";
                 } else {
 
                     console.log("show error message");
