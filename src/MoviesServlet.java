@@ -108,10 +108,10 @@ public class MoviesServlet extends HttpServlet {
                         "    m.title as title,\n" +
                         "    m.year as year,\n" +
                         "    m.director as director,\n" +
-                        "    GROUP_CONCAT(DISTINCT g.name ORDER BY g.name ASC SEPARATOR ', ') as genres,\n" +
-                        "    GROUP_CONCAT(DISTINCT g.id ORDER BY g.name ASC SEPARATOR ',') AS genres_id,\n" +
-                        "    GROUP_CONCAT(DISTINCT s.name ORDER BY (select count(sm.movieId) from stars_in_movies sm where sm.starId = s.id) Desc, s.name Asc SEPARATOR ',') AS stars,\n" +
-                        "    GROUP_CONCAT(DISTINCT s.id ORDER BY (select count(sm.movieId) from stars_in_movies sm where sm.starId = s.id) Desc, s.name Asc SEPARATOR ',') AS stars_id,\n" +
+                        "    GROUP_CONCAT(DISTINCT g.name ORDER BY g.name ASC SEPARATOR '\t') as genres,\n" +
+                        "    GROUP_CONCAT(DISTINCT g.id ORDER BY g.name ASC SEPARATOR '\t') AS genres_id,\n" +
+                        "    GROUP_CONCAT(DISTINCT s.name ORDER BY (select count(sm.movieId) from stars_in_movies sm where sm.starId = s.id) Desc, s.name Asc SEPARATOR '\t') AS stars,\n" +
+                        "    GROUP_CONCAT(DISTINCT s.id ORDER BY (select count(sm.movieId) from stars_in_movies sm where sm.starId = s.id) Desc, s.name Asc SEPARATOR '\t') AS stars_id,\n" +
                         "    mr.rating as rating,\n" +
                         "    mr.total_rows\n" +
                         "FROM (\n" +
@@ -139,10 +139,10 @@ public class MoviesServlet extends HttpServlet {
                         "    m.title as title,\n" +
                         "    m.year as year,\n" +
                         "    m.director as director,\n" +
-                        "    GROUP_CONCAT(DISTINCT g.name ORDER BY g.name ASC SEPARATOR ', ') as genres,\n" +
-                        "    GROUP_CONCAT(DISTINCT g.id ORDER BY g.name ASC SEPARATOR ',') AS genres_id,\n" +
-                        "    GROUP_CONCAT(DISTINCT s.name ORDER BY (select count(sm.movieId) from stars_in_movies sm where sm.starId = s.id) Desc, s.name Asc SEPARATOR ',') AS stars,\n" +
-                        "    GROUP_CONCAT(DISTINCT s.id ORDER BY (select count(sm.movieId) from stars_in_movies sm where sm.starId = s.id) Desc, s.name Asc SEPARATOR ',') AS stars_id,\n" +
+                        "    GROUP_CONCAT(DISTINCT g.name ORDER BY g.name ASC SEPARATOR '\t') as genres,\n" +
+                        "    GROUP_CONCAT(DISTINCT g.id ORDER BY g.name ASC SEPARATOR '\t') AS genres_id,\n" +
+                        "    GROUP_CONCAT(DISTINCT s.name ORDER BY (select count(sm.movieId) from stars_in_movies sm where sm.starId = s.id) Desc, s.name Asc SEPARATOR '\t') AS stars,\n" +
+                        "    GROUP_CONCAT(DISTINCT s.id ORDER BY (select count(sm.movieId) from stars_in_movies sm where sm.starId = s.id) Desc, s.name Asc SEPARATOR '\t') AS stars_id,\n" +
                         "    mr.rating as rating,\n" +
                         "    mr.total_rows\n" +
                         "FROM (\n" +

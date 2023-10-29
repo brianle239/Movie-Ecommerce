@@ -145,10 +145,10 @@ function populateMovieCard(resultData) {
     // Loop through resultData, each element in resultData is info about a movie
     for (let i = 0; i < resultData.length; i++) {
         // Construct card content for each movie
-        const stars_array = resultData[i]["movie_stars"].split(",");
-        const stars_id_array = resultData[i]["movie_stars_id"].split(",");
-        const movie_id = resultData[i]["movie_id"].split(",");
-        const movie_title = resultData[i]["movie_title"].split(",");
+        const stars_array = resultData[i]["movie_stars"].split("\t");
+        const stars_id_array = resultData[i]["movie_stars_id"].split("\t");
+        const movie_id = resultData[i]["movie_id"].split("\t");
+        const movie_title = resultData[i]["movie_title"].split("\t");
         let movieCardHtml =
             `<div class="movie-card">
                 <div class="movie-header">
