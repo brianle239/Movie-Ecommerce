@@ -17,23 +17,40 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <img src="images/popcorn_logo.png" width="30" height="25" alt="🍿" style="transform: translate(0px, -2px);">
     <h2>Fabflix</h2>
-
     <div class="ml-2" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-            <a class="nav-item nav-link " href="index.html">Home</a>
-            <a class="nav-item nav-link active" href="#">Movies</a>
+        <div class="navbar-nav mr-auto ml-auto">
+            <a class="nav-item nav-link" href="index.html">Home</a>
+            <a class="nav-item nav-link active" href="">Movies</a>
             <a class="nav-item nav-link" href="movie-list.html">Top 20</a>
-            <a class="nav-item nav-link" href="stars.html">Stars</a>
+<!--            <a class="nav-item nav-link" href="stars.html">Stars</a>-->
             <a class="nav-item nav-link " href="cart.html">View cart</a>
-
         </div>
+    </div>
+    <div class="navbar-collapse collapse dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+            <li class="ml-3">
+                <input type="text" class="form-control input-sm" id="titleSearch" placeholder="Title">
+            </li>
+            <li class="ml-3">
+                <input type="text" class="form-control input-sm" id="yearSearch" placeholder="Year" style="width:5em;">
+            </li>
+            <li class="ml-3">
+                <input type="text" class="form-control input-sm" id="directorSearch" placeholder="Director" style="width:8em;">
+            </li>
+            <li class="ml-3">
+                <input type="text" class="form-control input-sm" id="starSearch" placeholder="Star Name" style="width:8em;">
+            </li>
+            <li class="ml-3">
+                <img src="images/search_logo.png" width="42" height="42" alt="🔍" onclick="search()" style="transform: translate(0px, -2px);">
+            </li>
+        </ul>
     </div>
 </nav>
 <form id="page_form"  action="#">
     <div class="form-inline ml-5">
         <div class="form-group">
             <label class="" for="formPgAmt">Amount</label>
-            <select class="form-control col-sm-6 ml-1" id="formPgAmt">
+            <select class="form-control ml-1" id="formPgAmt" style="width:5em;">
                 <option value="10">10</option>
                 <option value="25">25</option>
                 <option value="50">50</option>
@@ -97,5 +114,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
 <script src="movieCard.js"></script>
+<script src="navbarSearch.js"></script>
 </body>
 </html>
