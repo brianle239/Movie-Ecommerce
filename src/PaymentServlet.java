@@ -74,7 +74,7 @@ public class PaymentServlet  extends HttpServlet {
 
                         statement2.setString(1, customerId);
                         statement2.setString(2, movieId);
-                        statement2.setString(3, "2022-10-29");
+                        statement2.setString(3, "2023-10-29");
 
 
                         statement2.executeUpdate();
