@@ -24,7 +24,7 @@ function handleLoginResult(resultDataString) {
     console.log(resultDataJson["status"]);
 
     if (resultDataJson["status"] === "success") {
-        window.location.replace("http://localhost:8080/fabflix_war/index.html");
+        window.location.href = "index.html";
     } else {
 
         console.log("show error message");
