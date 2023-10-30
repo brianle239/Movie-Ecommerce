@@ -1,6 +1,6 @@
 # 2023-fall-cs122b-team-winner
 
-Fabflix URL: http://13.58.98.182:8080/fabflix/
+Fabflix URL: [http://13.58.98.182:8080/fabflix/](http://13.58.62.187:8080/fabflix/)
 
 ## Project 2
 Project 2 Demo Video URL: 
