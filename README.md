@@ -11,11 +11,13 @@ Henry Reyes (henreyes): Task 1 Implement the Login Page and Task 4 Implement the
 
 ### Substring matching:
 Line 137 in src/MoviesServlet is the search query. Below is the Where statement of SQL that searches
+
     WHERE m.id is not null" + movie_name_cond + director_cond + year_cond + star_name_cond
 
 The variables are set in lines 77-88 of src/MoviesServlet if their parameters are passed in. 
 
 If movie name (a), director (b), year (c), and star (d) are all defined, then the Where condition will be
+
     WHERE m.id is not null and m.title LIKE '%a%' and m.director LIKE '%b%' and m.year = c and s.name = '%d%'
 
 Below is the nested query that returns the ids based on the search 
