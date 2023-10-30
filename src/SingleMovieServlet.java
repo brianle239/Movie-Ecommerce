@@ -53,13 +53,19 @@ public class SingleMovieServlet extends HttpServlet {
             // Get a connection from dataSource
 
             // Construct a query with parameter represented by "?"
-            String query = "SELECT m.id, m.title, m.year, m.director, r.rating, " +
-                    "GROUP_CONCAT(DISTINCT g.name ORDER BY g.name ASC SEPARATOR ', ') as genres, " +
-                    "GROUP_CONCAT(s.name ORDER BY (select count(sm.movieId) from stars_in_movies sm where sm.starId = s.id) Desc, s.name Asc SEPARATOR ',') AS stars," +
+            String query = "SELECT m.id, m.title, m.year, m.director, r.rating,\n" +
+                    "GROUP_CONCAT(DISTINCT g.id ORDER BY g.name ASC SEPARATOR ', ') as genres_id,\n" +
+                    "GROUP_CONCAT(DISTINCT g.name ORDER BY g.name ASC SEPARATOR ', ') as genres,\n" +
+                    "GROUP_CONCAT(s.name ORDER BY (select count(sm.movieId) from stars_in_movies sm where sm.starId = s.id) Desc, s.name Asc SEPARATOR ',') AS stars,\n" +
                     "GROUP_CONCAT(s.id ORDER BY (select count(sm.movieId) from stars_in_movies sm where sm.starId = s.id) Desc, s.name Asc SEPARATOR ',') AS stars_id\n" +
-                    "FROM movies as m, ratings as r, genres g, genres_in_movies gim, stars_in_movies sm, stars s\n" +
-                    "WHERE m.id = ? and m.id = r.movieId and m.id = gim.movieId and gim.genreId = g.id and m.id = sm.movieId and s.id = sm.starId\n" +
-                    "GROUP BY m.id";
+                    "FROM movies as m\n" +
+                    "LEFT JOIN ratings r on m.id = r.movieId\n" +
+                    "LEFT JOIN genres_in_movies gim on m.id = gim.movieId\n" +
+                    "LEFT JOIN genres g on gim.genreId = g.id\n" +
+                    "LEFT JOIN stars_in_movies sm on sm.movieId = m.id\n" +
+                    "LEFT JOIN stars s on sm.starId = s.id\n" +
+                    "WHERE m.id = ?\n" +
+                    "GROUP BY m.id;";
 
 
 
@@ -83,6 +89,7 @@ public class SingleMovieServlet extends HttpServlet {
                 String year = rs.getString("year");
                 String director = rs.getString("director");
                 String genres = rs.getString("genres");
+                String genres_id = rs.getString("genres_id");
                 String stars = rs.getString("stars");
                 String stars_id = rs.getString("stars_id");
                 String rating = rs.getString("rating");
@@ -95,6 +102,7 @@ public class SingleMovieServlet extends HttpServlet {
                 jsonObject.addProperty("movie_year", year);
                 jsonObject.addProperty("movie_director", director);
                 jsonObject.addProperty("movie_genres", genres);
+                jsonObject.addProperty("movie_genres_id", genres_id);
                 jsonObject.addProperty("movie_stars", stars);
                 jsonObject.addProperty("movie_stars_id", stars_id);
                 jsonObject.addProperty("movie_rating", rating);

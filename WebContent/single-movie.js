@@ -40,9 +40,31 @@ function handleResult(resultData) {
     rowHTML += "<th>" + resultData[0]["movie_title"] + "</th>";
     rowHTML += "<th>" + resultData[0]["movie_year"] + "</th>";
     rowHTML += "<th>" + resultData[0]["movie_director"] + "</th>";
-    rowHTML += "<th>" + resultData[0]["movie_genres"] + "</th>";
+    const genres_array = resultData[0]["movie_genres"].split(",");
+    const genres_id_array = resultData[0]["movie_genres_id"].split(",");
+
+    // rowHTML += "<th>" + resultData[0]["movie_genres"] + "</th>";
+    rowHTML += "<th>";
+    for (let i = 0; i < genres_array.length; i++) {
+        if (i == genres_array.length - 1) {
+            rowHTML +=
+                '<a href="movieCard.html?id=' + genres_id_array[i] + '">'
+                + genres_array[i] +
+                '</a>';
+        }
+        else {
+            rowHTML +=
+                '<a href="movieCard.html?id=' + genres_id_array[i] + '">'
+                + genres_array[i] + ", " +
+                '</a>';
+        }
+    }
+    rowHTML += "</th>";
+
+
     const stars_array = resultData[0]["movie_stars"].split(",");
     const stars_id_array = resultData[0]["movie_stars_id"].split(",");
+
     rowHTML += "<th>";
     for (let i = 0; i < stars_array.length; i++) {
         if (i == stars_array.length - 1) {
