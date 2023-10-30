@@ -66,7 +66,7 @@ public class PaymentServlet  extends HttpServlet {
                 else {
                     // payment is successful
 
-                    query = "INSERT INTO sales(customerId, movieId, saleDate) VALUES (?, ?, CURDATE())";
+                    query = "INSERT INTO sales(customerId, movieId, saleDate) VALUES (?, ?, ?)";
                     PreparedStatement statement2 = conn.prepareStatement(query);
                     String customerId = session.getAttribute("customerId").toString();
                     for (String key : cart.keySet()) {
@@ -74,8 +74,10 @@ public class PaymentServlet  extends HttpServlet {
 
                         statement2.setString(1, customerId);
                         statement2.setString(2, movieId);
+                        statement2.setString(3, "2022-10-29");
 
-                        statement2.executeUpdate();  // Insert for each movie in the cart
+
+                        statement2.executeUpdate();
                     }
 
                     statement2.close();
