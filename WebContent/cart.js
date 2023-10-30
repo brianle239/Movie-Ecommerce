@@ -5,15 +5,16 @@ jQuery.ajax({
         console.log(resultData)
         let cart = resultData.cart;
         let idDict = resultData.idCart;
+        let priceDict = resultData.priceId;
 
         for(let title in cart) {
             let price = 14;
             let quantity = cart[title];
-            let total = price * quantity;
+            let total = priceDict[idDict[title]] * quantity;
             let cartItemHTML = `
                     <tr id="${idDict[title]}">
                         <td>${title}</td>
-                        <td class="product-price">$${price}</td>
+                        <td class="product-price">$${priceDict[idDict[title]]}</td>
                         <td>
                             <button id="${idDict[title]}" class="decrease-quantity">-</button>
                             <input type="number" class="product-quantity" value="${quantity}" min="1">
