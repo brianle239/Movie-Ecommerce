@@ -149,15 +149,15 @@ function populateMovieCard(resultData) {
         const stars_id_array = resultData[i]["movie_stars_id"].split("\t");
         const genre_array = resultData[i]["movie_genres"].split("\t");
         const genre_id_array = resultData[i]["movie_genres_id"].split("\t");
-        const movie_id = resultData[i]["movie_id"];
-        const movie_title = resultData[i]["movie_title"];
+        const movie_id = resultData[i]["movie_id"].split("\t");
+        const movie_title = resultData[i]["movie_title"].split("\t");
         let movieCardHtml =
             `<div class="movie-card">
                 <div class="movie-header">
                     <div class="title-and-rating">`;
 
         movieCardHtml+=`<h1><span>`;
-        movieCardHtml+= '<a href="single-movie.html?id=' + movie_id + '">' + movie_title + '</a>';
+        movieCardHtml+= '<a href="single-movie.html?id=' + movie_id[0] + '">' + movie_title[0] + '</a>';
         movieCardHtml+= `</span></h1>`;
 
         let r = resultData[i]["movie_rating"]
@@ -240,6 +240,7 @@ $(document).ready(function() {
         var data = { item: this.id, increase: true, remove: "false" }
         jQuery.ajax({
             method: "POST",
+            dataType: 'text',
             data: data,
             url: "api/cart", // Setting request url, which is mapped by StarsServlet in Stars.java
             success: (resultData) => {
