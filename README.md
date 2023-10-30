@@ -19,6 +19,7 @@ The variables are set in lines 77-88 of src/MoviesServlet if their parameters ar
 If movie name (a), director (b), year (c), and star (d) are all defined, then the Where condition will be
 
     WHERE m.id is not null and m.title LIKE '%a%' and m.director LIKE '%b%' and m.year = c and s.name = '%d%'
+    
 
 Below is the nested query that returns the ids based on the search 
 
@@ -39,6 +40,7 @@ Below is the nested query that returns the ids based on the search
 "ORDER BY " + firstOrder + "\n" +
 
 "LIMIT ? OFFSET ?"
+
 
 
 ## Project 1
