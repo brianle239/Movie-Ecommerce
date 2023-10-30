@@ -87,8 +87,8 @@ function handleResult(resultData) {
         rowHTML += "<th>" + resultData[i]["movie_director"] + "</th>";
         // rowHTML += "<th>" + resultData[i]["movie_genres"] + "</th>";
         rowHTML += "<th>";
-        const genres_array = resultData[i]["movie_genres"].split(",");
-        const genres_id_array = resultData[i]["movie_genres_id"].split(",");
+        const genres_array = resultData[i]["movie_genres"].split("\t");
+        const genres_id_array = resultData[i]["movie_genres_id"].split("\t");
         for (let i = 0; i < Math.min(3, genres_array.length); i++) {
             if (i == Math.min(3, genres_array.length) - 1) {
                 rowHTML +=
@@ -103,8 +103,8 @@ function handleResult(resultData) {
         }
 
         rowHTML += "</th>";
-        const stars_array = resultData[i]["movie_stars"].split(",");
-        const stars_id_array = resultData[i]["movie_stars_id"].split(",");
+        const stars_array = resultData[i]["movie_stars"].split("\t");
+        const stars_id_array = resultData[i]["movie_stars_id"].split("\t");
         rowHTML += "<th>";
         for (let i = 0; i < Math.min(3, stars_array.length); i++) {
             if (i == Math.min(3, stars_array.length) - 1) {
