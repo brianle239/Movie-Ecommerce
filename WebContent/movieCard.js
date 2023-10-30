@@ -61,6 +61,18 @@ function setUrl(resultData) {
     else {
         sort = "r Desc Desc";
     }
+    if (movie_name != null) {
+        $("#titleSearch").attr('value', movie_name);
+    }
+    if (year != null) {
+        $("#yearSearch").attr('value', year);
+    }if (director != null) {
+        $("#directorSearch").attr('value', director);
+    }
+    if (star_name != null) {
+        $("#starSearch").attr('value', star_name);
+    }
+
     if (offset != null && offset !== "0") {
         console.log(offset);
         let page = parseInt(offset) / pageAmt;
