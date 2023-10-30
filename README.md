@@ -23,13 +23,21 @@ If movie name (a), director (b), year (c), and star (d) are all defined, then th
 Below is the nested query that returns the ids based on the search 
 
 "SELECT DISTINCT m.id as id, r.rating as rating, count(*) OVER() AS total_rows\n" +
+
 "FROM movies m\n" +
+
 "LEFT JOIN ratings r ON r.movieId = m.id\n" +
+
 "LEFT JOIN stars_in_movies sm ON sm.movieId = m.id\n" +
+
 "LEFT JOIN stars s ON sm.starId = s.id\n" +
+
 "WHERE m.id is not null" + movie_name_cond + director_cond + year_cond + star_name_cond + "\n" +
+
 "GROUP BY m.id\n" +
+
 "ORDER BY " + firstOrder + "\n" +
+
 "LIMIT ? OFFSET ?"
 
 
