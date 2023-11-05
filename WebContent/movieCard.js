@@ -18,6 +18,7 @@ function setUrl(resultData) {
     else {
         movie_url = resultData["history"];
     }
+    console.log(movie_url);
 
     pageAmt = getParameterByName('amt');
     sort = getParameterByName('sort');
@@ -29,7 +30,7 @@ function setUrl(resultData) {
     director = getParameterByName('director');
     star_name = getParameterByName('star_name');
 
-    console.log("Movie URL to be set" + movie_url);
+    console.log("Movie URL to be set" + movie_url + ": " + genreId);
     jQuery.ajax({
         dataType: "json",  // Setting return data type
         method: "POST",// Setting request method
@@ -82,7 +83,7 @@ function setUrl(resultData) {
         $(pages[3]).find("a").text(page+2);
 
         $(pages[1]).find("a").attr('href', 'movieCard.html?amt=' + pageAmt + "&sort=" + sort + "&offset=" + (parseInt(offset) - parseInt(pageAmt)) + addUrlParemeter());
-        $(pages[3]).find("a").attr('href', 'movieCard.html?amt=' + pageAmt + "&sort=" + sort + "&offset=" + (parseInt(offset) + parseInt(pageAmt))+ "&genreId=" + genreId + "&titleChar=" + titleChar);
+        $(pages[3]).find("a").attr('href', 'movieCard.html?amt=' + pageAmt + "&sort=" + sort + "&offset=" + (parseInt(offset) + parseInt(pageAmt))+ addUrlParemeter());
 
     }
     else {
@@ -135,7 +136,6 @@ function getParameterByName(target) {
     // Encode target parameter name to url encoding
 
     target = target.replace(/[\[\]]/g, "\\$&");
-    console.log("Found: " + movie_url);
     // Ues regular expression to find matched parameter value
     let regex = new RegExp("[?&]" + target + "(=([^&#]*)|&|#|$)"),
         results = regex.exec(movie_url);

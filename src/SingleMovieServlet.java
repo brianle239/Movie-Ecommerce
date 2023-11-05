@@ -53,11 +53,11 @@ public class SingleMovieServlet extends HttpServlet {
             // Get a connection from dataSource
 
             // Construct a query with parameter represented by "?"
-            String query = "SELECT m.id, m.title, m.year, m.director, r.rating,\n" +
+            String query = "SELECT DISTINCT m.id, m.title, m.year, m.director, r.rating,\n" +
                     "GROUP_CONCAT(DISTINCT g.id ORDER BY g.name ASC SEPARATOR ', ') as genres_id,\n" +
                     "GROUP_CONCAT(DISTINCT g.name ORDER BY g.name ASC SEPARATOR ', ') as genres,\n" +
-                    "GROUP_CONCAT(s.name ORDER BY (select count(sm.movieId) from stars_in_movies sm where sm.starId = s.id) Desc, s.name Asc SEPARATOR ',') AS stars,\n" +
-                    "GROUP_CONCAT(s.id ORDER BY (select count(sm.movieId) from stars_in_movies sm where sm.starId = s.id) Desc, s.name Asc SEPARATOR ',') AS stars_id\n" +
+                    "GROUP_CONCAT(DISTINCT s.name ORDER BY (select count(sm.movieId) from stars_in_movies sm where sm.starId = s.id) Desc, s.name Asc SEPARATOR ',') AS stars,\n" +
+                    "GROUP_CONCAT(DISTINCT s.id ORDER BY (select count(sm.movieId) from stars_in_movies sm where sm.starId = s.id) Desc, s.name Asc SEPARATOR ',') AS stars_id\n" +
                     "FROM movies as m\n" +
                     "LEFT JOIN ratings r on m.id = r.movieId\n" +
                     "LEFT JOIN genres_in_movies gim on m.id = gim.movieId\n" +

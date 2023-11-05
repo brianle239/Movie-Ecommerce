@@ -48,17 +48,18 @@ function handleResult(resultData) {
     for (let i = 0; i < genres_array.length; i++) {
         if (i == genres_array.length - 1) {
             rowHTML +=
-                '<a href="movieCard.html?id=' + genres_id_array[i] + '">'
+                '<a class="genre_page" href="movieCard.html?genreId=' + genres_id_array[i] + '">'
                 + genres_array[i] +
                 '</a>';
         }
         else {
             rowHTML +=
-                '<a href="movieCard.html?id=' + genres_id_array[i] + '">'
+                '<a class="genre_page" href="movieCard.html?genreId=' + genres_id_array[i] + '">'
                 + genres_array[i] + ", " +
                 '</a>';
         }
     }
+    // movieCard.html?id=
     rowHTML += "</th>";
 
 
@@ -90,6 +91,26 @@ function handleResult(resultData) {
 
 
 }
+
+
+$(document).ready(function() {
+    $(document).on('click', '.genre_page', function(event) {
+        event.preventDefault();
+        console.log("Clicked");
+        jQuery.ajax({
+            dataType: "json",  // Setting return data type
+            method: "POST",// Setting request method
+            // Do not change the url
+            url: "api/session?single=false"
+
+
+        });
+        console.log(this.href);
+        window.location.href = this.href;
+
+    });
+});
+
 $(document).ready(function() {
     $(document).on('click', '.cart-btn', function(event) {
         event.preventDefault();
@@ -119,8 +140,7 @@ jQuery.ajax({
     dataType: "json",  // Setting return data type
     method: "POST",// Setting request method
     // Do not change the url
-    url: "api/session?single=true",
-    success: (resultData) => setUrl(resultData) // Setting callback function to handle data returned successfully by the SingleStarServlet
+    url: "api/session?single=true"
 });
 // Makes the HTTP GET request and registers on success callback function handleResult
 jQuery.ajax({

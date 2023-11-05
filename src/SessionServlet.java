@@ -72,7 +72,10 @@ public class SessionServlet extends HttpServlet {
         try {
             if (!request.getParameter("single").equals("null")) {
                 String single = request.getParameter("single");
+                System.out.println(single);
+
                 session.setAttribute("single", single);
+
             }
         }
         catch (Exception e) {
