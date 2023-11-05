@@ -3,7 +3,7 @@
 Fabflix URL: [http://13.58.98.182:8080/fabflix/](http://13.58.62.187:8080/fabflix/)
 
 ## Project 2
-Project 2 Demo Video URL: 
+Project 2 Demo Video URL: https://www.youtube.com/watch?v=A2W_HyDl1sE&ab_channel=BrianLe
 
 Brian Le (bale4): Task 2 Implement the Main Page (with Search and Browse) and Task 3 Extend Project 1
 
