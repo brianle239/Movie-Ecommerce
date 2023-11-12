@@ -87,7 +87,7 @@ public class StarParser extends DefaultHandler {
 
     public void printInconStars() {
         System.out.println("Star name in Cast not found Actors: " + iNoStarMovie);
-        System.out.println("Star name unkown but improtant (sa) " + iSA);
+        System.out.println("Star name unkown but important (sa): " + iSA);
         System.out.println("Invalid Cast Formating: " + iInvalidCast);
         System.out.println("Incorrect format Year: " + iNoYear);
         System.out.println("Dupe stars: " + iDupe);

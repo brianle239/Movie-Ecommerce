@@ -31,7 +31,7 @@ public class MovieParser extends DefaultHandler {
 
     private DataSource dataSource;
 
-    private Connection connection;
+    static Connection connection;
     HashMap<String, Integer> genreDict;
 
     private int iNoDirector;
@@ -41,6 +41,7 @@ public class MovieParser extends DefaultHandler {
     private int iInvalidMidCast;
 
     private HashMap<String, Star> stars;
+    private ExecutorService executor;
 
 
     public MovieParser() {
@@ -104,13 +105,16 @@ public class MovieParser extends DefaultHandler {
         try {
             if (connection != null) {
                 System.out.println("Connection established!!");
-                System.out.println();
 
-                Statement select = connection.createStatement();
-                String query = "Insert Into movies\n" +
+                String baseQuery = "Insert Into movies\n" +
                         "Values ";
-                String queryGM = "Insert Into genres_in_movies\n" +
+                String baseQueryGM = "Insert Into genres_in_movies\n" +
                         "Values ";
+                int amt = 0;
+
+                String query = baseQuery;
+                String queryGM = baseQueryGM;
+
                 for (HashMap.Entry<String, Movie> set : movieDict.entrySet()) {
 
                     // Printing all elements of a Map
@@ -118,12 +122,21 @@ public class MovieParser extends DefaultHandler {
                     for (String g :  set.getValue().getGenres()) {
                         queryGM += "(" + genreDict.get(g) + ", \"" + set.getValue().getId() + "\"),\n";
                     }
-
+                    amt += 1;
+                    if (amt % 2000 == 0) {
+                        amt = 0;
+                        QueryWorker worker = new QueryWorker(query, queryGM);
+                        executor.execute(worker);
+                        query = baseQuery;
+                        queryGM = baseQueryGM;
+                    }
 
                 }
-//                System.out.println(query.substring(0, query.length()-2));
-                select.executeUpdate(query.substring(0, query.length()-2)+";");
-                select.executeUpdate(queryGM.substring(0, queryGM.length()-2)+";");
+                QueryWorker worker = new QueryWorker(query, queryGM);
+                executor.execute(worker);
+                executor.shutdown();
+                while (!executor.isTerminated()) {}
+                System.out.println("Finished Inserting Movies/Genres");
 
             }
         }
@@ -137,13 +150,16 @@ public class MovieParser extends DefaultHandler {
         try {
             if (connection != null) {
                 Statement select = connection.createStatement();
-                String query = "Insert Into stars\n" +
+                String baseQuery = "Insert Into stars\n" +
                         "Values ";
-                String querySM = "Insert Into stars_in_movies\n" +
+                String baseQuerySM = "Insert Into stars_in_movies\n" +
                         "Values ";
+                int amt = 0;
+                String query = baseQuery;
+                String querySM = baseQuerySM;
+
                 for (HashMap.Entry<String, Star> set : stars.entrySet()) {
 
-                    // Printing all elements of a Map
                     query += set.getValue().insertFormat() + ",\n";
                     if (set.getValue().getMovies().size() == 0) {
                         iCastNoMovie += 1;
@@ -156,11 +172,20 @@ public class MovieParser extends DefaultHandler {
                             iInvalidMidCast += 1;
                         }
                     }
-
+                    amt += 1;
+                    if (amt % 2000 == 0) {
+                        amt = 0;
+                        QueryWorker worker = new QueryWorker(query, querySM);
+                        executor.execute(worker);
+                        query = baseQuery;
+                        querySM = baseQuerySM;
+                    }
                 }
-//                System.out.println(query);
-                select.executeUpdate(query.substring(0, query.length()-2)+";");
-                select.executeUpdate(querySM.substring(0, querySM.length()-2)+";");
+                QueryWorker worker = new QueryWorker(query, querySM);
+                executor.execute(worker);
+                executor.shutdown();
+                while (!executor.isTerminated()) {}
+
             }
         } catch (Exception e) {
             System.out.println("Error: " + e);
@@ -181,16 +206,21 @@ public class MovieParser extends DefaultHandler {
 
         parseDocument();
         runGenreInsert();
+        int movieDictSize = movieDict.size();
+        executor = Executors.newFixedThreadPool((movieDictSize / 2000) + 1);
         runInsert();
         StarParser spx = new StarParser();
         spx.runExampleStar();
         stars = spx.getStarDict();
+        int starSize = stars.size();
+        executor = Executors.newFixedThreadPool((starSize / 2000) +1);
+        System.out.println("Star Insert");
         runStarInsert();
 
         long estimatedTime = System.currentTimeMillis() - startTime;
         printIncon();
         spx.printInconStars();
-        System.out.println("TIME: " + estimatedTime);
+        System.out.println("TIME: " + estimatedTime + " Milliseconds");
 
         //printData();
         // tempMovie.printSet();
@@ -266,9 +296,6 @@ public class MovieParser extends DefaultHandler {
                 }
 
             }
-//            else {
-//                System.out.println(tempMovie.toString());
-//            }
 
         } else if (qName.equalsIgnoreCase("t")) {
             tempMovie.setTitle(tempVal);
@@ -303,39 +330,37 @@ public class MovieParser extends DefaultHandler {
         }
 
 
-
     }
 
     public static void main(String[] args) {
         MovieParser spe = new MovieParser();
         spe.runExample();
-        ExecutorService executor = Executors.newFixedThreadPool(3);
-        for (int i = 0; i < 6; i++) {
-            QueryWorker worker = new QueryWorker(i);
-            executor.execute(worker);
-        }
-        executor.shutdown();
-        while (!executor.isTerminated()) {}
 
     }
     static class QueryWorker implements Runnable {
-        Random random;
-        String connection;
+
         String query;
 
-        QueryWorker(int i) {
-            random = new Random(i);
-            connection = "New connection " + i;
-            System.out.println(connection);
-            query = "SELECT * FROM Foo WHERE id = " + i;
+        String secondQuery;
+
+        QueryWorker(String i, String j) {
+            query = i.substring(0, i.length()-2)+";";
+            secondQuery = j.substring(0, j.length()-2)+";";
         }
 
         @Override
         public void run() {
-            System.out.println(String.format("Executing query: %s", query));
+            System.out.println("Threading");
             try {
-                Thread.sleep(random.nextInt(5000));
-            } catch (InterruptedException e) { e.printStackTrace();}
+                Statement select = connection.createStatement();
+                select.executeUpdate(query);
+                select.executeUpdate(secondQuery);
+//                Thread.sleep(1000);
+            }
+//            catch (InterruptedException e) { e.printStackTrace();
+//            }
+            catch (Exception e) {System.out.println("ERROR: " + e);}
+
         }
     }
 
