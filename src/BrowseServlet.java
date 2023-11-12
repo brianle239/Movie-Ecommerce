@@ -72,7 +72,6 @@ public class BrowseServlet extends HttpServlet {
 
                 jsonArray.add(jsonObject);
             }
-            System.out.print("yes");
 
             query = "SELECT DISTINCT SUBSTRING(m.title, 1, 1) AS t\n" +
                     "FROM movies m\n" +
@@ -90,7 +89,6 @@ public class BrowseServlet extends HttpServlet {
 
                 JsonObject jsonObject = new JsonObject();
                 jsonObject.addProperty("titleChar", titleChar);
-
                 jsonArray.add(jsonObject);
             }
             rs.close();

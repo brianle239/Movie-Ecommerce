@@ -47,14 +47,22 @@ public class MoviesServlet extends HttpServlet {
             amt = Integer.parseInt(request.getParameter("amt"));
         }
         if (!request.getParameter("sort").equals("null")) {
+            // SQL injections are prevented by the
+            // Hard code check the strings
+
             arr = request.getParameter("sort").split(" ");
             if (arr[0].equals("t")) {
-                firstOrder = "title " + arr[1];
-                entireOrder = "title " + arr[1] + ", rating " + arr[2];
+                if ((arr[1].equals("Desc") || arr[1].equals("Asc")) && ((arr[2].equals("Desc") || arr[2].equals("Asc")))) {
+                    firstOrder = "title " + arr[1];
+                    entireOrder = "title " + arr[1] + ", rating " + arr[2];
+                }
+
             }
             else {
-                firstOrder = "rating " + arr[1];
-                entireOrder = "rating " + arr[1] + ", title " + arr[2];
+                if ((arr[1].equals("Desc") || arr[1].equals("Asc")) && ((arr[2].equals("Desc") || arr[2].equals("Asc")))) {
+                    firstOrder = "rating " + arr[1];
+                    entireOrder = "rating " + arr[1] + ", title " + arr[2];
+                }
             }
         }
         if (!request.getParameter("offset").equals("null")) {
@@ -129,17 +137,18 @@ public class MoviesServlet extends HttpServlet {
 
                 statement = conn.prepareStatement(query);
 
-
                 int paramIndex = 1;
                 for (Object param : parameters) {
                     if (param instanceof String) {
-                        statement.setString(paramIndex++, (String) param);
+                        statement.setString(paramIndex, (String) param);
+                        paramIndex += 1;
+                    } else if (param instanceof Integer) {
+                        statement.setInt(paramIndex, (int) param);
+                        paramIndex += 1;
                     }
                 }
-
                 statement.setInt(paramIndex++, amt);
                 statement.setInt(paramIndex++, offset);
-
 
             }
             else {
@@ -184,19 +193,20 @@ public class MoviesServlet extends HttpServlet {
                         "\tLEFT JOIN stars s ON sm.starId = s.id\n" +
                         "\tWHERE m.id is not null" +  whereClause + "\n" +
                         "\tGROUP BY m.id\n" +
-                        "\tORDER BY ? \n" +
+                        "\tORDER BY " + firstOrder + "\n" +
                         "\tLIMIT ? OFFSET ?) mr, \n" +
                         "movies m, genres_in_movies gm, genres g, stars_in_movies sm, stars s\n" +
                         "WHERE mr.id = m.id and mr.id = gm.movieId and gm.genreId = g.id and mr.id = sm.movieId and s.id = sm.starId\n" +
                         "GROUP BY m.id\n" +
-                        "ORDER BY ? ;";
+                        "ORDER BY " + entireOrder + ";";
 
 
                 statement = conn.prepareStatement(query);
-                parameters.add(firstOrder);
+//                parameters.add(firstOrder);
                 parameters.add(amt);
                 parameters.add(offset);
-                parameters.add(entireOrder);
+
+//                parameters.add(entireOrder);
 
                 for (int i = 0; i < parameters.size(); i++) {
                     if (parameters.get(i) instanceof String) {
@@ -206,7 +216,10 @@ public class MoviesServlet extends HttpServlet {
                     }
 
                 }
+                System.out.println("Param: " + parameters);
+
             }
+            System.out.println(statement);
 
             // Perform the query
             ResultSet rs = statement.executeQuery();
