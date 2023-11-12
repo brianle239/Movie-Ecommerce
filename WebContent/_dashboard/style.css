@@ -1,0 +1,14 @@
+.modal .modal-header, .modal .modal-body, .modal .modal-footer {
+    background-color: #f1f1f1;
+}
+.modal .modal-title {
+    color: #333;
+}
+
+.btn {
+    background-color: #5F9EA0;
+}
+
+.btn:hover {
+    background-color: #3a6a6c;
+}
