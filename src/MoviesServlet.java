@@ -14,6 +14,8 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet(name = "MoviesServlet", urlPatterns = "/api/movies")
 public class MoviesServlet extends HttpServlet {
@@ -29,9 +31,8 @@ public class MoviesServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        response.setContentType("application/json"); // Response mime type
+        response.setContentType("application/json");
 
-        // Retrieve parameter id from url request.
         int amt = 10;
         int offset = 0;
 
@@ -40,10 +41,7 @@ public class MoviesServlet extends HttpServlet {
         String[] arr;
         String firstOrder = "rating Desc";
         String entireOrder = "rating Desc, title Desc";
-        String movie_name_cond = "";
-        String year_cond = "";
-        String director_cond = "";
-        String star_name_cond = "";
+
 
         if (!request.getParameter("amt").equals("null")) {
             amt = Integer.parseInt(request.getParameter("amt"));
@@ -53,7 +51,7 @@ public class MoviesServlet extends HttpServlet {
             if (arr[0].equals("t")) {
                 firstOrder = "title " + arr[1];
                 entireOrder = "title " + arr[1] + ", rating " + arr[2];
-            }
+          git  }
             else {
                 firstOrder = "rating " + arr[1];
                 entireOrder = "rating " + arr[1] + ", title " + arr[2];
@@ -74,35 +72,36 @@ public class MoviesServlet extends HttpServlet {
                 titleCondition = " and m.title RLIKE '^[^a-zA-Z0-9]'";
             }
         }
-        if (!request.getParameter("movie_name").equals("null")) {
-            movie_name_cond = " and m.title LIKE '%" + request.getParameter("movie_name") + "%'";
-        }
-        if (!request.getParameter("year").isEmpty() && !request.getParameter("year").equals("null")) {
-            year_cond = " and m.year =" + request.getParameter("year");
-        }
-        if (!request.getParameter("director").equals("null")) {
-            director_cond = " and m.director LIKE '%" + request.getParameter("director") + "%'";
-        }
-        if (!request.getParameter("star_name").equals("null")) {
-            star_name_cond = " and s.name LIKE '%" + request.getParameter("star_name") + "%'";
-        }
+
         System.out.println(genreCondition);
 
-        // The log message can be found in localhost log
-        //request.getServletContext().log("getting id: " + id);
-        // Output stream to STDOUT
         PrintWriter out = response.getWriter();
-
-        // Get a connection from dataSource and let resource manager close the connection after usage.
         try (Connection conn = dataSource.getConnection()) {
-            // Get a connection from dataSource
-            // Construct a query with parameter represented by "?"
-            // count(*) OVER() AS full_count
+
+
             String query = "";
             PreparedStatement statement;
             if (!genreCondition.isEmpty() || !titleCondition.isEmpty()) {
                 // This is browsing query
 
+                List<Object> parameters = new ArrayList<>();
+                StringBuilder whereClause = new StringBuilder();
+
+                if (!"null".equals(request.getParameter("genreId"))) {
+                    whereClause.append(" AND gm.genreId = ?");
+                    parameters.add(Integer.parseInt(request.getParameter("genreId")));
+                }
+
+                String titleChar = request.getParameter("titleChar");
+                if (titleChar != null && !"null".equals(titleChar)) {
+                    if (!"*".equals(titleChar)) {
+                        whereClause.append(" AND m.title LIKE ?");
+                        parameters.add(titleChar + "%");
+                    } else {
+                        whereClause.append(" AND m.title RLIKE ?");
+                        parameters.add("^[^a-zA-Z0-9]");
+                    }
+                }
                 query = "SELECT\n" +
                         "    m.id as id,\n" +
                         "    m.title as title,\n" +
@@ -119,21 +118,54 @@ public class MoviesServlet extends HttpServlet {
                         "\tFROM movies m\n" +
                         "\tLEFT JOIN ratings r ON r.movieId = m.id\n" +
                         "\tLEFT JOIN genres_in_movies gm ON gm.movieId = m.id\n" +
-                        "\tWHERE m.id is not null" + genreCondition + titleCondition + "\n" +
+                        "\tWHERE m.id is not null" + whereClause + "\n" +
                         "\tGROUP BY m.id\n" +
-                        "\tORDER BY " + firstOrder + "\n" +
+                        "\tORDER BY "+ firstOrder +"\n" +
                         "\tLIMIT ? OFFSET ?) mr, \n" +
                         "movies m, genres_in_movies gm, genres g, stars_in_movies sm, stars s\n" +
                         "WHERE mr.id = m.id and mr.id = gm.movieId and gm.genreId = g.id and mr.id = sm.movieId and s.id = sm.starId\n" +
                         "GROUP BY m.id\n" +
-                        "ORDER BY " + entireOrder + ";";
-                // Declare our statement
+                        "ORDER BY " + entireOrder +" ;";
+
                 statement = conn.prepareStatement(query);
 
-                statement.setInt(1, amt);
-                statement.setInt(2, offset);
+
+                int paramIndex = 1;
+                for (Object param : parameters) {
+                    if (param instanceof String) {
+                        statement.setString(paramIndex++, (String) param);
+                    }
+                }
+
+                statement.setInt(paramIndex++, amt);
+                statement.setInt(paramIndex++, offset);
+
+
             }
             else {
+                StringBuilder whereClause = new StringBuilder();
+                List<Object> parameters = new ArrayList<>();
+                if (!"null".equals(request.getParameter("movie_name"))) {
+                    whereClause.append(" AND m.title LIKE ?");
+                    parameters.add("%" + request.getParameter("movie_name").trim() + "%");
+                }
+                // Check for the year condition and append to the whereClause
+                if (!request.getParameter("year").isEmpty() && !"null".equals(request.getParameter("year"))) {
+                    whereClause.append(" AND m.year = ?");
+                    parameters.add(request.getParameter("year").trim());
+                }
+
+                if (!"null".equals(request.getParameter("director"))) {
+                    whereClause.append(" AND m.director LIKE ?");
+                    parameters.add("%" + request.getParameter("director").trim() + "%");
+                }
+
+
+                if (!"null".equals(request.getParameter("star_name"))) {
+                    whereClause.append(" AND s.name LIKE ?");
+                    parameters.add("%" + request.getParameter("star_name").trim() + "%");
+                }
+
                 query = "SELECT\n" +
                         "    m.id as id,\n" +
                         "    m.title as title,\n" +
@@ -151,19 +183,30 @@ public class MoviesServlet extends HttpServlet {
                         "\tLEFT JOIN ratings r ON r.movieId = m.id\n" +
                         "\tLEFT JOIN stars_in_movies sm ON sm.movieId = m.id\n" +
                         "\tLEFT JOIN stars s ON sm.starId = s.id\n" +
-                        "\tWHERE m.id is not null" + movie_name_cond + director_cond + year_cond + star_name_cond+ "\n" +
+                        "\tWHERE m.id is not null" +  whereClause + "\n" +
                         "\tGROUP BY m.id\n" +
-                        "\tORDER BY " + firstOrder + "\n" +
+                        "\tORDER BY ? \n" +
                         "\tLIMIT ? OFFSET ?) mr, \n" +
                         "movies m, genres_in_movies gm, genres g, stars_in_movies sm, stars s\n" +
                         "WHERE mr.id = m.id and mr.id = gm.movieId and gm.genreId = g.id and mr.id = sm.movieId and s.id = sm.starId\n" +
                         "GROUP BY m.id\n" +
-                        "ORDER BY " + entireOrder + ";";
+                        "ORDER BY ? ;";
 
 
                 statement = conn.prepareStatement(query);
-                statement.setInt(1, amt);
-                statement.setInt(2, offset);
+                parameters.add(firstOrder);
+                parameters.add(amt);
+                parameters.add(offset);
+                parameters.add(entireOrder);
+
+                for (int i = 0; i < parameters.size(); i++) {
+                    if (parameters.get(i) instanceof String) {
+                        statement.setString(i + 1, (String) parameters.get(i));
+                    } else if (parameters.get(i) instanceof Integer) {
+                        statement.setInt(i + 1, (Integer) parameters.get(i));
+                    }
+
+                }
             }
 
             // Perform the query
