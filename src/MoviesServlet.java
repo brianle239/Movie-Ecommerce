@@ -51,7 +51,7 @@ public class MoviesServlet extends HttpServlet {
             if (arr[0].equals("t")) {
                 firstOrder = "title " + arr[1];
                 entireOrder = "title " + arr[1] + ", rating " + arr[2];
-          git  }
+            }
             else {
                 firstOrder = "rating " + arr[1];
                 entireOrder = "rating " + arr[1] + ", title " + arr[2];
@@ -149,7 +149,7 @@ public class MoviesServlet extends HttpServlet {
                     whereClause.append(" AND m.title LIKE ?");
                     parameters.add("%" + request.getParameter("movie_name").trim() + "%");
                 }
-                // Check for the year condition and append to the whereClause
+
                 if (!request.getParameter("year").isEmpty() && !"null".equals(request.getParameter("year"))) {
                     whereClause.append(" AND m.year = ?");
                     parameters.add(request.getParameter("year").trim());
@@ -159,7 +159,6 @@ public class MoviesServlet extends HttpServlet {
                     whereClause.append(" AND m.director LIKE ?");
                     parameters.add("%" + request.getParameter("director").trim() + "%");
                 }
-
 
                 if (!"null".equals(request.getParameter("star_name"))) {
                     whereClause.append(" AND s.name LIKE ?");
