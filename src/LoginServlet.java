@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import org.jasypt.util.password.StrongPasswordEncryptor;
+
 
 @WebServlet(name = "LoginServlet", urlPatterns = "/api/login")
 public class LoginServlet extends HttpServlet {
@@ -44,25 +46,37 @@ public class LoginServlet extends HttpServlet {
         }
 
         try (Connection conn = dataSource.getConnection()) {
-            String query = "SELECT email, id, password FROM customers WHERE email = ? AND password = ?";
+            String query = "SELECT email, id, password FROM customers WHERE email = ?";
 
             PreparedStatement statement = conn.prepareStatement(query);
             statement.setString(1, username);
-            statement.setString(2, password);
+            //statement.setString(2, password);
 
             ResultSet rs = statement.executeQuery();
             JsonObject jsonObject = new JsonObject();
 
+            boolean success = false;
+
             if (rs.next()) {
-                jsonObject.addProperty("status", "success");
-                jsonObject.addProperty("message", "Logged in successfully!");
-                String customerId = rs.getString("id");
+                String encryptedPassword = rs.getString("password");
+                success = new StrongPasswordEncryptor().checkPassword(password, encryptedPassword);
+                if(success){
+                    jsonObject.addProperty("status", "success");
+                    jsonObject.addProperty("message", "Logged in successfully!");
+                    String customerId = rs.getString("id");
 
-                request.getSession().setAttribute("user", username);
-                request.getSession().setAttribute("customerId", customerId);
+                    request.getSession().setAttribute("user", username);
+                    request.getSession().setAttribute("customerId", customerId);
 
-                jsonObject.addProperty("user", (new User(username,customerId )).toString());
-                response.setStatus(200);
+                    jsonObject.addProperty("user", (new User(username,customerId )).toString());
+                    response.setStatus(200);
+                }
+                else {
+                    jsonObject.addProperty("status", "fail");
+                    jsonObject.addProperty("message", "Invalid email or password!");
+                    jsonObject.addProperty("input", username + " " + password);
+                }
+
             } else {
                 // User not found
                 jsonObject.addProperty("status", "fail");
