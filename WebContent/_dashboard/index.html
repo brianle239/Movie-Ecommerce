@@ -1,10 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome Employee</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-$END$
+<div class="container">
+    <h1 class="text-center mt-5">Welcome Employee</h1>
+    <div class="d-flex justify-content-center mt-5">
+        <button class="btn btn-primary m-2" onclick="showForm('star')">Add a Star</button>
+        <button class="btn btn-primary m-2" onclick="showForm('movie')">Add a Movie</button>
+        <button class="btn btn-primary m-2" onclick="showForm('genre')">Add a Genre</button>
+    </div>
+</div>
+
+
+<div class="modal" id="starForm" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add a Star</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="starName">Star Name</label>
+                        <input type="text" class="form-control" id="starName" placeholder="Enter star name">
+                    </div>
+                    <div class="form-group">
+                        <label for="birthYear">Birth Year</label>
+                        <input type="text" class="form-control" id="birthYear" placeholder="Enter birth year">
+                    </div>
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="movieForm" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add a Movie</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="movieTitle">Movie Title</label>
+                        <input type="text" class="form-control" id="movieTitle" placeholder="Enter movie title">
+                    </div>
+                    <div class="form-group">
+                        <label for="movieYear">Year</label>
+                        <input type="text" class="form-control" id="movieYear" placeholder="Enter year">
+                    </div>
+                    <div class="form-group">
+                        <label for="directorName">Director Name</label>
+                        <input type="text" class="form-control" id="directorName" placeholder="Enter director name">
+                    </div>
+                    <div class="form-group">
+                        <label for="starNameMovie">Star Name</label>
+                        <input type="text" class="form-control" id="starNameMovie" placeholder="Enter star name">
+                    </div>
+                    <div class="form-group">
+                        <label for="birthYearMovie">Star's Birth Year</label>
+                        <input type="text" class="form-control" id="birthYearMovie" placeholder="Enter star's birth year">
+                    </div>
+                    <div class="form-group">
+                        <label for="genre">Genre</label>
+                        <input type="text" class="form-control" id="genre" placeholder="Enter genre">
+                    </div>
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="genreForm" tabindex="-1" role="dialog">
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add a Genre</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="genreName">Genre Name</label>
+                        <input type="text" class="form-control" id="genreName" placeholder="Enter genre name">
+                    </div>
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="index.js"></script>
+
 </body>
 </html>
