@@ -39,6 +39,7 @@ public class MovieParser extends DefaultHandler {
     private int iNoId;
     private int iCastNoMovie;
     private int iInvalidMidCast;
+    private int iNoTitle;
 
     private HashMap<String, Star> stars;
     private ExecutorService executor;
@@ -195,6 +196,7 @@ public class MovieParser extends DefaultHandler {
     private void printIncon() {
         System.out.println("No Director: " + iNoDirector);
         System.out.println("No FID: " + iNoId);
+        System.out.println("No Title: " + iNoTitle);
         System.out.println("Incorrect format Year: " + iNoYear);
         System.out.println("Cast not in any movie: " + iCastNoMovie);
         System.out.println("Cast Movie ID not found: " + iInvalidMidCast);
@@ -298,7 +300,13 @@ public class MovieParser extends DefaultHandler {
             }
 
         } else if (qName.equalsIgnoreCase("t")) {
-            tempMovie.setTitle(tempVal);
+            if (!tempVal.trim().isEmpty()) {
+                tempMovie.setTitle(tempVal);
+            }
+            else {
+                inconsistent = true;
+                iNoTitle += 1;
+            }
         } else if (qName.equalsIgnoreCase("fid")) {
 
             if (!tempVal.trim().isEmpty()) {

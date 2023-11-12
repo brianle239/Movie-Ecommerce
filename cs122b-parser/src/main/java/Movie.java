@@ -120,7 +120,7 @@ public class Movie {
             Map.entry("ducu", new ArrayList<String>(){{add("Documentary");}}),
             Map.entry("fant", new ArrayList<String>(){{add("Fantasy");}}),
             Map.entry("dram>", new ArrayList<String>(){{add("Drama");}}),
-            Map.entry("cnrb", new ArrayList<String>(){{add("Cops and Robbbers");}}),
+            Map.entry("cnrb", new ArrayList<String>(){{add("Cops and Robbers");}}),
             Map.entry("ront", new ArrayList<String>(){{add("Romantic");}}),
             Map.entry("romt comd", new ArrayList<String>(){{add("Romantic");add("Comedy");}}),
             Map.entry("adct", new ArrayList<String>(){{add("adct");}}),
