@@ -25,8 +25,17 @@ public class LoginFilter implements Filter {
             chain.doFilter(request, response);
             return;
         }
+        if (httpRequest.getRequestURI().contains("/_dashboard/")) {
+            // Check if session has employee flag
+            if (httpRequest.getSession().getAttribute("employee") == null) {
+                httpResponse.sendRedirect("login.html");
+                chain.doFilter(request, response);
+            } else {
+                chain.doFilter(request, response);
+            }
+        }
 
-        // Redirect to login page if the "user" attribute doesn't exist in session
+
         if (httpRequest.getSession().getAttribute("user") == null) {
             httpResponse.sendRedirect("login.html");
             chain.doFilter(request, response);
@@ -44,6 +53,10 @@ public class LoginFilter implements Filter {
         allowedURIs.add("login.js");
         allowedURIs.add("login.css");
         allowedURIs.add("api/login");
+
+        allowedURIs.add("/_dashboard/login.html");
+        allowedURIs.add("/_dashboard/login.js");
+        allowedURIs.add("/_dashboard/login");
     }
 
     public void destroy() {
