@@ -3,52 +3,142 @@ function showForm(formType) {
 }
 $(document).ready(function() {
 
-    // Handle submission of the 'Add a Star' form
-    $('#starForm form').on('submit', function(event) {
-        event.preventDefault(); // Prevent the default form submission
-
-        var starData = {
-            starName: $('#starName').val(),
-            birthYear: $('#birthYear').val()
-        };
-
-        $.post('/add-star', starData, function(response) {
-            console.log(response); // Log the response from the server
-            $('#starForm').modal('hide'); // Hide the modal
-        });
-    });
-
-    // Handle submission of the 'Add a Movie' form
     $('#movieForm form').on('submit', function(event) {
-        event.preventDefault(); // Prevent the default form submission
+        event.preventDefault();
+
+        var birth = 0;
+        if($('#birthYearMovie').val()){
+            birth = $('#birthYearMovie').val()
+        } else {
+            birth = null;
+        }
 
         var movieData = {
-            movieTitle: $('#movieTitle').val(),
+            title: $('#movieTitle').val(),
             year: $('#movieYear').val(),
-            directorName: $('#directorName').val(),
+            director: $('#directorName').val(),
             starName: $('#starNameMovie').val(),
-            birthYear: $('#birthYearMovie').val(),
+            birthYear:birth ,
             genre: $('#genre').val()
         };
+        console.log(movieData)
 
-        $.post('/add-movie', movieData, function(response) {
-            console.log(response); // Log the response from the server
-            $('#movieForm').modal('hide'); // Hide the modal
+        $.ajax("/fabflix_war/_dashboard/addMovie", {
+            method: "POST",
+            data: movieData,
+            dataType: "json",
+            success: function (response) {
+                console.log(response)
+                var status = response.status;
+                var output = "Added succesfully! " + status
+
+                if(status === "Duplicate movie found. No new movie added."){
+                    $('#movieMessage')
+                        .text(status)
+                        .addClass('alert-danger')
+                        .show();
+
+                } else {
+                    $('#movieMessage')
+                        .text(output)
+                        .addClass('alert-success')
+                        .removeClass('alert-danger')
+                        .show();
+                }
+
+            },
+            error: function (xhr, status, error) {
+                $('#movieMessage')
+                    .text("Error adding movie: " + xhr.responseText)
+                    .addClass('alert-danger')
+                    .removeClass('alert-success')
+                    .show();
+                console.error("Error adding movie:", error);
+                console.error("Status", status);
+            },
         });
-    });
 
-    // Handle submission of the 'Add a Genre' form
+    });
+    $('#starForm form').on('submit', function(event) {
+        event.preventDefault();
+        var birth = 0;
+        if($('#birthYear').val()){
+            birth = $('#birthYear').val()
+        } else {
+            birth = null;
+        }
+
+        var starData = {
+            name: $('#starName').val(),
+            birthYear:birth ,
+
+        };
+        console.log(starData)
+
+        $.ajax("/fabflix_war/_dashboard/addStar", {
+            method: "POST",
+            data: starData,
+            dataType: "json",
+            success: function (response) {
+                console.log(response)
+                var status = response.status;
+                var output = "Added succesfully! " + status
+
+                $('#starMessage')
+                    .text(output)
+                    .addClass('alert-success')
+                    .removeClass('alert-danger')
+                    .show();
+
+            },
+            error: function (xhr, status, error) {
+                $('#starMessage')
+                    .text("Error adding star: " + xhr.responseText)
+                    .addClass('alert-danger')
+                    .removeClass('alert-success')
+                    .show();
+                console.error("Error adding star:", error);
+                console.error("Status", status);
+            },
+        });
+
+    });
     $('#genreForm form').on('submit', function(event) {
-        event.preventDefault(); // Prevent the default form submission
+        event.preventDefault();
 
         var genreData = {
-            genreName: $('#genreName').val()
+            name: $('#genreName').val(),
+
         };
+        console.log(genreData)
 
-        $.post('/add-genre', genreData, function(response) {
-            console.log(response); // Log the response from the server
-            $('#genreForm').modal('hide'); // Hide the modal
+        $.ajax("/fabflix_war/_dashboard/addGenre", {
+            method: "POST",
+            data: genreData,
+            dataType: "json",
+            success: function (response) {
+                console.log(response)
+                var status = response.status;
+                var output = "Added succesfully! " + status
+
+                $('#genreMessage')
+                    .text(output)
+                    .addClass('alert-success')
+                    .removeClass('alert-danger')
+                    .show();
+
+            },
+            error: function (xhr, status, error) {
+                $('#genreMessage')
+                    .text("Error adding genre: " + xhr.responseText)
+                    .addClass('alert-danger')
+                    .removeClass('alert-success')
+                    .show();
+                console.error("Error adding genre:", error);
+                console.error("Status", status);
+            },
         });
-    });
 
+    });
 });
+
