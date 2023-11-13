@@ -94,8 +94,8 @@ public class StarParser extends DefaultHandler {
         System.out.println("No DOB for stars: " + iNoDob);
     }
     public void runExampleStar() {
-        parseDocument("cs122b-parser/actors63.xml");
-        parseDocument("cs122b-parser/casts124.xml");
+        parseDocument("actors63.xml");
+        parseDocument("casts124.xml");
     }
 
     private void parseDocument(String file) {
