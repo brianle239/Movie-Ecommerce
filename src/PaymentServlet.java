@@ -93,9 +93,9 @@ public class PaymentServlet  extends HttpServlet {
                 jsonObject.addProperty("message", "Invalid payment information!");
 
             }
-
             rs.close();
             statement.close();
+
 
 
             response.getWriter().write(jsonObject.toString());

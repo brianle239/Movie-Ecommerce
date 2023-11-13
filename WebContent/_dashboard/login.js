@@ -8,7 +8,6 @@ function submitLoginForm(formSubmitEvent) {
     $.ajax(
         "login", {
             method: "POST",
-            // Serialize the login form to the data sent by POST request
             data: login_form.serialize(),
             success: handleLoginResult
         }

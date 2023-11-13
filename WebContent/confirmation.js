@@ -8,13 +8,6 @@ jQuery.ajax({
         for (let key in resultData["cart"]) {
             $("#userItems").append(`<li class="list-group-item">${key}</li>`);
         }
-
-
-
-
-
-
-
     },
     error: (jqXHR, textStatus, errorThrown) => {
         console.error("AJAX error:", textStatus, errorThrown);
