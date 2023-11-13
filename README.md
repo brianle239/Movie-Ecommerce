@@ -2,6 +2,10 @@
 
 Fabflix URL: [http://13.58.98.182:8080/fabflix/](http://13.58.62.187:8080/fabflix/)
 
+## Project
+Brian Le (bale4): Task 1 Adding reCaptcha, Task 2 Adding HTTPS, Task 6 Importing large XML data files into the Fabflix database
+Henry Reyes (henreyes): Task 3 Use PreparedStatement (filenames: EmployeeLogin.java, LoginServlet.java, CartItemServlet.java, BrowseServlet.java, MoviesServlet.java MoviesListServlet.Java, PaymentServlet.java, SingleMovieServlet.java, SingleStarServlet.java), Task 4  Use Encrypted Password, Task 5 Implementing a Dashboard using Stored Procedure
+
 ## Project 2
 Project 2 Demo Video URL: https://www.youtube.com/watch?v=A2W_HyDl1sE&ab_channel=BrianLe
 
