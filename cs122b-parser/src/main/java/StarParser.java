@@ -161,10 +161,17 @@ public class StarParser extends DefaultHandler {
                 count += 1;
                 if (starDict.get(key) == null) {
                     starDict.put(key, tempStar);
+
                 }
                 else {
                     iDupe += 1;
+                    System.out.println("Inconsistent Dupe: " + tempStar.toString());
                 }
+            }
+            else {
+
+                System.out.println("Inconsistent: " + tempStar.toString());
+
             }
             tempVal = "";
 

@@ -15,6 +15,8 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.io.File;
+import java.io.FileWriter;
 import java.util.Random;
 
 
@@ -204,8 +206,8 @@ public class MovieParser extends DefaultHandler {
     }
     public void runExample() {
 
-        long startTime = System.currentTimeMillis();
 
+        long startTime = System.currentTimeMillis();
         parseDocument();
         runGenreInsert();
         int movieDictSize = movieDict.size();
@@ -222,7 +224,15 @@ public class MovieParser extends DefaultHandler {
         long estimatedTime = System.currentTimeMillis() - startTime;
         printIncon();
         spx.printInconStars();
+
         System.out.println("TIME: " + estimatedTime + " Milliseconds");
+        try {
+            connection.close();
+        }
+        catch (Exception e) {
+            System.out.println("Error in closing connection");
+        }
+
 
         //printData();
         // tempMovie.printSet();
@@ -298,6 +308,9 @@ public class MovieParser extends DefaultHandler {
                 }
 
             }
+            else {
+                System.out.println("Inconsistent: " + tempMovie.toString());
+            }
 
         } else if (qName.equalsIgnoreCase("t")) {
             if (!tempVal.trim().isEmpty()) {
@@ -363,6 +376,7 @@ public class MovieParser extends DefaultHandler {
                 Statement select = connection.createStatement();
                 select.executeUpdate(query);
                 select.executeUpdate(secondQuery);
+                select.close();
 //                Thread.sleep(1000);
             }
 //            catch (InterruptedException e) { e.printStackTrace();
