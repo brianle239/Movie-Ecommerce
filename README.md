@@ -13,8 +13,16 @@ Henry Reyes (henreyes):
 
 
 Parser Optimization:
+
 Multi Threading for inserting into query. (Time before on EC2 - 60 seconds)
+
 Creating objects for each star/movie and storing them into Hashmaps instead of ArrayList to quickly find duplicates for movies and stars. (Time before on EC2 - 270 seconds)
+
+
+Inconsistent File: inconsistent.txt
+
+Inconsistency is determined if for movie, year is not formatted correctly, or any field is missing. For Actors/Casts, inconsistent if any field other than year is missing or can't parse. Actors not in Cast will still be added to the db
+
 
 ## Project 2
 Project 2 Demo Video URL: https://www.youtube.com/watch?v=A2W_HyDl1sE&ab_channel=BrianLe
