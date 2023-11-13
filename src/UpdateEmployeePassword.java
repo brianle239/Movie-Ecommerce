@@ -12,7 +12,7 @@ public class UpdateEmployeePassword {
     public static void main(String[] args) throws Exception {
 
         String loginUser = "mytestuser";
-        String loginPasswd = "My6$Password";
+        String loginPasswd = "milk";
         String loginUrl = "jdbc:mysql://localhost:3306/moviedb";
 
         Class.forName("com.mysql.jdbc.Driver").newInstance();
