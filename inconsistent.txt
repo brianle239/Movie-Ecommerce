@@ -1,0 +1,245 @@
+Inconsistent Movie: Movie Details - Title:El grand cavalcodos, Id:LB9, Director:Bunuel, Year:0, Genres:[].
+Inconsistent Movie: Movie Details - Title:null, Id:JD7, Director:Dassin, Year:1947, Genres:[Violence].
+Inconsistent Movie: Movie Details - Title:Catherine of Russia, Id:WS45, Director:W.Staudte, Year:0, Genres:[Uncategorized].
+Inconsistent Movie: Movie Details - Title:null, Id:WlJ10, Director:W.Jackson, Year:1949, Genres:[].
+Inconsistent Movie: Movie Details - Title:Morgan Stewart's Coming Home, Id:AS22, Director:Alan~Smithee, Year:0, Genres:[].
+Inconsistent Movie: Movie Details - Title:Raging Angels, Id:AS32, Director:Alan~Smithee, Year:0, Genres:[].
+Inconsistent Movie: Movie Details - Title:null, Id:GeP45, Director:Pollock, Year:1999, Genres:[].
+Inconsistent Movie: Movie Details - Title:null, Id:GxR10, Director:G.Reinhardt, Year:1954, Genres:[].
+Inconsistent Movie: Movie Details - Title:null, Id:GxR10, Director:G.Reinhardt, Year:1954, Genres:[].
+Inconsistent Movie: Movie Details - Title:Stop Train 349, Id:RHd2, Director:Haedrich, Year:0, Genres:[Thriller].
+Inconsistent Movie: Movie Details - Title:Karate Kid, Id:IAv12, Director:J.G.Avildsen, Year:0, Genres:[].
+Inconsistent Movie: Movie Details - Title:The Eternal City, Id:MS0, Director:Scorsese, Year:0, Genres:[Drama].
+Inconsistent Movie: Movie Details - Title:Gangs of New York, Id:MS36, Director:Scorsese, Year:0, Genres:[].
+Inconsistent Movie: Movie Details - Title:Buena Vista Social Club, Id:WiW30, Director:Wenders, Year:0, Genres:[Musical].
+Inconsistent Movie: Movie Details - Title:Mulholland Drive, Id:DLy25, Director:D.Lynch, Year:0, Genres:[Uncategorized].
+Inconsistent Movie: Movie Details - Title:null, Id:MLt15, Director:M.Lester, Year:1984, Genres:[Horror].
+Inconsistent Movie: Movie Details - Title:Sarabande, Id:AEy13, Director:Egoyan, Year:0, Genres:[].
+Inconsistent Movie: Movie Details - Title:null, Id:BSi3, Director:Silberling, Year:1988, Genres:[Thriller].
+Inconsistent Movie: Movie Details - Title:Fairy Tale: A True Story, Id:CsS15, Director:Sturridge, Year:0, Genres:[Fantasy].
+Inconsistent Movie: Movie Details - Title:Cradle will Rock, Id:null, Director:T.Robbins, Year:2000, Genres:[Drama].
+Inconsistent Movie: Movie Details - Title:null, Id:KDo1x, Director:Dowling, Year:0, Genres:[].
+Inconsistent Movie: Movie Details - Title:Jerry and Tom, Id:TdC13, Director:diCillo, Year:0, Genres:[].
+Inconsistent Movie: Movie Details - Title:The Shanghai Triad, Id:Z9590, Director:UnYear95, Year:0, Genres:[Cops and Robbers].
+Inconsistent Movie: Movie Details - Title:Taste of Cherry, Id:AbK15, Director:Kiarostami, Year:0, Genres:[Drama].
+Inconsistent Movie: Movie Details - Title:The Matchmaker, Id:MkJ11, Director:M.Joffe, Year:0, Genres:[Comedy, Romantic].
+Inconsistent Movie: Movie Details - Title:All is Routine, Id:MJu15, Director:M.Judge, Year:0, Genres:[].
+Inconsistent Movie: Movie Details - Title:Show Me Love, Id:LMy1, Director:, Year:1999, Genres:[Drama].
+Inconsistent Movie: Movie Details - Title:Together, Id:LMy3, Director:, Year:2001, Genres:[Drama, Comedy].
+Inconsistent Movie: Movie Details - Title:In the Bedroom, Id:TFd10, Director:, Year:2001, Genres:[Drama].
+Inconsistent Movie: Movie Details - Title:Never Never, Id:JSx0, Director:, Year:2002, Genres:[Drama].
+Inconsistent Movie: Movie Details - Title:Monster's Ball, Id:MFo10, Director:, Year:2002, Genres:[Uncategorized].
+Inconsistent Cast: Star Details - Name:The Andrews Sisters, Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Alec Baldwin, Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Stephen Baldwin, Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Vincent Ball, Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:The Beatles, Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Barbara BelGeddes, Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Halle Berry, Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:The Bowery Boys, Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Miriam Brickman, Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Kenneth Branagh, Id:sn687, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Wilford Brimley, Id:sn718, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Colin Campbell, Id:sn892, Year:1937, Movies:[]. 
+Inconsistent Cast: Star Details - Name:John Cassavetes, Id:sn994, Year:1929, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Soumitra Chatterjee, Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Anne Chevalier, Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:George Clooney, Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:The Commodores, Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:William Devane, Id:sn1576, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Derek Farr, Id:sn1906, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Charles Farrell, Id:sn1910, Year:1901, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Frances Fisher, Id:sn1998, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Lynn Frederick, Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Charlotte Gainsbourg, Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Peter Graves, Id:sn2384, Year:1911, Movies:[]. 
+Inconsistent Cast: Star Details - Name:The Little Tough Guys, Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Ray Hallam, Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Laurence Harvey, Id:sn2639, Year:1928, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Terry Hatcher, Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Max Haufler, Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Nicky Henson, Id:sn2734, Year:1945, Movies:[]. 
+Inconsistent Cast: Star Details - Name:William Holden, Id:sn2819, Year:1918, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Rex Ingram, Id:sn2991, Year:1895, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Dead End Kids, Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:East Side Kids, Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Charles King, Id:sn3309, Year:1899, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Keystone Kops, Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Jack Lambert, Id:sn3435, Year:1920, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Queen Latifah, Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Laurel and Hardy, Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Jane March, Id:sn3906, Year:1973, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Marx Brothers, Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Spanky McFarland, Id:sn4069, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Mary Morris, Id:sn4372, Year:1915, Movies:[]. 
+Inconsistent Cast: Star Details - Name:David Morrissey, Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Mickey Mouse, Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Rene Navarre, Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Jennifer ONeill, Id:sn4690, Year:1947, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Super Dave Osborne, Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Raymond Pellegrin, Id:sn4845, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:The Sons of the Pioneers, Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Brad Pitt, Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Moliere Players, Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Sarah Polley, Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Gilda Radner, Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Pamela Reed, Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:The Ritz-Brothers, Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Tanya Roberts, Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Howard E. Rollins~jr., Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Tim Roth, Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Mercedes Ruehl, Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Claudia Schiffer, Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Tony Shalhoub, Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Posh Spice, Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:The Loving Spoonful, Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Harvey Stephens, Id:sn5880, Year:1970, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Sting, Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Natalie Talmadge, Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Fred Thompson, Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Ann Todd, Id:sn6170, Year:1932, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Beverly Tyler, Id:sn6265, Year:1924, Movies:[]. 
+Inconsistent Cast: Star Details - Name:The Who, Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:The Wiere~Brothers, Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Dianne Wiest, Id:null, Year:0, Movies:[]. 
+Inconsistent Cast: Star Details - Name:Vanessa Williams, Id:sn6643, Year:1963, Movies:[]. 
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Cast: No name
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Cast: No name
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Cast: No name
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
+Inconsistent Actor: sa
