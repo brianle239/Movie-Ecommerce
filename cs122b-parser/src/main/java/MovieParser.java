@@ -26,6 +26,7 @@ public class MovieParser extends DefaultHandler {
 
     private String tempVal;
     private String tempDirector;
+    public static FileWriter myWriter;
 
     //to maintain context
     private Movie tempMovie;
@@ -206,7 +207,13 @@ public class MovieParser extends DefaultHandler {
     }
     public void runExample() {
 
+        try {
+            File myObj = new File("inconsistent.txt");
+            myWriter = new FileWriter("inconsistent.txt");
+        } catch (Exception e) {
+            System.out.println("Writing to File Error.\n");
 
+        }
         long startTime = System.currentTimeMillis();
         parseDocument();
         runGenreInsert();
@@ -227,6 +234,7 @@ public class MovieParser extends DefaultHandler {
 
         System.out.println("TIME: " + estimatedTime + " Milliseconds");
         try {
+            myWriter.close();
             connection.close();
         }
         catch (Exception e) {
@@ -309,7 +317,12 @@ public class MovieParser extends DefaultHandler {
 
             }
             else {
-                System.out.println("Inconsistent: " + tempMovie.toString());
+                try {
+                    myWriter.write("Inconsistent Movie: " + tempMovie + "\n");
+                }
+                catch (Exception e) {
+                    System.out.println("Fail to write to file");
+                }
             }
 
         } else if (qName.equalsIgnoreCase("t")) {

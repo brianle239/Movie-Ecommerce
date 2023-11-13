@@ -165,12 +165,21 @@ public class StarParser extends DefaultHandler {
                 }
                 else {
                     iDupe += 1;
-                    System.out.println("Inconsistent Dupe: " + tempStar.toString());
+                    try {
+                        MovieParser.myWriter.write("Inconsistent Cast: " + tempStar + "\n");
+                    }
+                    catch (Exception e) {
+                        System.out.println("Fail to write to file");
+                    }
                 }
             }
             else {
-
-                System.out.println("Inconsistent: " + tempStar.toString());
+                try {
+                    MovieParser.myWriter.write("Inconsistent Cast: " + tempStar + "\n");
+                }
+                catch (Exception e) {
+                    System.out.println("Fail to write to file");
+                }
 
             }
             tempVal = "";
@@ -200,9 +209,21 @@ public class StarParser extends DefaultHandler {
         else if (qName.equalsIgnoreCase("m")) {
             if (tempFid.trim().isEmpty() || tempName.trim().isEmpty()) {
                 iInvalidCast += 1;
+                try {
+                    MovieParser.myWriter.write("Inconsistent Cast: No name" + "\n");
+                }
+                catch (Exception e) {
+                    System.out.println("Fail to write to file");
+                }
             }
             else if (tempName.equals("sa")) {
                 iSA += 1;
+                try {
+                    MovieParser.myWriter.write("Inconsistent Actor: " + tempName + "\n");
+                }
+                catch (Exception e) {
+                    System.out.println("Fail to write to file");
+                }
             }
             else if (starDict.get(tempName) != null) {
                 Star s =  starDict.get(tempName);
