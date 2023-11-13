@@ -1,6 +1,6 @@
 # 2023-fall-cs122b-team-winner
 
-Fabflix URL: [http://13.58.98.182:8080/fabflix/](http://13.58.62.187:8080/fabflix/)
+Fabflix URL: https://13.58.62.187:8443/fabflix/index.html
 
 ## Project 3
 Brian Le (bale4): Task 1 Adding reCaptcha, Task 2 Adding HTTPS, Task 6 Importing large XML data files into the Fabflix database
@@ -10,6 +10,11 @@ Henry Reyes (henreyes):
       PaymentServlet.java, SingleMovieServlet.java, SingleStarServlet.java) 
     - Task 4  Use Encrypted Password
     - Task 5 Implementing a Dashboard using Stored Procedure
+
+
+Parser Optimization:
+Multi Threading for inserting into query. (Time before on EC2 - 60 seconds)
+Creating objects for each star/movie and storing them into Hashmaps instead of ArrayList to quickly find duplicates for movies and stars. (Time before on EC2 - 270 seconds)
 
 ## Project 2
 Project 2 Demo Video URL: https://www.youtube.com/watch?v=A2W_HyDl1sE&ab_channel=BrianLe
