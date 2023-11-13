@@ -23,7 +23,7 @@ $(document).ready(function() {
         };
         console.log(movieData)
 
-        $.ajax("/fabflix_war/_dashboard/addMovie", {
+        $.ajax("/addMovie", {
             method: "POST",
             data: movieData,
             dataType: "json",
@@ -75,7 +75,7 @@ $(document).ready(function() {
         };
         console.log(starData)
 
-        $.ajax("/fabflix_war/_dashboard/addStar", {
+        $.ajax("/addStar", {
             method: "POST",
             data: starData,
             dataType: "json",
@@ -112,7 +112,7 @@ $(document).ready(function() {
         };
         console.log(genreData)
 
-        $.ajax("/fabflix_war/_dashboard/addGenre", {
+        $.ajax("/addGenre", {
             method: "POST",
             data: genreData,
             dataType: "json",
