@@ -12,3 +12,23 @@
 .btn:hover {
     background-color: #3a6a6c;
 }
+
+.metadata-table {
+    background-color: #fff;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border-radius: 0.25rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.metadata-table h4 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.table-sm th,
+.table-sm td {
+    padding: 0.3rem;
+    font-size: 0.85rem;
+}
