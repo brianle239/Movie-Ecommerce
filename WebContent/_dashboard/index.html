@@ -29,6 +29,7 @@
                 </button>
             </div>
             <div class="modal-body">
+                <div id="starMessage" class="alert" role="alert" style="display:none;"></div>
                 <form>
                     <div class="form-group">
                         <label for="starName">Star Name</label>
@@ -48,6 +49,7 @@
 <div class="modal" id="movieForm" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
+
             <div class="modal-header">
                 <h5 class="modal-title">Add a Movie</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -55,6 +57,7 @@
                 </button>
             </div>
             <div class="modal-body">
+                <div id="movieMessage" class="alert" role="alert" style="display:none;"></div>
                 <form>
                     <div class="form-group">
                         <label for="movieTitle">Movie Title</label>
@@ -98,6 +101,7 @@
                 </button>
             </div>
             <div class="modal-body">
+                <div id="genreMessage" class="alert" role="alert" style="display:none;"></div>
                 <form>
                     <div class="form-group">
                         <label for="genreName">Genre Name</label>
@@ -110,7 +114,301 @@
     </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+
+<div class="container mt-5">
+    <h2 class="text-center">Metadata</h2>
+    <div class="row">
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="metadata-table table-responsive">
+                <h3>creditcards</h3>
+                <table class="table table-sm">
+                    <thead class="thead-light">
+                    <tr>
+                        <th>Attribute</th>
+                        <th>Type</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>id</td>
+                        <td>VARCHAR</td>
+                    </tr>
+                    <tr>
+                        <td>firstName</td>
+                        <td>VARCHAR</td>
+                    </tr>
+                    <tr>
+                        <td>lastName</td>
+                        <td>VARCHAR</td>
+                    </tr>
+                    <tr>
+                        <td>expiration</td>
+                        <td>DATE</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="metadata-table table-responsive">
+                <h3>customers</h3>
+                <table class="table table-sm">
+                    <thead class="thead-light">
+                    <tr>
+                        <th>Attribute</th>
+                        <th>Type</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>id</td>
+                        <td>INT</td>
+                    </tr>
+                    <tr>
+                        <td>firstName</td>
+                        <td>VARCHAR</td>
+                    </tr>
+                    <tr>
+                        <td>lastName</td>
+                        <td>VARCHAR</td>
+                    </tr>
+                    <tr>
+                        <td>ccId</td>
+                        <td>VARCHAR</td>
+                    </tr>
+                    <tr>
+                        <td>address</td>
+                        <td>VARCHAR</td>
+                    </tr>
+                    <tr>
+                        <td>email</td>
+                        <td>VARCHAR</td>
+                    </tr>
+                    <tr>
+                        <td>password</td>
+                        <td>VARCHAR</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="metadata-table table-responsive">
+                <h3>employees</h3>
+                <table class="table table-sm">
+                    <thead class="thead-light">
+                    <tr>
+                        <th>Attribute</th>
+                        <th>Type</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>email</td>
+                        <td>VARCHAR</td>
+                    </tr>
+                    <tr>
+                        <td>password</td>
+                        <td>VARCHAR</td>
+                    </tr>
+                    <tr>
+                        <td>fullname</td>
+                        <td>VARCHAR</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="metadata-table table-responsive">
+                <h3>genres</h3>
+                <table class="table table-sm">
+                    <thead class="thead-light">
+                    <tr>
+                        <th>Attribute</th>
+                        <th>Type</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>id</td>
+                        <td>INT</td>
+                    </tr>
+                    <tr>
+                        <td>name</td>
+                        <td>VARCHAR</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="metadata-table table-responsive">
+                <h3>ratings</h3>
+                <table class="table table-sm">
+                    <thead class="thead-light">
+                    <tr>
+                        <th>Attribute</th>
+                        <th>Type</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>movieid</td>
+                        <td>VARCHAR</td>
+                    </tr>
+                    <tr>
+                        <td>rating</td>
+                        <td>FLOAT</td>
+                    </tr>
+                    <tr>
+                        <td>numVotes</td>
+                        <td>INT</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="metadata-table table-responsive">
+                <h3>genre_in_movies</h3>
+                <table class="table table-sm">
+                    <thead class="thead-light">
+                    <tr>
+                        <th>Attribute</th>
+                        <th>Type</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>genreid</td>
+                        <td>INT</td>
+                    </tr>
+                    <tr>
+                        <td>movieId</td>
+                        <td>VARCHAR</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="metadata-table table-responsive">
+                <h3>movies</h3>
+                <table class="table table-sm">
+                    <thead class="thead-light">
+                    <tr>
+                        <th>Attribute</th>
+                        <th>Type</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>id</td>
+                        <td>VARCHAR</td>
+                    </tr>
+                    <tr>
+                        <td>title</td>
+                        <td>VARCHAR</td>
+                    </tr>
+                    <tr>
+                        <td>year</td>
+                        <td>INT</td>
+                    </tr>
+                    <tr>
+                        <td>director</td>
+                        <td>VARCHAR</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="metadata-table table-responsive">
+                <h3>sales</h3>
+                <table class="table table-sm">
+                    <thead class="thead-light">
+                    <tr>
+                        <th>Attribute</th>
+                        <th>Type</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>id</td>
+                        <td>INT</td>
+                    </tr>
+                    <tr>
+                        <td>customerid</td>
+                        <td>INT</td>
+                    </tr>
+                    <tr>
+                        <td>movieId</td>
+                        <td>VARCHAR</td>
+                    </tr>
+                    <tr>
+                        <td>saleDate</td>
+                        <td>DATE</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="metadata-table table-responsive">
+                <h3>stars</h3>
+                <table class="table table-sm">
+                    <thead class="thead-light">
+                    <tr>
+                        <th>Attribute</th>
+                        <th>Type</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>id</td>
+                        <td>VARCHAR</td>
+                    </tr>
+                    <tr>
+                        <td>name</td>
+                        <td>VARCHAR</td>
+                    </tr>
+                    <tr>
+                        <td>birthYear</td>
+                        <td>INT</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="metadata-table table-responsive">
+                <h3>stars_in_movies</h3>
+                <table class="table table-sm">
+                    <thead class="thead-light">
+                    <tr>
+                        <th>Attribute</th>
+                        <th>Type</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>starId</td>
+                        <td>VARCHAR</td>
+                    </tr>
+                    <tr>
+                        <td>movieId</td>
+                        <td>VARCHAR</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="index.js"></script>
