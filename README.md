@@ -1,6 +1,8 @@
 # 2023-fall-cs122b-team-winner
 
-Fabflix URL: https://13.58.62.187:8443/fabflix/index.html
+Fabflix URL: [https://13.58.62.187:8443/fabflix/index.html](https://13.59.221.90:8443/fabflix/)
+
+Video URL: https://youtu.be/l7qm-j3WspI
 
 ## Project 3
 Brian Le (bale4): Task 1 Adding reCaptcha, Task 2 Adding HTTPS, Task 6 Importing large XML data files into the Fabflix database

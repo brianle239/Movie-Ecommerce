@@ -23,7 +23,7 @@ $(document).ready(function() {
         };
         console.log(movieData)
 
-        $.ajax("/addMovie", {
+        $.ajax("addMovie", {
             method: "POST",
             data: movieData,
             dataType: "json",
@@ -75,7 +75,7 @@ $(document).ready(function() {
         };
         console.log(starData)
 
-        $.ajax("/addStar", {
+        $.ajax("addStar", {
             method: "POST",
             data: starData,
             dataType: "json",
@@ -112,7 +112,7 @@ $(document).ready(function() {
         };
         console.log(genreData)
 
-        $.ajax("/addGenre", {
+        $.ajax("addGenre", {
             method: "POST",
             data: genreData,
             dataType: "json",
