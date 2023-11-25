@@ -155,8 +155,10 @@ public class MoviesServlet extends HttpServlet {
                 StringBuilder whereClause = new StringBuilder();
                 List<Object> parameters = new ArrayList<>();
                 if (!"null".equals(request.getParameter("movie_name"))) {
-                    whereClause.append(" AND m.title LIKE ?");
-                    parameters.add("%" + request.getParameter("movie_name").trim() + "%");
+                    // MATCH (entry) AGAINST ('graduate michigan' IN BOOLEAN MODE);
+                    whereClause.append(" AND MATCH (title) AGAINST (? IN BOOLEAN MODE)");
+                    String temp_movie = "+" + request.getParameter("movie_name").trim().replace(" ", "* +") + "*";
+                    parameters.add(temp_movie);
                 }
 
                 if (!request.getParameter("year").isEmpty() && !"null".equals(request.getParameter("year"))) {

@@ -11,7 +11,7 @@ form {
     justify-content: center;
     align-items: center;
     padding: 20px;
-    font-size: 2em;
+    font-size: 28px;
 }
 .search-input {
     width: 300px;
@@ -23,8 +23,7 @@ form {
 }
 
 .search-button {
-    padding: 10px;
-    margin-left: -40px;
+    margin-left: -37px;
     border: 2px solid #ccc;
     border-radius: 30px;
     background-color: #5F9EA0;
@@ -41,3 +40,11 @@ form {
 .search-button:focus {
     background-color: #4e8d8e;
 }
+
+.autocomplete-suggestions { border: 1px solid #999; background: #FFF; overflow: auto; }
+.autocomplete-suggestion { padding: 2px 5px; white-space: nowrap; overflow: hidden;  }
+/*max-height: 240px;*/
+.autocomplete-selected { background: #F0F0F0; }
+.autocomplete-suggestions strong { font-weight: normal; color: #3399FF; }
+.autocomplete-group { padding: 2px 5px; }
+.autocomplete-group strong { display: block; border-bottom: 1px solid #000; }

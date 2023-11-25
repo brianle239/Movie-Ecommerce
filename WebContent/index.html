@@ -9,6 +9,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
     <link rel="stylesheet" href="index.css">
 </head>
 <body style="background-image: url('images/Background.jpg');
@@ -53,14 +54,14 @@ height: 100vh;">
 
 <h1 class="h-30 display-2 d-flex align-items-center justify-content-center mt-5 mb-4" style="font-weight: 650; letter-spacing: .3rem;">Fabflix</h1>
 
-<!--<div class="search-bar">-->
-<!--    <form action="/search" method="GET"> &lt;!&ndash; Replace '/search' with your search endpoint &ndash;&gt;-->
-<!--        <input type="text" name="query" class="search-input" placeholder="Search for movies...">-->
-<!--        <button type="submit" class="search-button">-->
-<!--            ->-->
-<!--        </button>-->
-<!--    </form>-->
-<!--</div>-->
+<div class="search-bar">
+    <form id="autoSearch" method="GET"> <!-- Replace '/search' with your search endpoint -->
+        <input type="text" class="search-input autocomplete-searchbox" id="autocomplete" placeholder="Search for movies..." >
+        <button type="submit" class="search-button">
+            ⌕
+        </button>
+    </form>
+</div>
 
 <form id="genre_form"  action="#">
     <div class="form-inline">
@@ -95,6 +96,8 @@ height: 100vh;">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.devbridge-autocomplete/1.4.11/jquery.autocomplete.min.js"></script>
+
 
 
 <script src="index.js"></script>
