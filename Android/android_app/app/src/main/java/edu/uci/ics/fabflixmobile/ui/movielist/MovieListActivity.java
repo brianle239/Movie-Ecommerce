@@ -21,10 +21,10 @@ import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
 import edu.uci.ics.fabflixmobile.data.NetworkManager;
 public class MovieListActivity extends AppCompatActivity {
-    private final String host = "10.0.2.2";
-    private final String port = "8080";
-    private final String domain = "fabflix_war";
-    private final String baseURL = "http://" + host + ":" + port + "/" + domain;
+    private final String host = "18.219.176.42";
+    private final String port = "8443";
+    private final String domain = "fabflix";
+    private final String baseURL = "https://" + host + ":" + port + "/" + domain;
     private int currentPage = 1;
     private final int pageSize = 10;
     private int totalNumMovies = 0;

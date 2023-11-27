@@ -10,10 +10,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 
 public class SearchActivity extends AppCompatActivity {
-    private final String host = "10.0.2.2";
-    private final String port = "8080";
-    private final String domain = "fabflix_war";
-    private final String baseURL = "http://" + host + ":" + port + "/" + domain;
+    private final String host = "18.219.176.42";
+    private final String port = "8443";
+    private final String domain = "fabflix";
+    private final String baseURL = "https://" + host + ":" + port + "/" + domain;
     private EditText movieSearch;
     // guylee@hanmail.net
     protected void onCreate(Bundle savedInstanceState) {
