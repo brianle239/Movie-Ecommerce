@@ -3,12 +3,13 @@ let login_form = $("#login_form");
 function submitLoginForm(formSubmitEvent) {
     console.log("submit login form");
     formSubmitEvent.preventDefault();
+    /*
     if (typeof grecaptcha !== "undefined" && grecaptcha.getResponse().length === 0) {
         console.log("error")
         const errorMessageDiv = jQuery("#login_error_message");
         errorMessageDiv.text("Please check the reCAPTCHA.");
         errorMessageDiv.show();
-    } else {
+    } else { */
 
         $.ajax(
             "api/login", {
@@ -17,7 +18,7 @@ function submitLoginForm(formSubmitEvent) {
                 success: handleLoginResult
             }
         );
-    }
+
 }
 
 

@@ -37,10 +37,11 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
-        System.out.println("gRecaptchaResponse=" + gRecaptchaResponse);
+       // String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
+        //System.out.println("gRecaptchaResponse=" + gRecaptchaResponse);
         try {
-            RecaptchaVerifyUtils.verify(gRecaptchaResponse);
+            int filler = 2;
+            //RecaptchaVerifyUtils.verify(gRecaptchaResponse);
         } catch (Exception e) {
             return;
         }

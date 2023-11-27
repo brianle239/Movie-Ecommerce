@@ -174,12 +174,5 @@ public class CartItemServlet extends HttpServlet {
                 response.getWriter().close();
             }
 
-
-
-
-
-
-
-
     }
     }

@@ -42,6 +42,9 @@ public class MoviesServlet extends HttpServlet {
         String firstOrder = "rating Desc";
         String entireOrder = "rating Desc, title Desc";
 
+        System.out.print(request.getAttributeNames());
+        System.out.print(request);
+
 
         if (!request.getParameter("amt").equals("null")) {
             amt = Integer.parseInt(request.getParameter("amt"));
