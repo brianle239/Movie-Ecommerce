@@ -2,7 +2,7 @@
 
 Fabflix URL: [[https://13.58.62.187:8443/fabflix/index.html](https://13.59.221.90:8443/fabflix/)](https://18.219.176.42:8443/fabflix/)
 
-Video URL: 
+Video URL: https://youtu.be/WjDXl1xrIYE
 
 
 ## Project 4
