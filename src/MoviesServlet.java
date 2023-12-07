@@ -137,6 +137,7 @@ public class MoviesServlet extends HttpServlet {
                         "WHERE mr.id = m.id and mr.id = gm.movieId and gm.genreId = g.id and mr.id = sm.movieId and s.id = sm.starId\n" +
                         "GROUP BY m.id\n" +
                         "ORDER BY " + entireOrder +" ;";
+//               //
 
                 statement = conn.prepareStatement(query);
 
@@ -157,7 +158,9 @@ public class MoviesServlet extends HttpServlet {
             else {
                 StringBuilder whereClause = new StringBuilder();
                 List<Object> parameters = new ArrayList<>();
-                if (!"null".equals(request.getParameter("movie_name"))) {
+                String starSearch = "";
+                if (!(request.getParameter("movie_name").isEmpty() || "null".equals(request.getParameter("movie_name")))) {
+                    System.out.println("Lol: " + request.getParameter("movie_name").trim());
                     // MATCH (entry) AGAINST ('graduate michigan' IN BOOLEAN MODE);
                     whereClause.append(" AND MATCH (title) AGAINST (? IN BOOLEAN MODE)");
                     String temp_movie = "+" + request.getParameter("movie_name").trim().replace(" ", "* +") + "*";
@@ -169,14 +172,16 @@ public class MoviesServlet extends HttpServlet {
                     parameters.add(request.getParameter("year").trim());
                 }
 
-                if (!"null".equals(request.getParameter("director"))) {
+                if (!("null".equals(request.getParameter("director")) || request.getParameter("director").isEmpty())) {
                     whereClause.append(" AND m.director LIKE ?");
                     parameters.add("%" + request.getParameter("director").trim() + "%");
                 }
 
-                if (!"null".equals(request.getParameter("star_name"))) {
+                if (!("null".equals(request.getParameter("star_name")) || request.getParameter("star_name").isEmpty())) {
                     whereClause.append(" AND s.name LIKE ?");
                     parameters.add("%" + request.getParameter("star_name").trim() + "%");
+                    starSearch = "\tLEFT JOIN stars_in_movies sm ON sm.movieId = m.id\n" +
+                                 "\tLEFT JOIN stars s ON sm.starId = s.id\n";
                 }
 
                 query = "SELECT\n" +
@@ -193,9 +198,7 @@ public class MoviesServlet extends HttpServlet {
                         "FROM (\n" +
                         "\tSELECT DISTINCT m.id as id, r.rating as rating, count(*) OVER() AS total_rows\n" +
                         "\tFROM movies m\n" +
-                        "\tLEFT JOIN ratings r ON r.movieId = m.id\n" +
-                        "\tLEFT JOIN stars_in_movies sm ON sm.movieId = m.id\n" +
-                        "\tLEFT JOIN stars s ON sm.starId = s.id\n" +
+                        "\tLEFT JOIN ratings r ON r.movieId = m.id\n" + starSearch +
                         "\tWHERE m.id is not null" +  whereClause + "\n" +
                         "\tGROUP BY m.id\n" +
                         "\tORDER BY " + firstOrder + "\n" +
@@ -205,7 +208,7 @@ public class MoviesServlet extends HttpServlet {
                         "GROUP BY m.id\n" +
                         "ORDER BY " + entireOrder + ";";
 
-
+                System.out.println(query);
                 statement = conn.prepareStatement(query);
 //                parameters.add(firstOrder);
                 parameters.add(amt);
@@ -283,3 +286,42 @@ public class MoviesServlet extends HttpServlet {
         // Always remember to close db connection after usage. Here it's done by try-with-resources
     }
 }
+
+//With mr AS (SELECT DISTINCT m.id as movieId, m.title, m.year, m.director, r.rating as rating, count(*) OVER() AS total_rows
+//FROM movies m
+//LEFT JOIN ratings r ON r.movieId = m.id
+//LEFT JOIN genres_in_movies gm ON gm.movieId = m.id
+//WHERE m.id is not null
+//GROUP BY m.id
+//ORDER BY rating Desc, title Desc
+//LIMIT 50 OFFSET 0),
+//StarsInPage AS (
+//  SELECT *
+//  FROM stars_in_movies
+//  INNER JOIN mr
+//    USING (movieId)
+//    INNER JOIN stars ON stars.id = stars_in_movies.starId),
+//StarMovieCounts AS (
+//  SELECT
+//    starId,
+//    COUNT(*) AS movieCount
+//  FROM stars_in_movies
+//  INNER JOIN StarsInPage USING (starId)
+//  GROUP BY starId)
+//SELECT
+//mr.movieId as id,
+//mr.title as title,
+//mr.year as year,
+//mr.director as director,
+//GROUP_CONCAT(DISTINCT g.name ORDER BY g.name ASC SEPARATOR '\t') as genres,
+//
+//GROUP_CONCAT(DISTINCT g.id ORDER BY g.name ASC SEPARATOR '\t') AS genres_id,
+//GROUP_CONCAT(DISTINCT s.name ORDER BY (select movieCount from StarMovieCounts sm where sm.starId = s.id) Desc, s.name Asc SEPARATOR '	') AS stars,
+//GROUP_CONCAT(DISTINCT s.starId ORDER BY (select movieCount from StarMovieCounts sm where sm.starId = s.id) Desc, s.name Asc SEPARATOR '	') AS stars,
+//mr.rating as rating,
+//mr.total_rows
+//FROM mr, genres_in_movies gm, genres g, StarsInPage s
+//WHERE mr.movieId = gm.movieId and gm.genreId = g.id and mr.movieId = s.movieId
+//GROUP BY mr.movieId
+//ORDER BY rating Desc, title Desc;
+//
