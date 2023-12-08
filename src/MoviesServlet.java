@@ -9,6 +9,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -31,6 +33,11 @@ public class MoviesServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
+        long startServletTime = System.nanoTime();
+        long startJDBCTime = 0;
+        long endServletTime = 0;
+        long endJDBCTime = 0;
+
         response.setContentType("application/json");
 
         int amt = 10;
@@ -42,8 +49,8 @@ public class MoviesServlet extends HttpServlet {
         String firstOrder = "rating Desc";
         String entireOrder = "rating Desc, title Desc";
 
-        System.out.print(request.getAttributeNames());
-        System.out.print(request);
+//        System.out.print(request.getAttributeNames());
+//        System.out.print(request);
 
 
         if (!request.getParameter("amt").equals("null")) {
@@ -83,8 +90,6 @@ public class MoviesServlet extends HttpServlet {
                 titleCondition = " and m.title RLIKE '^[^a-zA-Z0-9]'";
             }
         }
-
-        System.out.println(genreCondition);
 
         PrintWriter out = response.getWriter();
         try (Connection conn = dataSource.getConnection()) {
@@ -160,7 +165,6 @@ public class MoviesServlet extends HttpServlet {
                 List<Object> parameters = new ArrayList<>();
                 String starSearch = "";
                 if (!(request.getParameter("movie_name").isEmpty() || "null".equals(request.getParameter("movie_name")))) {
-                    System.out.println("Lol: " + request.getParameter("movie_name").trim());
                     // MATCH (entry) AGAINST ('graduate michigan' IN BOOLEAN MODE);
                     whereClause.append(" AND MATCH (title) AGAINST (? IN BOOLEAN MODE)");
                     String temp_movie = "+" + request.getParameter("movie_name").trim().replace(" ", "* +") + "*";
@@ -208,7 +212,6 @@ public class MoviesServlet extends HttpServlet {
                         "GROUP BY m.id\n" +
                         "ORDER BY " + entireOrder + ";";
 
-                System.out.println(query);
                 statement = conn.prepareStatement(query);
 //                parameters.add(firstOrder);
                 parameters.add(amt);
@@ -224,13 +227,16 @@ public class MoviesServlet extends HttpServlet {
                     }
 
                 }
-                System.out.println("Param: " + parameters);
 
             }
-            System.out.println(statement);
+
 
             // Perform the query
+            startJDBCTime = System.nanoTime();
             ResultSet rs = statement.executeQuery();
+            endJDBCTime = System.nanoTime();
+
+
 
             JsonArray jsonArray = new JsonArray();
             // Iterate through each row of rs
@@ -267,7 +273,21 @@ public class MoviesServlet extends HttpServlet {
 
             // Write JSON string to output
             out.write(jsonArray.toString());
+            endServletTime = System.nanoTime();
             // Set response status to 200 (OK)
+            long resServletTime = endServletTime - startServletTime;
+            long resJDBCTime = endJDBCTime - startJDBCTime;
+            try {
+
+                writeToFile(request.getServletContext().getRealPath("/"), resServletTime + ":" + resJDBCTime + "\n");
+            }
+            catch (Exception e) {
+                System.out.print(e);
+                System.out.println("Error Writing to File");
+            }
+
+
+
             response.setStatus(200);
 
         } catch (Exception e) {
@@ -284,6 +304,17 @@ public class MoviesServlet extends HttpServlet {
             out.close();
         }
         // Always remember to close db connection after usage. Here it's done by try-with-resources
+    }
+    synchronized void writeToFile(String contextPath, String data) throws IOException {
+        // Open file in append mode
+
+        String path = contextPath + "/timeLog.txt"; // For windows, .replaceAll("/", "\\\\")
+
+        FileWriter writer = new FileWriter(path, true);
+        // Write data to file
+        writer.write(data);
+        writer.close();
+
     }
 }
 
