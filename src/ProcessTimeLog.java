@@ -7,7 +7,7 @@ public class ProcessTimeLog {
         // Path for AWS (ubuntu)
 
         try {
-            String path = "C:\\Program Files\\Apache Software Foundation\\Tomcat 10.1\\webapps\\fabflix_war\\timeLog.txt"; // Windows use .replaceALl("/", "\\\\")
+            String path = "/var/lib/tomcat10/webapps/fabflix/timeLog.txt"; // Windows use .replaceALl("/", "\\\\")
             File myObj = new File(path);
             Scanner myReader = new Scanner(myObj);
             long stSum = 0;
